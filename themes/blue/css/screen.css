@@ -136,15 +136,15 @@ pre, code, .hljs {
     background-color: #f7f9fd;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 842px) {
     .navbar {
-        min-height: 70px;
+        min-height: 64px;
     }
     .navbar-nav>li>a {
         padding: 30px 20px;
     }
     .navbar-default .navbar-brand {
-        font-size: 36px;
+        font-size: 42px;
         padding: 25px 15px;
     }
     #content{
@@ -153,7 +153,7 @@ pre, code, .hljs {
     }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 841px) {
     body{
         font-size: 14px;
     }
@@ -161,7 +161,7 @@ pre, code, .hljs {
         font-size: 30px;
     }
     #content{
-        padding: 15px;
+        padding: 4px;
     }
     #post-meta .right {
         float:left;
