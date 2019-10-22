@@ -1,11 +1,11 @@
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Alegreya';
+    font-family: 'Ubuntu';
 }
 
 body {
     color: #333;
     background-color: #f2f2f2;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
     font-size: 16px;
 }
 
@@ -30,7 +30,7 @@ body {
 
 .navbar-default .navbar-brand {
     color: #fff;
-    font-family: 'Alegreya';
+    font-family: 'Ubuntu';
 }
 
 .navbar-default .navbar-brand:hover {
@@ -120,6 +120,7 @@ pre {
     overflow-x: auto;
 }
 pre code {
+    font-family: 'Ubuntu Mono';
     display: block;
     padding: 0.5em;
     overflow-wrap: normal;
