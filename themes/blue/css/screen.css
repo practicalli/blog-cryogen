@@ -10,7 +10,8 @@ body {
 }
 
 .container {
-    max-width: 1000px;
+    max-width: 96%;
+    width: 84%
 }
 
 .right {
