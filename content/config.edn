@@ -21,8 +21,8 @@
  :theme                "blue"
  :resources            ["img"]
  :keep-files           [".git"]
- :disqus?              false
- :disqus-shortname     ""
+ :disqus?              true
+ :disqus-shortname     "practicalli-blog"
  :ignored-files        [#"\.#.*" #".*\.swp$"]
  :previews?            false
  :posts-per-page       5
