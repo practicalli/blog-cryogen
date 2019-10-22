@@ -19,7 +19,7 @@
  :sass-path            "sass"
  :compass-path         "compass"
  :theme                "blue"
- :resources            ["img"]
+ :resources            ["images" ".nojekyll"]
  :keep-files           [".git"]
  :disqus?              true
  :disqus-shortname     "practicalli-blog"
