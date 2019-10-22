@@ -30,5 +30,6 @@
  :clean-urls           :trailing-slash
  :collapse-subdirs?    false
  :hide-future-posts?   true
- :klipse               {}
+ :klipse               {:settings {:selector         ".klipse-clj"
+                                   :selector-reagent ".klipse-reagent"}}
  :debug?               false}
