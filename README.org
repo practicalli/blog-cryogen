@@ -2,6 +2,10 @@
 
 A Cryogen project containing the raw markdown content that is used to generate the [[https://practicalli.github.io/blog][Practicalli blog website]]
 
+A detailed description of putting this site together can be found in
+
+[[https://practicalli.github.io/blog/posts/clojure-powered-blogging-with-cryogen/][Clojure powered blogging with Cryogent]] explains in detail how this project was developed.  Here is just the essential information.
+
 The project was created with Leiningen
 
 #+BEGIN_SRC shell
