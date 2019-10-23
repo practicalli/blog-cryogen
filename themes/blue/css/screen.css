@@ -71,6 +71,11 @@ body {
     box-shadow: 0 0 0 0,0 6px 12px rgba(34,34,34,0.1);
 }
 
+img.topic {
+    float: right;
+}
+
+
 #content img {
     max-width: 100%;
     height: auto;
@@ -168,11 +173,18 @@ ul li {
     .navbar-default .navbar-brand {
         font-size: 30px;
     }
+    .navbar-header img {
+        width: 200px
+    }
     #content{
         padding: 4px;
     }
     #post-meta .right {
         float:left;
         text-align: left;
+    }
+    img.topic {
+        width: 120px;
+        float: right;
     }
 }

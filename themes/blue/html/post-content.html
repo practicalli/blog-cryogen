@@ -6,6 +6,11 @@
         {% endif %}
     </div>
     <h2>{{post.title}}</h2>
+
+    <!-- conditional topic logo displayed if :topic has value in a post -->
+    {% if post.topic %}
+    <img class="topic" src="{{index-uri}}images/{{post.topic}}-logo-name.png" alt="{{post.topic}} logo" />
+    {% endif %}
 </div>
 <div>
     {% if post.toc %}{{post.toc|safe}}{% endif %}
