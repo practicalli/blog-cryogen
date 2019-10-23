@@ -1,0 +1,27 @@
+* Practicalli Blog Content
+
+A Cryogen project containing the raw markdown content that is used to generate the [[https://practicalli.github.io/blog][Practicalli blog website]]
+
+The project was created with Leiningen
+
+#+BEGIN_SRC shell
+lein new cryogen practicalli-blog
+#+END_SRC
+
+
+Run a local server that generates the website
+
+#+BEGIN_SRC shell
+lein ring server
+#+END_SRC
+
+This generates all the files for the website the ~public~ directory
+
+
+The ~deploy-to-gh-pages~ script will create a temporary git repository locally and use that to commit and push the site to the specified GitHub repository.  Update the address of the Github repository to use this script.
+
+
+** Suggestions / issues / bugs
+   Any suggestions for posts, issues or bugs found on the  [[https://practicalli.github.io/blog][Practicalli blog website]] should be reported as an issue on the practicalli/blog-content repository] should be reported as an issue or pull request on the practicalli/blog-content repository.
+
+   Deployment of the blog is not automated at the moment, but an updated site will be manually generated once any pull request is accepted by the maintainers.
