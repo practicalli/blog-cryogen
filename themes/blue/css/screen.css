@@ -136,6 +136,14 @@ pre, code, .hljs {
     background-color: #f7f9fd;
 }
 
+
+/* Style lists */
+ul li {
+    padding: 0 0 0.4em 0;
+    list-style-image: url("/blog/images/practicalli-logo-bullet.png");
+}
+
+
 @media (min-width: 842px) {
     .navbar {
         min-height: 64px;
