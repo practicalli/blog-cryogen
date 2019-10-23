@@ -146,6 +146,19 @@ hr {
     border-radius: 5px;
 }
 
+blockquote{
+    font-size: 0.84em;
+    width:96%;
+    margin:16px auto;
+    font-family:Ubuntu;
+    font-style:italic;
+    color: #555555;
+    padding:1.2em 16px 1.2em 12px;
+    border-left:8px solid #91DC47;
+    line-height:1.6;
+    position: relative;
+    background:#EDEDED;
+}
 
 /* Style lists */
 ul li {
