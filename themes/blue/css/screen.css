@@ -141,6 +141,11 @@ pre, code, .hljs {
     background-color: #f7f9fd;
 }
 
+hr {
+    border: 4px solid #62B132;
+    border-radius: 5px;
+}
+
 
 /* Style lists */
 ul li {
