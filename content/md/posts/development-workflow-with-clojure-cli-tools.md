@@ -66,6 +66,10 @@ We can run figwheel by specifying `figwheel-main` as the main namespace.  Figwhe
 clojure -A:fig -m figwheel.main
 ```
 
+>
+> [Running a deps.edn project from CIDER (Emacs/Spacemacs)](https://practicalli.github.io/blog/posts/cider-jack-in-to-clojure-cli-projects-from-spacemacs/) may require a `.dir-locals.el` file to set which alias you wish to run by default.  CIDER version 0.23 onwards should offer you a choice of alias to run.
+
+
 The browser will show the default figwheel website that contains basic instructions on how to work with figwheel.
 
 ![figwheel-main - REPL host page](/images/figwheel-main-REPL-host-page.png)
