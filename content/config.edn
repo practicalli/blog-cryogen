@@ -18,8 +18,8 @@
  :sass-src             []
  :sass-path            "sass"
  :compass-path         "compass"
- :resources            ["images" ".nojekyll"]
  :theme                "practicalli"
+ :resources            ["images" ".nojekyll" "README.org"]
  :keep-files           [".git"]
  :disqus?              true
  :disqus-shortname     "practicalli-blog"
