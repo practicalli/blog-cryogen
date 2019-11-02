@@ -24,9 +24,9 @@
  :disqus?              true
  :disqus-shortname     "practicalli-blog"
  :ignored-files        [#"\.#.*" #".*\.swp$"]
- :previews?            false
+ :previews?            true
  :posts-per-page       5
- :blocks-per-preview   2
+ :blocks-per-preview   3
  :clean-urls           :trailing-slash
  :collapse-subdirs?    false
  :hide-future-posts?   true
