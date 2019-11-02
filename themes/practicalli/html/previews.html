@@ -10,6 +10,10 @@
             {% endif %}
             <div class="date">{{post.date|date:longDate}}</div>
         </div>
+        <!-- conditional topic logo displayed if :topic has value in a post -->
+        {% if post.topic %}
+        <img class="topic" src="{{index-uri}}images/{{post.topic}}-logo-name.png" alt="{{post.topic}} logo" />
+        {% endif %}
     </div>
     {{post.content|safe}}
     <a href="{{post.uri}}">Continue reading &#8594;</a>
