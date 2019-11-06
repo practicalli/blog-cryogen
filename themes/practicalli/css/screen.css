@@ -71,15 +71,18 @@ body {
     box-shadow: 0 0 0 0,0 6px 12px rgba(34,34,34,0.1);
 }
 
-img.topic {
-    float: right;
-}
-
 
 #content img {
     max-width: 100%;
     height: auto;
+    padding-top: 1em;
+    padding-bottom: 2em;
 }
+
+img.topic {
+        float: right;
+}
+
 
 footer {
     font-size: 14px;
