@@ -1,19 +1,19 @@
 {:title "Improving communication with GitHub issue templates"
- :date "2019-11-02"
+ :date "2019-11-04"
  :layout :post
  :topic "github"
  :tags  ["github"]}
 
-Create templates for issues and pull requests can greatly improve feedback and contributions, especially as an open source project maintainer.
+Create templates for issues and pull requests can greatly improve feedback and contributions, especially as an open source project maintainer.  We will look specifically at issue templates.
 
 Templates can ask people to provide specific information, or request use of a tool for generating system information (e.g. Spacemacs).  Automatic assignment and labelling saves time on issue triage by the project maintainers.
 
 Templates can be created for most shared Git repository services, i.e GitHub, GitLab, BitBucket, etc.
 
-We will discuss what to include in these templates and use GitHub as an example of how to create them.
+We will discuss what to include in these templates and use GitHub as an example of how to create and edit issue templates.
 
 
-## Creating a template on GitHub
+## Creating an issue template
 
 In your GitHub project, open the **Settings** tab and scroll down to the **features** section.
 
@@ -25,6 +25,7 @@ Ensure **Issues** is selected and click on the **Set up templates** button
 Select an existing template to change it or select **Custom template** to create a new blank template.
 
 ![GitHub templates - select template](/images/github-templates-select-template.png)
+
 
 ## Changing an existing template
 
