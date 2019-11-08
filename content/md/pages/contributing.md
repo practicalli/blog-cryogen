@@ -17,4 +17,11 @@ For more substantial feedback, please create an issue on the [practicalli/blog-c
 
 ## Contributing
 
-Please raise an issue
+Please raise an issue using one of the following issue templates
+
+* [Article](https://github.com/practicalli/blog-content/issues/new?assignees=&labels=article&template=article.md&title=Suggested+article+title)
+* [blog-design](https://github.com/practicalli/blog-content/issues/new?assignees=&labels=blog-design&template=blog-design.md&title=) - issues and improvements to the overall usability and graphic design of the blog website
+* [correction](https://github.com/practicalli/blog-content/issues/new?assignees=&labels=Correction&template=correction.md) - a fix for a specific article
+* [update](https://github.com/practicalli/blog-content/issues/new?labels=update&template=update.md) - additional content for a published article
+
+Please [raise a blank issue](https://github.com/practicalli/blog-content/issues/new?assignees=&labels=article&template=article.md&title=Suggested+article+title) for anything else.
