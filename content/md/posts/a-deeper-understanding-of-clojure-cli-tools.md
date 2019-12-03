@@ -155,8 +155,7 @@ Full report at:
 
 You can see that the first time we are using the test-runner the CLI tools download the source code from the Git repository.
 
-> NOTE: Using a Git commit is relatively stable dependencies.  The only risk is if you are using a shared repository and a force commit is made that replaces the commit you have as dependency.
-
+> NOTE: Using a Git commit provides just a stable dependency as Maven or other tool.  The only risk is if you are using a shared repository and a force commit is made that replaces the commit you have as dependency, but that will have a different hash value, so you will notice that kind of change when running your code.
 
 
 ## And now some code
