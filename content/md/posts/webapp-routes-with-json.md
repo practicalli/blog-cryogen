@@ -4,7 +4,7 @@
  :topic "clojure-cli"
  :tags  ["webapps" "apis" "json" "clojure-cli" "tools-deps"]}
 
-Defining routes for a Clojure webapps is easy with the Compojure library and we can also serve JSON to create a simple API.  All this is built on the [Clojure webserver we built in the previous article](clojure-web-server-cli-tools-deps-edn.md).
+Defining routes for a Clojure webapps is easy with the Compojure library and we can also serve JSON to create a simple API.  All this is built on the [Clojure webserver we built in the previous article](clojure-web-server-cli-tools-deps-edn.html).
 
 Compojure has a `defroutes` macro that provides a simple way to define routes and there are other convienience functions that make routing very straight forward.
 
