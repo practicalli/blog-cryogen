@@ -271,7 +271,7 @@ Using the `def` function we can bind a name to the calling of the `create-server
 Define a name for the server and keep that name private, so only functions in the current namespace can use that name.
 
 ```clojure
-(defonce ^private api-server (create-server))
+(defonce ^:private api-server (create-server))
 ```
 
 Now we can use the `api-server` name as a reference to the running server and send it commands.
@@ -294,7 +294,7 @@ When the server is started we reset the `api-server` atom to contain a dynamic b
 The `api-server` atom can then be used to send a timeout to the running Jetty server process.
 
 ```clojure
-(defonce ^private api-server (atom nil))
+(defonce ^:private api-server (atom nil))
 ```
 
 ### Stop server function
