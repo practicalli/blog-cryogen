@@ -5,6 +5,8 @@
 # This should only be run from the root of the gitbook project
 # Replace the remote Github URL to use this on a different project
 
+# Generate the live website
+lein run content/config.edn
 
 # Deploy new build
 cd public/blog && rm -rf .git && git init && git add . && git commit -m "initial commit" && git branch -m master gh-pages && git remote add practicalli git@github.com:practicalli/blog.git && git push -f practicalli gh-pages

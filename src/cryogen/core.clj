@@ -2,7 +2,7 @@
   (:require [cryogen-core.compiler :refer [compile-assets-timed]]
             [cryogen-core.plugins :refer [load-plugins]]))
 
-(defn -main []
+(defn -main [config-file]
   (load-plugins)
-  (compile-assets-timed)
+  (compile-assets-timed (read-string (slurp config-file)))
   (System/exit 0))
