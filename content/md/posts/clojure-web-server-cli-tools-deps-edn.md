@@ -121,8 +121,8 @@ The `handler` should return a response hash-map, containing values for `:status`
   Return: ring response hash-map including :status :headers and :body"
   [req]
   {:status  200
-   :headers {}}
-   :body    "Hello Clojure Server world!")
+  :headers {}
+  :body    "Hello Clojure Server world!"})
 ```
 
 > **httpkit server request and response keys**
