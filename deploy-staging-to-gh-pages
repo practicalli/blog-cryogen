@@ -1,0 +1,16 @@
+#!/bin/sh
+
+## Deploy to test environment to review articles and other changes to the blog website.
+
+## A quick hack to deploy a generated website onto a Github repository, to be served as static content by github pages.  This is an example of a very bad shell script.
+
+# This should only be run from the root of the gitbook project
+# Replace the remote Github URL to use this on a different project
+
+
+# Generate test website - using content/config-test.edn configuration file
+# which sets the :blog-prefix to /test-blog
+lein run content/config-staging.edn
+
+# Deploy new build
+cd public/test-blog && rm -rf .git && git init && git add . && git commit -m "initial commit" && git branch -m live gh-pages && git remote add practicalli git@github.com:practicalli/test-blog.git && git push -f practicalli gh-pages
