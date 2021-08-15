@@ -6,6 +6,8 @@
 
 CLI tools make Clojure very accessible and simple to install as they are a essentially a wrapper for running Clojure code using the `java` command and use additional libraries to manage dependencies, class paths, create projects and build java archive (jar) files.
 
+> Newer content can be found in [Using Clojure tools section of Practicalli Clojure](http://practicalli.github.io/clojure/clojure-tools/using-clojure-tools.html)
+
 Its quite common to use the `java` command to run your code in production, usually defined in a shell script.  Leiningen can be used to run your application in production too, however, because Leiningen creates 2 JVM instances (one for itself and one for the application), its more efficient to just use the `java` command.
 
 Leiningen does provides a very rich set of templates that speed up development with Clojure and has a multitude of plugins. Plugins provide a rich source of features but they are not very composable, especially compared to the Clojure language itself.

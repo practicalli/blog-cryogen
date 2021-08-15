@@ -6,6 +6,8 @@
 
 Clojure Command Line Interface (CLI) tools provide a fast way for developers to get started with Clojure and simplify an already pretty simple experience.   With tools.deps it also provides a more flexible approach to including libraries, including the use of code from a specific commit in a Git repository.
 
+> Newer content can be found in [Using Clojure tools section of Practicalli Clojure](http://practicalli.github.io/clojure/clojure-tools/using-clojure-tools.html)
+
  [Practicalli Clojure 35 - Clojure CLI tools - an introduction](https://www.youtube.com/watch?v=JsdgIKUD_6Q&list=PLpr9V-R8ZxiDjyU7cQYWOEFBDR1t7t0wv&index=37) is a video of a live broadcast of this content (inclucing typos)
 
 Clojure CLI tools provide:
@@ -178,15 +180,12 @@ With `deps.edn` you are not limited to using just dependencies from JAR files, i
 > TODO: Expand on this section in another article with some useful examples
 
 
-## rebl readline
+## rebel readline
 
 [Rebel readline](https://github.com/bhauman/rebel-readline) enhances the REPL experience by providing multi-line editing with auto-indenting, language completions, syntax highlighting and function argument hints as you code.
 
- {% youtube u8B65_a_QYE %}
-
-
 * [New Clojure REPL experience with Clj tools and rebel readline](http://jr0cket.co.uk/2018/07/New-Clojure-REPL-experience-with-Clj-tools-and-rebel-readline.html)
-* [rebel-readline in Clojure CLI REPL](https://www.youtube.com/watch?v=u8B65_a_QYE)
+* Video: [rebel-readline in Clojure CLI REPL](https://www.youtube.com/watch?v=u8B65_a_QYE)
 
 
 ## clj-new

@@ -6,7 +6,7 @@
 
 Discover how to build a Clojure web server from the ground up using Clojure CLI tools to create and run the project and `deps.edn` to manage the dependencies.
 
-There are many Clojure web server projects created with Leiningen, thanks to all the tutorials and templates available.
+Update: [Practicalli Clojure WebApps](https://practicalli.github.io/clojure-webapps/) has newer versions of this guide.  Take a look at the Status Monitor and Banking on Clojure projects
 
 > This project will be used to build a web server that will serve our API, which we will build in future posts and [study group broadcasts](http://yt.vu/+practicalli).
 
@@ -14,17 +14,17 @@ There are many Clojure web server projects created with Leiningen, thanks to all
 
 # Create a project
 
-A new project could be made by creating a few files and directories.  To save time we will use the [clj-new project](https://github.com/seancorfield/clj-new#getting-started), configured as an alias with the Clojure CLI tools.
+A new project could be made by manually creating a few files and directories.  The [clj-new project](https://github.com/seancorfield/clj-new) provides a convienient was to create a project from a template. The [practicalli/clojure-deps-edn configuration](https://github.com/practicalli/clojure-deps-edn) contains the `:project/new` alias.
 
 In a terminal, create the project called `practicalli/simple-api-server`
 
 ```shell
-clojure -A:new app practicalli/simple-api-server
+clojure -M:project/new app practicalli/simple-api-server
 ```
 
 This creates a Clojure namespace (file) called `simple-api-server` in the `practicalli` domain.  The project contains the `clojure.core`, `test.check` and `test.runner` libraries by default.
 
-The `deps.edn` file defines two aliases.
+The `deps.edn` file defines two aliases (possibly a few more).
 
 * `:test` includes the `test.check` library and test code files under the `test` path.
 * `:runner` sets the main namespace to that of the test runner, calling the `-main` function in that namespace which then runs all the tests under the directory `test`.
@@ -33,17 +33,29 @@ The `deps.edn` file defines two aliases.
 **deps.edn**
 
 ```clojure
-{:paths ["resources" "src"]
- :deps {org.clojure/clojure {:mvn/version "1.10.1"}}
+
+{:paths ["src" "resources"]
+ :deps {org.clojure/clojure {:mvn/version "1.10.3"}}
  :aliases
- {:test {:extra-paths ["test"]
-         :extra-deps {org.clojure/test.check {:mvn/version "0.10.0-RC1"}}}
+ {:run-m {:main-opts ["-m" "practicalli.simple-api-server"]}
+  :run-x {:ns-default practicalli.simple-api-server
+          :exec-fn greet
+          :exec-args {:name "Clojure"}}
+  :test {:extra-paths ["test"]
+         :extra-deps {org.clojure/test.check {:mvn/version "1.1.0"}}}
   :runner
   {:extra-deps {com.cognitect/test-runner
                 {:git/url "https://github.com/cognitect-labs/test-runner"
-                 :sha "76568540e7f40268ad2b646110f237a60295fa3c"}}
+                 :sha "b6b3193fcc42659d7e46ecd1884a228993441182"}}
    :main-opts ["-m" "cognitect.test-runner"
-               "-d" "test"]}}}
+               "-d" "test"]}
+  :uberjar {:replace-deps {com.github.seancorfield/depstar
+{:mvn/version "2.0.211"}}
+            :exec-fn hf.depstar/uberjar
+            :exec-args {:aot true
+                        :jar "simple-api-server.jar"
+                        :main-class "practicalli.simple-api-server"
+                        :sync-pom true}}}}
 ```
 
 The project created with [clj-new](https://github.com/seancorfield/clj-new#getting-started) contains all these files
@@ -64,12 +76,12 @@ Routing will be done using the compojure library, which is a common approach in 
 
 Add the httpkit library to the project.
 
-Edit the `project.edn` file and add `http-kit` version `2.4.0-alpha4` to the `:deps` map of dependencies
+Edit the `project.edn` file and add `http-kit` version `2.5.3` to the `:deps` map of dependencies
 
 ```clojure
 :deps
-{org.clojure/clojure {:mvn/version "1.10.1"}
- http-kit            {:mvn/version "2.4.0-alpha4"}}
+{org.clojure/clojure {:mvn/version "1.10.3"}
+ http-kit/http-kit {:mvn/version "2.5.3"}}
 ```
 
 ### Add httpkit server namespace
@@ -140,7 +152,7 @@ The `handler` should return a response hash-map, containing values for `:status`
 Start a REPL using the Clojure CLI tools, preferably using [rebel-readline](https://github.com/bhauman/rebel-readline#clojure-tools) for the complete REPL experience.
 
 ```shell
-clojure -A:rebel
+clojure -M:repl/rebel
 ```
 
 In the REPL, load the namespace to include all the code in the running REPL.  Use the `:verbose` option to show what namespaces are loading if you are curious.

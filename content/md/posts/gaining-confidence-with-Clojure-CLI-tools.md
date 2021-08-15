@@ -8,6 +8,8 @@ We are going to try out the different command line options available as we conti
 
  We explore the different ways to running Clojure code, from a single expression to a full project.  We include examples of aliases for optional configuration and combining aliases to create specific configurations when running a project.  Finally we will see how to diagnose a project and understand potential sources of conflicts.
 
+> Newer content can be found in [Using Clojure tools section of Practicalli Clojure](http://practicalli.github.io/clojure/clojure-tools/using-clojure-tools.html)
+
 Please see earlier articles in thise series for background:
 
 * [A Deeper Understanding of Clojure CLI Tools](http://jr0cket.co.uk/2019/07/a-deeper-understanding-of-Clojure-CLI-tools.html)
