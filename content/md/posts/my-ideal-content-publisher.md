@@ -1,6 +1,7 @@
 {:title "Content publishing with Clojure"
  :layout :post
- :date "2020-10-23"
+ :draft? true
+ :date "2022-10-23"
  :topic "clojure-cli"
  :tags  ["clojure" "blogging"]}
 
