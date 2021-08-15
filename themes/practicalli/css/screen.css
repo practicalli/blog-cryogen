@@ -127,11 +127,13 @@ blockquote footer {
 
 pre {
     overflow-x: auto;
+    padding: 0.1em;
 }
 pre code {
+    font-size: 1.25em;
     font-family: 'Ubuntu Mono';
     display: block;
-    padding: 0.5em;
+    padding: 0.1em;
     overflow-wrap: normal;
     white-space: pre;
 }
