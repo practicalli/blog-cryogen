@@ -13,4 +13,4 @@
 lein run content/config-test.edn
 
 # Deploy new build
-cd public/test-blog && rm -rf .git && git init && git add . && git commit -m "initial commit" && git branch -m master gh-pages && git remote add practicalli git@github.com:practicalli/test-blog.git && git push -f practicalli gh-pages
+cd public/test-blog && rm -rf .git && git init && git add . && git commit -m "initial commit" && git branch -m live gh-pages && git remote add practicalli git@github.com:practicalli/test-blog.git && git push -f practicalli gh-pages

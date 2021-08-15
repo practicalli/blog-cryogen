@@ -9,4 +9,4 @@
 lein run content/config.edn
 
 # Deploy new build
-cd public/blog && rm -rf .git && git init && git add . && git commit -m "initial commit" && git branch -m master gh-pages && git remote add practicalli git@github.com:practicalli/blog.git && git push -f practicalli gh-pages
+cd public/blog && rm -rf .git && git init && git add . && git commit -m "initial commit" && git branch -m live gh-pages && git remote add practicalli git@github.com:practicalli/blog.git && git push -f practicalli gh-pages
