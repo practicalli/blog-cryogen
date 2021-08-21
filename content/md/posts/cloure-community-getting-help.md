@@ -15,6 +15,8 @@ A guide to getting help from the Clojure community.  There are several ways you 
 
 General website such as [redit/clojure](https://www.reddit.com/r/Clojure/) are useful ways for the Clojure community to reach out to the more general development community.
 
+> Hundreds of Clojure related videos are available on [Clojure.tv](https://www.youtube.com/user/ClojureTV), the [London Clojurians community](https://www.youtube.com/c/LondonClojurians) and [Practicalli](https://www.youtube.com/practicalli) YouTube channels.
+
 
 ## ask.clojure.org
 An official place to ask questions about Clojure, ClojureScript, ClojureCLR, Clojure contrib libraries and any other Clojure topic.  This forum is used by the Clojure maintainer team and so discussions can shape the direction of Clojure.
