@@ -2,8 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
     <meta charset="utf-8"/>
-    <title>Practicalli: Posts Tagged &quot;thinkpad&quot;</title>
-    <link rel="canonical" href="http://practical.li/blog/tags/thinkpad/">
+    <title>Practicalli: Automate Cryogen Clojure blogg with GitHub Actions</title>
+    <link rel="canonical" href="http://practical.li/blog/posts/automate-cryogen-clojure-blog-with-github-actions/">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu|Ubuntu+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
@@ -54,17 +54,104 @@
         <div class="col-lg-9">
             <div id="content">
                 
-<div id="posts-by-tag">
-    <div id="page-header">
-        <h2>Posts Tagged &quot;thinkpad&quot;</h2>
+<div id="post">
+    <div class="post-header">
+    <div id="post-meta" class="row">
+        <div class="col-lg-6">August 28, 2021</div>
+        
     </div>
-    <ul>
+    <h2>Automate Cryogen Clojure blogg with GitHub Actions</h2>
+
+    <!-- conditional topic logo displayed if :topic has value in a post -->
     
-        <li>
-            <a href="/blog/posts/lenovo-x1-extreme-gen2-ubuntu-install/">Ubuntu install on Lenovo X1 Extreme 2nd Gen with RAID</a>
-        </li>
+    <img class="topic" src="/blog/images/cryogen-logo-name.png" alt="cryogen logo" />
     
-    </ul>
+</div>
+<div>
+    
+    <p><a href="https://practical.li/blog/posts/clojure-powered-blogging-with-cryogen/">Practicalli uses Cryogen static site generator for its blog website</a>.  Cryogen is fast and simple to use thanks to the Clojure EDN file used for configuration.</p><p>Cryogen documentation shows <a href="https://cryogenweb.org/docs/deploying-to-github-pages.html">how to publish a Cryogen blog to GitHub pages</a> using Git command.  The deployment can be automated using GitHub actions, so that a new version of the site is deployed when Pull Requests are merged to the specified branch (or on direct commits to that branch).</p><!-- more --><h2 id="what-does-the-github-workflow-do">What does the GitHub workflow do?</h2><p>This is a combination of GitHub actions, each doing a specific part of the automated workflow.</p><p>The <strong>publish</strong> job runs on an Ubuntu docker image and the <strong>Checkout</strong> step performs a git checkout of the project into the docker image.</p><p><strong>Prepare Java</strong> step uses the <a href="https://github.com/actions/setup-java">setup-java action</a> to add Java 11 to the docker image, using the Eclipse Foundation <code>temurin</code> image (<a href="https://blog.adoptopenjdk.net/2021/08/goodbye-adoptopenjdk-hello-adoptium/">OpenJDK / AdoptOpenJDK is now part of the Eclipse Foundation</a>).</p><p><strong>Install clojure tools</strong> step uses the <a href="https://github.com/DeLaGuardo/setup-clojure">setup-clojure action</a> to add the specified version of Clojure CLI tools (Leiningen and Boot build tools are also supported)</p><p><strong>Build blog site</strong> step calls the Cryogen function using Clojure CLI tools to build the static site</p><p><strong>Publish to GitHub pages</strong> step uses the <a href="https://github.com/JamesIves/github-pages-deploy-action">github-pages-deploy-action</a> to deploy a specific directory, the directory built by Cryogen, to another branch of the original repository or a different repository. If the branch does not exist, the action will create it.</p><h2 id="deploying-to-other-repositories">Deploying to other repositories</h2><p>When deploying the Cryogen site to the same GitHub repository as the source files, the <a href="https://github.com/JamesIves/github-pages-deploy-action">github-pages-deploy-action</a> does not require an explicit token to be added. The action uses the default repository scoped GitHub token.</p><p>If deploying the site to another repository from that of its source files, create a GitHub secret with a value of a Personal Access Token (PAT). The personal access token should have the least permissions necessary, usually only <code>repo</code>.</p><p>A GitHub secret can be added at user or organisation level and configured for specific repositories.</p><h2 id="add-github-action">Add GitHub Action</h2><p>Create a file called <code>.github/workflows/cryogen-publish.yml</code> and add a workflow configuration.</p><pre><code class="json">name: Publish Blog
+on:
+  push:
+    branches:
+    - live
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Prepare java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+
+      - name: Install clojure tools
+        uses: DeLaGuardo/setup-clojure@3.5
+        with:
+          cli: 1.10.3.943
+
+      - name: Build Blog site
+        run: clojure -M:build
+
+      - name: Publish to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.4
+        with:
+          commit-message: ${{ github.event.head_commit.message }}
+          branch: gh-pages                                      # branch to deploy to
+          single-commit: yes                                    # no commit history
+          folder: public/blog                                   # directory to deploy from
+</code></pre><h2 id="github-action-configuration-with-token">GitHub Action configuration with token</h2><p>If deploying to a different repository than the source, then add a token to the configuration</p><pre><code class="json">      - name: Publish to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.4
+        with:
+          commit-message: ${{ github.event.head_commit.message }}
+          token: ${{ secrets.PRACTICALLI_BLOG_PUBLISH_TOKEN }}  # GitHub secret
+          repository-name: practicalli/deployed-blog            # repository to deploy to
+          branch: gh-pages                                      # branch to deploy to
+          single-commit: yes                                    # no commit history
+          folder: public/blog                                   # directory to deploy from
+</code></pre><h2 id="summary">Summary</h2><p>Once the <code>.github/workflows/cryogent-publish.yml</code> file is committed to the default branch of the repository, any commits to that branch or merged pull requests to that branch will trigger the workflow and publish a new version of the Cryogen static website.</p>
+</div>
+
+<div id="post-tags">
+    <b>Tags: </b>
+    
+    <a href="/blog/tags/cryogen/">cryogen</a>
+    
+    <a href="/blog/tags/blogging/">blogging</a>
+    
+    <a href="/blog/tags/github-actions/">github-actions</a>
+    
+    <a href="/blog/tags/static-sites/">static-sites</a>
+    
+</div>
+
+
+    <div id="prev-next">
+        
+        
+        <a class="right" href="/blog/posts/overview-of-language-server-protocol-lsp-for-clojure-development/">Overview of Language Server Protocol LSP for Clojure development &raquo;</a>
+        
+    </div>
+
+    
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_config = function () {
+            this.page.url = "http://practical.li/blog/posts/automate-cryogen-clojure-blog-with-github-actions/";
+            this.page.identifier = "Automate Cryogen Clojure blogg with GitHub Actions";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//practicalli-blog.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    
+
+
 </div>
 
             </div>
