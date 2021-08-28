@@ -115,7 +115,7 @@ jobs:
 </code></pre><h2 id="deploying-to-aws-s3-bucket">Deploying to AWS S3 bucket</h2><p>Cryogen can also be published to an Amazon S3 bucket by taking the above GitHub action and replacing the <strong>Publish to GitHub Pages</strong> step</p><p>Add the following step in its place and add GitHub secrets to the Git Repository for AWS access and the name of the AWS bucket</p><pre><code class="json">    - name: Publish to AWS S3
       uses: jakejarvis/s3-sync-action@master
       with:
-        args: --follow-symlinks --delete
+        args: --follow-symlinks --delete --acl public-read
       env:
         AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
