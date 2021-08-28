@@ -29,7 +29,6 @@ jobs:
       - name: Publish to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
-          token: ${{ secrets.CRYOGEN_PUBLISH_TOKEN }}  # Organisation secret
           branch: gh-pages # The branch the action should deploy to.
           folder: public/blog # The folder the action should deploy.
           commit-message: ${{ github.event.head_commit.message }}
