@@ -1,4 +1,4 @@
-{:title "Automate Cryogen Clojure blogg with GitHub Actions"
+{:title "Automate Cryogen Clojure blog with GitHub Actions"
  :layout :post
  :date "2021-08-28"
  :topic "cryogen"
