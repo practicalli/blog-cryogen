@@ -95,9 +95,9 @@ If deploying to a different repository than the source, then add a token to the 
 
 ## Deploying to AWS S3 bucket
 
-Cryogen can also be published to an Amazon S3 bucket by taking the above GitHub action and replacing the **Publish to GitHub Pages** step
+Cryogen can also be published to an Amazon S3 bucket by taking the above GitHub action and replacing the **Publish to GitHub Pages** step.
 
-Add the following step in its place and add GitHub secrets to the Git Repository for AWS access and the name of the AWS bucket
+Add the following step in its place and add GitHub secrets to the Git Repository for AWS access and the name of the AWS bucket.
 
 ```json
     - name: Publish to AWS S3
@@ -118,3 +118,10 @@ Add the following step in its place and add GitHub secrets to the Git Repository
 ## Summary
 
 Once the `.github/workflows/cryogent-publish.yml` file is committed to the default branch of the repository, any commits to that branch or merged pull requests to that branch will trigger the workflow and publish a new version of the Cryogen static website.
+
+Consider adding linters and other GitHub Actions to check for potential issues with markdown and other aspects of the website, to avoid checking in content that may break the website.
+
+Setting up monitoring of the website is also recommended, using simple monitoring tools such as [pingdom](https://www.pingdom.com/).
+
+Thank you.
+[Practicalli](https://twitter.com/practical_li)
