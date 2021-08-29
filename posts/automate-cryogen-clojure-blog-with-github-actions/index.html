@@ -112,7 +112,7 @@ jobs:
           branch: gh-pages                                      # branch to deploy to
           single-commit: yes                                    # no commit history
           folder: public/blog                                   # directory to deploy from
-</code></pre><h2 id="deploying-to-aws-s3-bucket">Deploying to AWS S3 bucket</h2><p>Cryogen can also be published to an Amazon S3 bucket by taking the above GitHub action and replacing the <strong>Publish to GitHub Pages</strong> step</p><p>Add the following step in its place and add GitHub secrets to the Git Repository for AWS access and the name of the AWS bucket</p><pre><code class="json">    - name: Publish to AWS S3
+</code></pre><h2 id="deploying-to-aws-s3-bucket">Deploying to AWS S3 bucket</h2><p>Cryogen can also be published to an Amazon S3 bucket by taking the above GitHub action and replacing the <strong>Publish to GitHub Pages</strong> step.</p><p>Add the following step in its place and add GitHub secrets to the Git Repository for AWS access and the name of the AWS bucket.</p><pre><code class="json">    - name: Publish to AWS S3
       uses: jakejarvis/s3-sync-action@master
       with:
         args: --follow-symlinks --delete --acl public-read
@@ -122,7 +122,8 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_REGION: 'eu-west-2'
         SOURCE_DIR: 'public/blog'
-</code></pre><blockquote><p>NOTE: also check the AWS region is the correct one for your needs</p></blockquote><h2 id="summary">Summary</h2><p>Once the <code>.github/workflows/cryogent-publish.yml</code> file is committed to the default branch of the repository, any commits to that branch or merged pull requests to that branch will trigger the workflow and publish a new version of the Cryogen static website.</p>
+</code></pre><blockquote><p>NOTE: also check the AWS region is the correct one for your needs</p></blockquote><h2 id="summary">Summary</h2><p>Once the <code>.github/workflows/cryogent-publish.yml</code> file is committed to the default branch of the repository, any commits to that branch or merged pull requests to that branch will trigger the workflow and publish a new version of the Cryogen static website.</p><p>Consider adding linters and other GitHub Actions to check for potential issues with markdown and other aspects of the website, to avoid checking in content that may break the website.</p><p>Setting up monitoring of the website is also recommended, using simple monitoring tools such as <a href="https://www.pingdom.com/">pingdom</a>.</p><p>Thank you.
+<a href="https://twitter.com/practical_li">Practicalli</a></p>
 </div>
 
 <div id="post-tags">
