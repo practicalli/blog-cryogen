@@ -78,7 +78,8 @@ jobs:
 
 ## GitHub Action configuration with token
 
-If deploying to a different repository than the source, then add a token to the configuration
+If deploying to a different repository than the source, then add a token to either a [repository, account or organisation secret](https://docs.github.com/en/actions/reference/encrypted-secrets).  Use a [GitHub Personal Access Token](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token) for the value of the token secret.
+
 
 ```json
       - name: Publish to GitHub Pages
