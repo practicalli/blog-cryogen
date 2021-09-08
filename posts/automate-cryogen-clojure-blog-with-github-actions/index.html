@@ -103,7 +103,7 @@ jobs:
           branch: gh-pages                                      # branch to deploy to
           single-commit: yes                                    # no commit history
           folder: public/blog                                   # directory to deploy from
-</code></pre><h2 id="github-action-configuration-with-token">GitHub Action configuration with token</h2><p>If deploying to a different repository than the source, then add a token to the configuration</p><pre><code class="json">      - name: Publish to GitHub Pages
+</code></pre><h2 id="github-action-configuration-with-token">GitHub Action configuration with token</h2><p>If deploying to a different repository than the source, then add a token to either a <a href="https://docs.github.com/en/actions/reference/encrypted-secrets">repository, account or organisation secret</a>.  Use a <a href="https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token">GitHub Personal Access Token</a> for the value of the token secret.</p><pre><code class="json">      - name: Publish to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
           commit-message: ${{ github.event.head_commit.message }}
