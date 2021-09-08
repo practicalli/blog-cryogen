@@ -122,7 +122,7 @@ Once the `.github/workflows/cryogent-publish.yml` file is committed to the defau
 
 Consider adding linters and other GitHub Actions to check for potential issues with markdown and other aspects of the website, to avoid checking in content that may break the website.
 
-Setting up monitoring of the website is also recommended, using simple monitoring tools such as [pingdom](https://www.pingdom.com/).
+Setting up monitoring of the website is also recommended, using simple monitoring tools such as [StatusCake](https://www.statuscake.com/).
 
 Thank you.
 [Practicalli](https://twitter.com/practical_li)
