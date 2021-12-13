@@ -1,6 +1,6 @@
-name: Publish Blog
+name: Publish Blog Staging
 
-on: [pull_request workflow_dispatch]
+on: [pull_request]
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -30,6 +30,6 @@ jobs:
           repository-name: practicalli/blog-staging
           token: ${{ secrets.CRYOGEN_PUBLISH_TOKEN }}
           branch: gh-pages # The branch the action should deploy to.
-          folder: public/blog # The folder the action should deploy.
+          folder: public/blog-staging # The folder the action should deploy.
           commit-message: ${{ github.event.head_commit.message }}
           single-commit: yes
