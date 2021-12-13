@@ -18,7 +18,7 @@ This article covers two approaches to running Clojure CLI projects from CIDER ja
 
 I created a new project with the Clojure CLI tools and the figwheel-main template (using clj-new).  This is the first time with this approach, so I may have missed something.
 
-```
+```shell
 clj -A:new figwheel-main practicalli/study-group-guide -- --reagent
 ```
 
@@ -98,7 +98,7 @@ You can check the results by looking at the `*mesages*` buffer and you will see 
 
 deps.edn has a top-level key called `:aliases` that can include one or more alias definitions as maps.  This example is from the `figwheel-main` template and has an extra dependency for the `figwheel-main` and `rebel-readline-cljs` libraries.  So when starting a REPL with this alias, both those dependencies are available in the project.
 
-```
+```clojure
 :aliases
   {:fig
     {:extra-deps
@@ -120,6 +120,6 @@ Using CIDER with projects created with Clojure CLI tools and `clj-new` works ver
 If you have multiple aliases needed each time, you can chain them together:`-A:fig:build:custom` by editing the jack-in command line or including those aliases in the `.dir-locals.el`
 
 Thank you.
-[@jr0cket](https://twitter.com/jr0cket)
+[@practicalli](https://twitter.com/practical_li)
 
-[Practicalli - free online books on Spacemacs and Clojure development](https://practicalli.github.io/)
+[Practicalli - free online books on Software Engineering and Clojure development](https://practical.li/)
