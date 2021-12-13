@@ -1,6 +1,8 @@
 name: Publish Blog Staging
 
-on: [pull_request]
+on:
+  workflow_dispatch:
+  pull_request:
 jobs:
   publish:
     runs-on: ubuntu-latest
