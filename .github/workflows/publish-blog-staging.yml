@@ -1,0 +1,35 @@
+name: Publish Blog
+
+on: [pull_request workflow_dispatch]
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Prepare java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+
+      - name: Install clojure tools
+        uses: DeLaGuardo/setup-clojure@3.5
+        with:
+          cli: 1.10.3.943
+
+      - name: Build Blog site
+        run: clojure -M:build content/config-staging.edn
+
+      - name: Publish to GitHub Pages
+        # Publish to a separate repository as GitHub pages can only be served from one branch
+        # Requires developer token as deploying across repositories
+        uses: JamesIves/github-pages-deploy-action@4.1.4
+        with:
+          repository-name: practicalli/blog-staging
+          token: ${{ secrets.CRYOGEN_PUBLISH_TOKEN }}
+          branch: gh-pages # The branch the action should deploy to.
+          folder: public/blog # The folder the action should deploy.
+          commit-message: ${{ github.event.head_commit.message }}
+          single-commit: yes

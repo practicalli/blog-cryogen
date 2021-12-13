@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 ### Removed
 
+## [2.0.1] - 2021-12-13
+
+### Added
+* publish-blog-staging.yml GitHub actions workflow to publish pull request changes
+
 
 ## [2.0.0] - 2021-08-28
 
