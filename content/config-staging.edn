@@ -29,7 +29,7 @@
  :blocks-per-preview   3
  :clean-urls           :trailing-slash
  :collapse-subdirs?    false
- :hide-future-posts?   true
+ :hide-future-posts?   false
  :klipse               {:settings {:selector         ".klipse-clj"
                                    :selector-reagent ".klipse-reagent"}}
  :debug?               false}
