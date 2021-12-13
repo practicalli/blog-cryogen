@@ -4,6 +4,11 @@ on:
   push:
     branches:
     - live
+    paths-ignore:
+      - '.github/**'
+      - 'CHANGELOG.md'
+      - 'README.md'
+      - 'deps.edn'
 
 jobs:
   publish:
