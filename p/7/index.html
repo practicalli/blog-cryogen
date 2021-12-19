@@ -2,8 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
     <meta charset="utf-8"/>
-    <title>Practicalli: Brave Clojure redux - part 1 - the REPL</title>
-    <link rel="canonical" href="http://practical.li/blog/posts/brave-clojure-redux-part01-the-repl/">
+    <title>Practicalli</title>
+    <link rel="canonical" href="http://practical.li">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu|Ubuntu+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
@@ -55,61 +55,29 @@
             <div id="content">
                 
 <div id="post">
+    
     <div class="post-header">
-    <div id="post-meta" class="row">
-        <div class="col-lg-6">February 16, 2021</div>
+        <h2>
+            <a href="/blog/posts/2014-03-10-first-post/">A Post</a>
+        </h2>
+        <div id="post-meta">
+            
+            <div class="date">March 10, 2014</div>
+        </div>
+        <!-- conditional topic logo displayed if :topic has value in a post -->
         
     </div>
-    <h2>Brave Clojure redux - part 1 - the REPL</h2>
-
-    <!-- conditional topic logo displayed if :topic has value in a post -->
+    <h3 id="this-post-not-fetch-enough">This Post Not Fetch Enough</h3><p>some stuff happened</p><blockquote><p>Stop trying to make fetch happen.</p><ul><li>Regina</li></ul></blockquote>
+    <a href="/blog/posts/2014-03-10-first-post/">Continue reading &#8594;</a>
+    <hr>
     
-    <img class="topic" src="/blog/images/learning-clojure-logo-name.png" alt="learning-clojure logo" />
-    
-</div>
-<div>
-    
-    <p>Brave Clojure redux is series that revisits the code examples and tooling covered in the book: "Clojure for the Brave and the True".  The good news is you do not need to be brave or true to read the book or learn Clojure either.  It does help if you have some time and motivation though.</p><p>Brave Clojure redux uses Clojure CLI tools rather than Leiningen as used in Brave Clojure.  Code examples will be used from the book, complemented with additional examples where relevant.</p><p>Part 1 covers the Clojure REPL process, a vital part of Clojure development. The basics of building and running a project are also included.</p><p>Practicalli Clojure covers Clojure CLI tools installation, along with example aliases in <code>practicalli/clojure-deps-edn</code>, to provide a wide set of tools to support Clojure development.</p><p>A Clojure aware editor is also recommended, which part 2 will cover.</p><!-- more --><h2 id="practicalli-clojure-study-group">Practicalli Clojure study group</h2><p>The Practicalli Study guide playlist contains 100+ videos on Clojure and ClojureScript development.  From episode 97 onwards, the the videos are the Brave Clojure Redux series.</p><iframe width="560" height="315" src="https://www.youtube.com/embed/li8dRt6JdfQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen"></iframe><h2 id="coding-with-the-repl">Coding with the REPL</h2><p>The REPL is a process that reads Clojure code and returns the results.  Specifically, the REPL Reads the code and ensures its of a good form.  Then it Evaluates the code to return a value.  Then it Prints that value out to the terminal or editor.  Finally it Loops around again if there is more Clojure to read.</p><p>The REPL evaluates a single expression at a time, so you can see exactly what a piece of code does and see the result instantaneously.</p><p>Clojure development benefits greatly when actively using the REPL to create Clojure code.</p><blockquote><p>Static analysis tools may be more familiar with other languages (Java, C#, etc.).  and can useful in supporting Clojure development with the REPL.</p></blockquote><h2 id="which-clojure-development-tool">Which Clojure development tool?</h2><p>The Brave Clojure book uses the Leiningen build automation tool for its examples.  Leiningen is a commonly used tool to create an manage Clojure projects for the last decade.</p><p>Brave Clojure redux uses the newer Clojure CLI tools which takes a data centric approach to the configuration, using a <code>deps.edn</code> file.  As the name suggests, this file uses the Extensible Data Notation (EDN) which the Clojure syntax is written with.  A <code>deps.edn</code> file is simply a hash-map that defines your project and the tools used with the project.</p><blockquote><p><a href="https://www.youtube.com/watch?v=7d53ABMqpqU">"A Case for Clojure" by James Reeves</a> covers in detail the EDN foundation of the Clojure language</p></blockquote><p>Clojure CLI tools focuses on dependency management and running Clojure code. Community projects are added as aliases, e.g. <a href="https://github.com/practicalli/clojure-deps-edn">practicalli/clojure-deps.edn</a>, providing a wide range of features as and when they are needed.</p><p>Practicalli Clojure has a more in depth <a href="http://practicalli.github.io/clojure/alternative-tools/clojure-tools/compare-with-leiningen.html">comparison of Clojure CLI tools and Leiningen</a>.</p><h2 id="creating-a-new-clojure-project">Creating a New Clojure project</h2><p><a href="https://github.com/seancorfield/clj-new">clj-new</a> will create the directory and file structure for a Clojure project, from one of many available templates.</p><pre><code class="shell">clojure -X:project/new :template app :name practicalli/brave-clojure-redux
-</code></pre><p>This creates a simple project structure with matching <code>src</code> and <code>test</code> directory trees, with one <code>*_test.clj</code> file for each <code>*_.clj</code> source file.  The only difference between this project and the example in the Brave Clojure book is the project configuration file, <code>deps.edn</code> rather than <code>project.clj</code></p><p><code>deps.edn</code> project configuration and contains the paths used in the project, libraries required as dependencies and aliases for tasks and tools to support working with the project.</p><blockquote><p>Install <a href="https://github.com/practicalli/clojure-deps-edn">practicalli/clojure-deps.edn</a> for the aliases used in this series.</p></blockquote><h2 id="using-the-repl">Using the REPL</h2><p>The Clojure REPL can be used without a Clojure project to quickly try out some ideas with Clojure.  Its far more useful to use a Clojure project with a REPL, where code and experiments can be saved to files for later use.</p><p>Clojure CLI tools provides the <code>clojure</code> command that runs a REPL process and provides a simple terminal user interface.  <code>clj</code> is a wrapper that adds history support to the terminal REPL UI.  The Rebel readline project provides a rich terminal REPL UI experience.</p><p>Open a terminal window and change to the root of the Clojure project created previously.</p><p>Use the <code>:repl/rebel</code> alias from <a href="https://github.com/practicalli/clojure-deps-edn">practicalli/clojure-deps-edn</a> to start a REPL process with the Rebel UI.</p><pre><code class="shell">clojure -M:repl/rebel
-</code></pre><p>Use the <code>:repl/rebel-nrepl</code> alias instead to connect a Clojure aware editor to the REPL process via the nREPL server.</p><pre><code class="shell">clojure -M:repl/rebel-nrepl
-</code></pre><h2 id="running-the-clojure-project">Running the Clojure project</h2><p>Using the <code>app</code> tempate, the <code>practicalli/brave_clojure_redux.clj</code> file contains a definition for a function called <code>-main</code>.  You can edit the <code>println</code> in this function to return a different string if you wish, such as <code>"I'm a little teapot!"</code> from the Brave Clojure book.</p><p>Run this function with Clojure CLI tools:</p><pre><code class="shell">clojure -M -m practicalli.brave-clojure-redux
-</code></pre><p>The <code>-M</code> flag tells the Clojure command to use Clojure.main to look for a function called <code>-main</code> in the namespace specified by the <code>-m</code> flag.</p><h2 id="building-a-clojure-project">Building a Clojure project</h2><p>A Clojure project is packaged into a Java archive file (<code>.jar</code>).  This is a zip compressed file with a particular structure and configuration files.</p><p>The <code>app</code> template used to create the project includes aliases to create jar files in the <code>deps.edn</code> configuration file.</p><ul><li><p><code>:jar</code> packages the project code into a .jar file.  This is used for deploying libraries to a shared repository such as <a href="https://mvnrepository.com/repos/central">Maven Central</a> and <a href="https://clojars.org/">Clojars</a>, or to a local repository such as <a href="https://jfrog.com/artifactory/">Artifactory</a></p></li><li><p><code>:uberjar</code> creates a .jar containing the project code and the Clojure runtime environment, so all that is required to run the uberjar is a Java Virtual Machine.</p></li></ul><p>Thank you.
-<a href="https://twitter.com/practical_li">@practical_li</a></p>
-</div>
-
-<div id="post-tags">
-    <b>Tags: </b>
-    
-    <a href="/blog/tags/clojure-cli/">clojure-cli</a>
-    
-</div>
-
 
     <div id="prev-next">
         
-        <a href="/blog/posts/overview-of-language-server-protocol-lsp-for-clojure-development/">&laquo; Overview of Language Server Protocol LSP for Clojure development</a>
+        <a class="left" href="/blog/p/6/">&laquo; Prev</a>
         
-        
-        <a class="right" href="/blog/posts/clojure-repl-jack-in-or-connect/">Clojure CLI tools - To jack-in or connect, that is the question &raquo;</a>
         
     </div>
-
-    
-    <div id="disqus_thread"></div>
-    <script type="text/javascript">
-        var disqus_config = function () {
-            this.page.url = "http://practical.li/blog/posts/brave-clojure-redux-part01-the-repl/";
-            this.page.identifier = "Brave Clojure redux - part 1 - the REPL";
-        };
-        (function() {
-            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-            dsq.src = '//practicalli-blog.disqus.com/embed.js';
-            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        })();
-    </script>
-    
-
-
 </div>
 
             </div>
