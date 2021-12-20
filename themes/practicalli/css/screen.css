@@ -138,12 +138,14 @@ pre code {
     white-space: pre;
 }
 
+
 code {
-    color: #428bca;
+    color: #01833a;
 }
 
+
 pre, code, .hljs {
-    background-color: #f7f9fd;
+    background-color: #eeeeee85;
 }
 
 hr {
