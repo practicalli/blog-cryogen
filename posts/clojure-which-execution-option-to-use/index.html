@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Practicalli: Clojure CLI tools - which execution option to use</title>
+    <link rel="canonical" href="http://practical.li/blog/posts/clojure-which-execution-option-to-use/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu|Ubuntu+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/default.min.css">
+    <link href="/blog/css/screen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/blog/">
+              <img src="/blog//images/practicalli-logo-name.png" alt="Practicalli logo" />
+            </a>
+        </div>
+
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li ><a href="/blog/">Home</a></li>
+                <li
+                ><a href="/blog/archives/">Archives</a></li>
+                
+                <li
+                >
+                <a href="/blog/pages/about/">About</a>
+                </li>
+                
+                <li><a href="/blog/feed.xml">RSS</a></li>
+                <li><a href="https://github.com/practicalli/blog-content/projects/1">Feedback</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div><!--/.container-fluid -->
+</nav>
+
+
+<div class="container">
+
+
+    <div class="row">
+        <div class="col-lg-9">
+            <div id="content">
+                
+<div id="post">
+    <div class="post-header">
+    <div id="post-meta" class="row">
+        <div class="col-lg-6">December 20, 2021</div>
+        
+    </div>
+    <h2>Clojure CLI tools - which execution option to use</h2>
+
+    <!-- conditional topic logo displayed if :topic has value in a post -->
+    
+    <img class="topic" src="/blog/images/clojure-cli-logo-name.png" alt="clojure-cli logo" />
+    
+</div>
+<div>
+    
+    <p>Clojure CLI tools provide a very flexible way to run Clojure, using aliases to include community libraries and tools to enhance clojure projects and provide independent tools. Understand the execution options (exec-opts) on the command line options ensures an effective use of Clojure CLI tools.</p><p>Clojure CLI tools was <a href="https://clojure.org/releases/tools#v1.10.1.510">first released in February 2020</a> with a specific focus on running Clojure code quickly and easily, which also required the management of dependencies from Maven, Git and a local file space.</p><p>Since that release the design has evolved to provide clojure.exec (<code>-X</code>) to run any Clojure function not just <code>-main</code> as with clojure.main (<code>-M</code>). In July 2021, the ability to run tools (<code>-T</code>) which are independent from the Clojure project classpath was also introduced.</p><p>The exec-opts command line flags have evolved to enable these features, so lets explore those flags and show how each flag is typically used.</p><!-- more --><h2 id="summary-of-use">Summary of use</h2><p>In very simple terms, the Clojure CLI tools flags are used as follows</p><p><code>-A</code> - [Deprecated] use <code>-M</code> instead</p><p><code>-M</code> for running the <code>-main</code> function of the current project, using the <code>-m</code> flag to specify the namespace containing <code>-main</code></p><p><code>-X</code> for running any fully qualified function from the current project</p><p><code>-P</code> a dry run, downloading all dependencies</p><p><code>-T</code> running a separate tool</p><blockquote><p>The tools flag, <code>-T</code> removes the need for other aliases to run tools and eventually all community tools should move to use the -T approach.  However, some tools still need to be run using the <code>-M</code> or <code>-X</code> flag (as the <code>-T</code> flag is quite new).</p></blockquote><h2 id="clojuremain--m">clojure.main -M</h2><p><a href="https://clojure.org/reference/repl_and_main"><code>clojure.main</code> namespace</a> has been the way Clojure code was run (including a REPL) for most of its history.  This is now evolving with the addition of <a href="#clojure-exec--X">clojure.exec</a>.</p><p><code>clojure.main/main</code> function looks for a <code>-main</code> function in the given namespace (<code>-m fully-qualified.namespace</code>) or if no main namespace is found then a REPL session is run.  This is the approach Leiningen has always used and still uses today.</p><p>Running a project using Clojure CLI tools without any additional aliases on the command line</p><pre><code class="bash">clojure -M -m practicalli.sudoku-solver
+</code></pre><p><code>-M</code> flag instructs Clojure CLI tools to use <code>clojure.main</code> to run the Clojure code.</p><p><code>-m</code> flag is an argument to <code>clojure.main</code> which specifies the namespace to search for a <code>-main</code> function.</p><p>The same approach is taken when including an alias, in this example <code>:alias/name</code>.</p><pre><code class="bash">clojure -M:alias/name -m practicalli.sudoku-solver
+</code></pre><p>This command will merge values defined in the alias for <code>:extra-paths</code> and <code>extra-deps</code> into the call.</p><blockquote><p>When the command line includes the <code>-m</code> flag with a namespace it will over-ride the <code>:main-opts</code> value if defined in the alias</p></blockquote><p>Adding a <code>:project/run</code> alias to the project <code>deps.edn</code> file provides a simpler way to run the project on the command line</p><pre><code class="clojure">  :project/run
+  {:main-opts ["-m" "practicalli.sudoku-solver"]}
+
+</code></pre><p>Now the project code can be run using the simple command line form</p><pre><code class="bash">clojure -M:project/run
+</code></pre><h3 id="chaining-aliases-together">Chaining aliases together</h3><p>Alises can be used together by chaining their names on the command line</p><pre><code class="bash">clojure -M:env/dev:env/test:lib/cider:repl/rebel
+</code></pre><p>Using several aliases on the command line will merge their <code>:extra-paths</code> and <code>:extra-deps</code> values.</p><p>The <code>:main-opts</code> values are not merged and the value from the last <code>:main-opts</code> in the alias chain is used with <code>clojure.main</code></p><p>Again, if the command line includes the <code>-m</code> flag with a namespace, then that namespace is passed to <code>clojure.main</code>, ignoring the values from the aliases.</p><blockquote><p>Aliases can be chained together to merge their configuration, e.g. <code>clojure -M:env/dev:repl/rebel</code> will included the configuration from both <code>:env/dev</code> and <code>:repl/rebel</code>.  With the <code>-M</code> flag, only the <code>:main-opts</code> from the last alias in the chain is used.  If <code>-m namespace/name</code> is also part of the command, this will be used instead of any values from alias <code>:main-opts</code> keys.</p></blockquote><h2 id="clojureexec--x">clojure.exec -X</h2><p><code>-X</code> flag provides the flexibility to call any fully qualified function, so Clojure code is no longer tied to <code>-main</code></p><p>Arguments are passed as EDN key value pairs and can therefore be included in any order</p><blockquote><p>The namesapce of the function to be called is automatically loaded using <code>requiring-resolve!</code> (TODO: explanation)</p></blockquote><p>Thus you can now define programs as functions that take a map and execute them via clj:</p><p>Call the <code>status</code> function from the namespace <code>practicalli.service</code> in the current project</p><pre><code class="bash">clojure -X practicalli.service/status
+</code></pre><p>Pass arguments to a <code>start</code> function in the <code>practicalli.service</code> namespace</p><pre><code class="bash">clojure -X practicalli.service/status :port 8080 :join? false
+</code></pre><p>As the arguments are key/value pairs, it does not matter in which order the pairs are used in the command line.</p><h3 id="built-in-clojureexec-functions">Built in clojure.exec functions</h3><p>Clojure CLI tools has some built in tools under the special <code>:deps</code> alias (not to be confused with the <code>:deps</code> configuration in a <code>deps.edn</code> file)</p><ul><li><code>-X:deps mvn-install</code> - install a maven jar to the local repository cache</li><li><code>-X:deps git-resolve-tags</code> - Resolve git coord tags to shas and update deps.edn</li><li><code>-X:deps find-versions</code> - Find available versions of a library</li><li><code>-X:deps prep</code> - <a href="https://clojure.org/reference/deps_and_cli#prep">prepare source code libraries</a> in the dependency tree</li></ul><blockquote><p>See <code>clojure --help</code> for other descriptions and examples (or just read this article further)</p></blockquote><h2 id="tools--t">Tools -T</h2><p>Install, run and remove a tool that can be used independently from a Clojure project configuration.</p><p>The <code>-T</code> flag is based on the <code>clojure.exec</code> approach, except it only uses the <code>:extra-deps</code> and <code>:extra-path</code> from the alias, ignoring the <code>:deps</code> and <code>:path</code> values from the project <code>deps.edn</code> file.</p><p><code>-Ttools</code> is a built in tool for <code>install</code> and <code>remove</code> of other tools.</p><p>The  <code>:as</code> directive specifying a name for the too
+l</p><p>In this example, the antq tool is installed using the name <code>libs-outdated</code></p><pre><code class="bash">clojure -Ttools install com.github.liquidz/antq '{:git/tag "1.3.1"}' :as libs-outdated
+</code></pre><p>To update a tool, simply run the install again with the latest version of the library or git reference.</p><p>Installing a tool adds an EDN configuration file using the name of the tool in <code>$HOME/.clojure/tools/</code> (or $XDG_HOME/.clojure/tools/) directory.</p><p>Once a tool is installed, run by using the name of the tool.</p><pre><code class="bash">clojure -Tlibs-outdated
+</code></pre><p>Options to the tool are passed as key/value pairs (as the tool is called by clojure.exec)</p><pre><code class="bash">clojure -Tlibs-outdated :upgrade true
+</code></pre><p><code>-Ttools remove</code> will remove the configuration of the tool of the given name</p><pre><code class="bash">clojure -Ttools remove :tool libs-outdated
+</code></pre><blockquote><p>Minimise installs between computers by placing the <code>.clojure/tools</code> directory in version control. It would be great to have antq also update tools aliases to their latest versions as it does with other aliases (assuming this doesnt already happen).</p></blockquote><p>Example tools include</p><ul><li><a href="https://github.com/liquidz/antq">liquidz/antq</a> - search dependencies for newer library versions</li><li><a href="https://github.com/seancorfield/deps-new">seancorfield/deps-new</a> - create new projects using templates</li></ul><h2 id="prepare--p">Prepare -P</h2><p><code>-P</code> flag instructs the <code>clojure</code> command to download all library dependencies to the local cache and then stop without executing a function call.</p><p>The <code>-P</code> flag is often used with Continuous Integration workflows and to create pre-populated Container images, to avoid repeatedly downloading the same library jar files.</p><p>If used with just a project, then the Maven dependencies defined in the project <code>deps.edn</code> file will be downloaded, if not already in the users local cache (<code>~/.m2/repository/</code>).</p><p>If <code>:git</code> or <code>:local/root</code> dependencies are defined, the respective code will be downloaded and added to the classpath.</p><p>Prepare flag by itself download dependencies defined in the <code>:deps</code> section of the <code>deps.edn</code> file of the current project.</p><pre><code class="bash">clojure -P
+</code></pre><p>Including one or more aliases will preparing all the dependencies from every alias specified</p><pre><code class="bash">clojure -M:project/hotload:env/dev:lib/cider -P
+</code></pre><p>As prepare is essentially a dry run, then the <code>clojure</code> command does not call <code>:main-opts</code> or <code>:exec-fn</code> functions, even if they exist in an alias or on the command line.</p><blockquote><p><code>-P</code> will warn if a project has dependencies that <a href="https://clojure.org/reference/deps_and_cli#prep">require building from source</a> (i.e Java code) or resource file manipulation.  If so then <code>clojure -X:deps prep</code> will prepare these source based dependencies.</p></blockquote><h2 id="summary">Summary</h2><p>There are many options when it comes to running Clojure CLI tools that are not covered here, however, this guide gives you the most common options used.</p><p>The <code>-J</code> and <code>:jvm-opts</code> are useful to configure the Java Virtual machine and deserve an article to themselves as there are many possible options.</p><p>See the <a href="https://clojure.org/reference/deps_and_cli#prep">Deps and CLI Reference Rationale for more details and description of these options</a>.</p><h2 id="references">References</h2><ul><li><a href="https://insideclojure.org/2020/07/28/clj-exec/">Inside Clojure - clj exec</a></li><li><a href="https://insideclojure.org/2020/09/04/clj-exec/">Inside Clojure - clj exec update</a></li></ul>
+</div>
+
+<div id="post-tags">
+    <b>Tags: </b>
+    
+    <a href="/blog/tags/clojure-cli/">clojure-cli</a>
+    
+    <a href="/blog/tags/tools-deps/">tools-deps</a>
+    
+</div>
+
+
+    <div id="prev-next">
+        
+        
+        <a class="right" href="/blog/posts/clojure-cli-tools-understanding-aliases/">Clojure CLI tools - understanding aliases &raquo;</a>
+        
+    </div>
+
+    
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_config = function () {
+            this.page.url = "http://practical.li/blog/posts/clojure-which-execution-option-to-use/";
+            this.page.identifier = "Clojure CLI tools - which execution option to use";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//practicalli-blog.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    
+
+
+</div>
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div id="sidebar">
+                <h3>Links</h3>
+                <ul id="links">
+                    <li><a href="http://practical.li/">Practicalli Home</a></li>
+                    <li><a href="http://yt.vu/+practicalli">YouTube channel</a></li>
+                    <li><a href="https://github.com/practicalli/blog-content/projects/1">Feeback / Issues</a></li>
+                    
+                    <li><a href="/blog/pages/contributing/">Contributing</a></li>
+                    
+                </ul>
+                
+                <div id="recent">
+                    <h3>Recent Posts</h3>
+                    <ul>
+                        
+                        <li><a href="/blog/posts/clojure-which-execution-option-to-use/">Clojure CLI tools - which execution option to use</a></li>
+                        
+                        <li><a href="/blog/posts/clojure-cli-tools-understanding-aliases/">Clojure CLI tools - understanding aliases</a></li>
+                        
+                        <li><a href="/blog/posts/automate-cryogen-clojure-blog-with-github-actions/">Automate Cryogen Clojure blog with GitHub Actions</a></li>
+                        
+                        <li><a href="/blog/posts/overview-of-language-server-protocol-lsp-for-clojure-development/">Overview of Language Server Protocol LSP for Clojure development</a></li>
+                        
+                        <li><a href="/blog/posts/brave-clojure-redux-part01-the-repl/">Brave Clojure redux - part 1 - the REPL</a></li>
+                        
+                        <li><a href="/blog/posts/clojure-repl-jack-in-or-connect/">Clojure CLI tools - To jack-in or connect, that is the question</a></li>
+                        
+                        <li><a href="/blog/posts/clojure-cli-aliases-deserve-designing-too/">Clojure CLI tools aliases deserve good design too</a></li>
+                        
+                        <li><a href="/blog/posts/cloure-community-getting-help/">Clojure community - getting help</a></li>
+                        
+                        <li><a href="/blog/posts/web-scraping-with-clojure-hacking-hacker-news/">Web Scraping with Clojure - Scraping Hacker News</a></li>
+                        
+                    </ul>
+                </div>
+                
+                
+                <div id="tags">
+                    <h3>Tags</h3>
+                    <ul>
+                        
+                        <li><a href="/blog/tags/json/">json</a></li>
+                        
+                        <li><a href="/blog/tags/ring/">ring</a></li>
+                        
+                        <li><a href="/blog/tags/very%20fetch/">very fetch</a></li>
+                        
+                        <li><a href="/blog/tags/ubuntu/">ubuntu</a></li>
+                        
+                        <li><a href="/blog/tags/lsp/">lsp</a></li>
+                        
+                        <li><a href="/blog/tags/cryogen/">cryogen</a></li>
+                        
+                        <li><a href="/blog/tags/aliases/">aliases</a></li>
+                        
+                        <li><a href="/blog/tags/challenges/">challenges</a></li>
+                        
+                        <li><a href="/blog/tags/github/">github</a></li>
+                        
+                        <li><a href="/blog/tags/clojure/">clojure</a></li>
+                        
+                        <li><a href="/blog/tags/httpkit/">httpkit</a></li>
+                        
+                        <li><a href="/blog/tags/webapps/">webapps</a></li>
+                        
+                        <li><a href="/blog/tags/clojure-cli/">clojure-cli</a></li>
+                        
+                        <li><a href="/blog/tags/pull-requests/">pull-requests</a></li>
+                        
+                        <li><a href="/blog/tags/editors/">editors</a></li>
+                        
+                        <li><a href="/blog/tags/tools-deps/">tools-deps</a></li>
+                        
+                        <li><a href="/blog/tags/hardware/">hardware</a></li>
+                        
+                        <li><a href="/blog/tags/cider/">cider</a></li>
+                        
+                        <li><a href="/blog/tags/emacs/">emacs</a></li>
+                        
+                        <li><a href="/blog/tags/clj-http/">clj-http</a></li>
+                        
+                        <li><a href="/blog/tags/calva/">calva</a></li>
+                        
+                        <li><a href="/blog/tags/thinkpad/">thinkpad</a></li>
+                        
+                        <li><a href="/blog/tags/events/">events</a></li>
+                        
+                        <li><a href="/blog/tags/community/">community</a></li>
+                        
+                        <li><a href="/blog/tags/advent-of-parens/">advent-of-parens</a></li>
+                        
+                        <li><a href="/blog/tags/spacemacs/">spacemacs</a></li>
+                        
+                        <li><a href="/blog/tags/help/">help</a></li>
+                        
+                        <li><a href="/blog/tags/lenovo/">lenovo</a></li>
+                        
+                        <li><a href="/blog/tags/compojure/">compojure</a></li>
+                        
+                        <li><a href="/blog/tags/klipse/">klipse</a></li>
+                        
+                        <li><a href="/blog/tags/figwheel-main/">figwheel-main</a></li>
+                        
+                        <li><a href="/blog/tags/not%20fetch/">not fetch</a></li>
+                        
+                        <li><a href="/blog/tags/web-scraper/">web-scraper</a></li>
+                        
+                        <li><a href="/blog/tags/blogging/">blogging</a></li>
+                        
+                        <li><a href="/blog/tags/conjure/">conjure</a></li>
+                        
+                        <li><a href="/blog/tags/github-actions/">github-actions</a></li>
+                        
+                        <li><a href="/blog/tags/apis/">apis</a></li>
+                        
+                        <li><a href="/blog/tags/static-sites/">static-sites</a></li>
+                        
+                        <li><a href="/blog/tags/re-clojure/">re-clojure</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <footer>
+      Copyright &copy; 2021 Practicalli
+      <p style="text-align: center;">Powered by <a href="http://cryogenweb.org">Cryogen</a></p>
+
+      <license id="license">
+        <div>
+          <p>This work is licensed under a <a href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution 4.0 ShareAlike License</a>, including custom images & stylesheets.</p>
+          <p>Permissions beyond the scope of this license may be available by contacting <a xmlns:cc="http://creativecommons.org/ns#" href="https://twitter.com/practical_li" rel="cc:morePermissions">@practical_li</a></p>
+          <br>
+          <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a>
+        </div>
+      </license>
+
+    </footer>
+</div>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="/blog/js/highlight.pack.js" type="application/javascript"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+</body>
+</html>
