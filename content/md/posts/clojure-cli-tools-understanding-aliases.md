@@ -32,11 +32,11 @@ As aliases are optional, they provide a way to add libraries and tools that are 
 
 The configuration keys that can be used to define an alias are:
 
-* `extra-paths` - a vector of directory names always included in the project class path, `["dev" "test"]`
+* `:extra-paths` - a vector of directory names always included in the project class path, `["dev" "test"]`
 * `:extra-deps` - a map of additional library dependencies
 * `:main-opts` - a vector of command line options passed to `clojure.main`
-* `exec-fn` - the fully qualified name of a function to be run by `clojure.exec`
-* `exec-args` - default arguments passed to the function, over-ridden by matching argument keys specified on the command line
+* `:exec-fn` - the fully qualified name of a function to be run by `clojure.exec`
+* `:exec-args` - default arguments passed to the function, over-ridden by matching argument keys specified on the command line
 
 > Lesser used keys `:replace-paths` and `:replace-deps` use only the specified dependencies and directories, ignoring the project dependencies and class path. Community tools that use these directives should consider adopting the tool `-T` flag approach.
 
@@ -60,13 +60,7 @@ clojure -X:project/new :template app :name practicalli/simple-api-server
 
 This creates a Clojure namespace (file) called `simple-api-server` in the `practicalli` domain.  The project contains the `clojure.core`, `test.check` and `test.runner` libraries by default.
 
-The `deps.edn` includes several aliases, some names have been adjusted from the template defaults to provide greater context.
-
-* `:env/test` includes the `test.check` library and test code files under the `test` path.
-* `:test/run` sets the main namespace for the Cognitect Labs test runner, calling the `-main` function in that namespace that runs all the tests under the directory `test`
-* `project/run` runs the Clojure project using clojure.main, so calls the `-main` function of the specified namespace
-* `project/greet` runs the fully qualified function `greet` (this could be any specified function in any of the project namespaces)
-* `package/uberjar` creates an uberjar of the project for deployment
+The `deps.edn` includes several aliases, some aliases have been adjusted and added from the template defaults to provide greater context.
 
 ```clojure
 {:paths ["src" "resources"]
@@ -87,27 +81,24 @@ The `deps.edn` includes several aliases, some names have been adjusted from the 
    :extra-deps {org.clojure/test.check {:mvn/version "1.1.0"}}}
 
   :test/run
-  {:extra-deps {com.cognitect/test-runner
-                {:git/url "https://github.com/cognitect-labs/test-runner"
-                 :sha "b6b3193fcc42659d7e46ecd1884a228993441182"}}
-   :main-opts ["-m" "cognitect.test-runner"
-               "-d" "test"]}
-
-  :package/uberjar
-  {:replace-deps {com.github.seancorfield/depstar {:mvn/version "2.0.211"}}
-   :exec-fn hf.depstar/uberjar
-   :exec-args {:aot true
-               :jar "simple-api-server.jar"
-               :main-class "practicalli.simple-api-server"
-               :sync-pom true}}}}
+  {:extra-paths ["test"]
+   :extra-deps {org.clojure/test.check {:mvn/version "1.1.1"}
+                io.github.cognitect-labs/test-runner {:git/tag "v0.5.0" :git/sha "48c3c67"}}
+   :main-opts ["-m" "cognitect.test-runner"]
+   :exec-fn cognitect.test-runner.api/test}}
 ```
 
-> `:test/run` alias shows an example of using a Git repository as a dependency.  It specifies the URL of the Git repository and the commit :sha (any commit sha or tag in the history can be used).  Clojure CLI tools will clone the repository and build a jar when first run.
+* `project/run` runs the Clojure project using clojure.main, so calls the `-main` function of the specified namespace
+* `project/greet` runs the fully qualified function `greet` (this could be any specified function in any of the project namespaces)
+* `:env/test` includes the `test.check` library and test code files under the `test` path, useful for REPL based test runners like CIDER.
+* `:test/run` sets the main namespace for the Cognitect Labs test runner, calling the `-main` function in that namespace that runs all the tests under the directory `test`.  Also provides the `:exec-fn` for running with `-X` clojure.exec
+
+> `:test/run` alias shows an example of using a Git repository as a dependency.  It uses the fully qualified repository name with a specific Git tag and commit :sha (any commit sha or tag in the history can be used).  Clojure CLI tools will clone the repository when this alias is first used.
 
 
 ## Alias definition for clojure.main
 
-`:main-opts` specifies the options passed to a clojure.main alias.
+`:main-opts` specifies the options passed to a clojure.main alias, using the `clojure -M` execution option flag.
 
 The value is a vector containing individual string values that represent each option, i.e. option flag and value.
 
@@ -127,15 +118,16 @@ In this example, a `"--middleware"` flag has multiple values which are wrapped i
                 "-i"]}
 ```
 
-> Use a `,` comma character to represent a space in an alias value.  The comma will be interpreted by Clojure as a space.
+This alias is called using the command `clojure -M:repl/cider-refactor`
+
+> Earlier versions of Clojure CLI tools required the use of a `,` comma character to represent a space character in an alias value.  The comma is interpreted by Clojure as a space.
+
 
 ## Alias definition for clojure.exec
 
-Aliases for clojure.exec are defined in deps.edn files
+`:exec-fn` specifies the fully qualified name of the function, using the `clojure -X` execution option flag .
 
-`:exec-fn` specifies the fully qualified name of the function.
-
-`:exec-args` specifies a hash-map of default key/value pairs passed to the `:exec-fn` function.  The defaults can be overriden on the command line.
+`:exec-args` specifies a hash-map of default key/value pairs passed to the `:exec-fn` function.  The defaults can be overriden on the command line with respective key/value pairs.
 
 Arguments can be nested within the `:exec-args` map, especially useful on projects with several component configurations (server, database, logging) and managed by a component system (i.e Integrant)
 
@@ -148,7 +140,13 @@ Arguments can be nested within the `:exec-args` map, especially useful on projec
                :log/mulog :elastic-search}}}}
 ```
 
-Arguments in a nested map within the alias can be traversed (as with `get-in` and `update-in` functions) to override the default values in the alias.  So to set a different port value :
+To run with the default arguments:
+
+```
+clojure -X:project/run
+```
+
+Over-ride the default arguments by passing them on the command line
 
 ```bash
 clojure -X:project/run '[:http/server :port]' 8888 :log/mulog :console :profile :dev
@@ -156,27 +154,28 @@ clojure -X:project/run '[:http/server :port]' 8888 :log/mulog :console :profile 
 
 In this command the vector defines the path to the `:port` key and over-rides the default value. :log/mulog is a top-level key which changes the log publisher type.  `:profile` is another top-level key that sets the environment to `:dev` (e.g. to configure Integrant / Aero).
 
-Argument keys should either be a top-level key or a vector of keys to refer to a key in a nested hash-map of arguments.
+Arguments in a nested map within the alias can be traversed (as with `get-in` and `update-in` functions) to override the default values in the alias.  So to set a different port value :
 
-Key/value pairs passed on the command line override any of the argument values define in the `:exec-args` section of the respective alias.
+Argument keys should either be a top-level key or a vector of keys to refer to a key in a nested hash-map of arguments.
 
 > An alias can contain configuration to run both `clojure.main` and `clojure.exec` (useful if steadily migrating users from -M to -X approach without breaking the user experience)
 
 
 ### Form of clojure.exec command line arguments
 
-Key/value pairs are read as edn strings.
+Key/value pairs are read as EDN (extensible data notation that is the base syntax of Clojure).
 
 The command line shell needs a little help parsing
 
-Some EDN arguments need to be wrapped in single quotes, `''` to prevent the command line shell incorrectly interpreting them.  Number values and keywords should not need wrapping though.
+Arguments that are vectors and hash maps should be wrapped in single quotes to avoid the command line shell splitting arguments at spaces, e.g. `'[:a :b]'`, `'{:c 1}'`.
 
 The double quotes in an EDN string must be wrapped by single quotes, along with vectors and hash-maps
+
+Number values and keywords should not need to be wrapped.
 
 * `'"strings in double quotes surround by single quotes"'`
 * `:key `[:service :port]` 9999`
 * `:config '{:log :console}'`
-
 
 
 ## User wide alias examples
@@ -213,7 +212,7 @@ Further examples of aliases can be found in [practicalli/clojure-deps-edn config
 
 You should have a better understanding of how to create aliases and what the individual keys in an alias configuration mean.
 
-See the next article in the series on [using the most appropriate flags for Clojure CLI aliases](/posts/clojure-cli-tools-flags/)
+See the next article in the series on [using the most appropriate flags for Clojure CLI aliases](/posts/clojure-which-execution-option-to-use/)
 
 Thank you
 
