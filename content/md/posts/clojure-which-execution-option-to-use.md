@@ -18,13 +18,13 @@ The exec-opts command line flags have evolved to enable these features, so lets 
 
 In very simple terms, the Clojure CLI tools flags are used as follows
 
-`-A` - [Deprecated] use `-M` instead
+`-A` - use `-M` unless adding an alias (with no `:main-opts`) when running a REPL
 
 `-M` using `clojure.main` to run the `-main` function of a Clojure project or tool, using the `-m` flag to specify the namespace containing `-main` ([clojure.main has other features too](https://clojure.org/reference/repl_and_main))
 
 `-X` for running any fully qualified function from a Clojure project or tool
 
-`-P` a dry run, downloading all dependencies
+`-P` a dry run, downloading all dependencies (must use as first flag)
 
 `-T` running a separate tool
 
@@ -116,11 +116,10 @@ As the arguments are key/value pairs, it does not matter in which order the pair
 Clojure CLI tools has some built in tools under the special `:deps` alias (not to be confused with the `:deps` configuration in a `deps.edn` file)
 
 * `-X:deps mvn-install` - install a maven jar to the local repository cache
-* `-X:deps git-resolve-tags` - Resolve git coord tags to shas and update deps.edn
 * `-X:deps find-versions` - Find available versions of a library
 * `-X:deps prep` - [prepare source code libraries](https://clojure.org/reference/deps_and_cli#prep) in the dependency tree
 
-> See `clojure --help` for other descriptions and examples (or just read this article further)
+> See `clojure --help` for an overview or `man clojure` for detailed descriptions
 
 
 ## Tools -T
@@ -135,7 +134,7 @@ A tool may provide many functions, so the specific function name is provided whe
 
 The `-T` execution option is the same as the `clojure.exec` approach, although the `:deps` and `:path` values from a project `deps.edn` file are ignored.  This isolates the tool from the dependencies in a Clojure project.
 
-`-Ttools` is a built in tool for `install` and `remove` of other tools, with the `:as` directive providing a specific name for the too.
+`-Ttools` is a built in tool for `install` and `remove` of other tools, with the `:as` directive providing a specific name for the tool.
 
 In this example, the antq tool is installed using the name `libs-outdated`
 
@@ -192,18 +191,25 @@ clojure -P
 Including one or more aliases will preparing all the dependencies from every alias specified
 
 ```bash
-clojure -M:project/hotload:env/dev:lib/cider -P
+clojure -P -M:project/hotload:env/dev:lib/cider
 ```
+
+> `-P` flag must be used before any subsequent arguments, i.e. before `-M`, `-X`, `-T`
 
 As prepare is essentially a dry run, then the `clojure` command does not call `:main-opts` or `:exec-fn` functions, even if they exist in an alias or on the command line.
 
-> `-P` will warn if a project has dependencies that [require building from source](https://clojure.org/reference/deps_and_cli#prep) (i.e Java code) or resource file manipulation.  If so then `clojure -X:deps prep` will prepare these source based dependencies.
+`-P` will warn if a project has dependencies that [require building from source](https://clojure.org/reference/deps_and_cli#prep) (i.e Java code) or resource file manipulation.  If so then `clojure -X:deps prep` will prepare these source based dependencies.
+
 
 ## Summary
 
-There are many options when it comes to running Clojure CLI tools that are not covered here, however, this guide gives you the most common options used.
+There are many options when it comes to running Clojure CLI tools that are not covered here, however, this guide gives you the most common options used so far.
+
+Practicalli recommends using the `-X` execution option where possible, as arguments follow the data approach of Clojure design.
 
 The `-J` and `:jvm-opts` are useful to configure the Java Virtual machine and deserve an article to themselves as there are many possible options.
+
+The `-T` tools is an exciting and evolving approach and it will be interesting to see how the Clojure community adopt this model.
 
 See the [Deps and CLI Reference Rationale for more details and description of these options](https://clojure.org/reference/deps_and_cli#prep).
 
