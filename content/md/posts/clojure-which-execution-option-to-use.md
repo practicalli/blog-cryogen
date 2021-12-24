@@ -1,10 +1,12 @@
 {:title "Clojure CLI tools - which execution option to use"
  :layout :post
- :date "2021-12-20"
+ :date "2021-12-24"
  :topic "clojure-cli"
  :tags  ["clojure-cli" "tools-deps"]}
 
 Clojure CLI tools provide a very flexible way to run Clojure, using aliases to include community libraries and tools to enhance clojure projects and provide independent tools. Understand the execution options (exec-opts) on the command line options ensures an effective use of Clojure CLI tools.
+
+> Updated on 24th December 2021 with feedback from Alex, Sean and other community members.  Thank you.
 
 Clojure CLI tools [first documented released in February 2020](https://clojure.org/releases/tools#v1.10.1.510) with a specific focus on running Clojure code quickly and easily, which also required the management of dependencies from Maven, Git and a local file space.
 
@@ -12,24 +14,50 @@ Since that release the design has evolved to provide clojure.exec (`-X`) to run 
 
 The exec-opts command line flags have evolved to enable these features, so lets explore those flags and show how each flag is typically used.
 
+
 <!-- more -->
 
 ## Summary of use
 
 In very simple terms, the Clojure CLI tools flags are used as follows
 
-`-A` - use `-M` unless adding an alias (with no `:main-opts`) when running a REPL
+`-A` to configure paths and dependencies when running the Clojure CLI tools REPL
 
 `-M` using `clojure.main` to run the `-main` function of a Clojure project or tool, using the `-m` flag to specify the namespace containing `-main` ([clojure.main has other features too](https://clojure.org/reference/repl_and_main))
 
 `-X` for running any fully qualified function from a Clojure project or tool
 
-`-P` a dry run, downloading all dependencies (must use as first flag)
+`-P` a dry run, downloading all dependencies (must use flag in first position)
 
-`-T` running a separate tool
+`-T` running a tool separate from a Clojure project (class path)
 
-> The tools flag, `-T` removes the need for other aliases to run tools and eventually all community tools should move to use the -T approach.  However, some tools still need to be run using the `-M` or `-X` flag (as the `-T` flag is quite new).
+> The tools flag, `-T` removes the need for other aliases to run tools and eventually all community tools should move to use the `-T` approach.  However, some tools still need to be run using the `-M` or `-X` flag (as the `-T` flag is quite new).
 
+
+## Alias with REPL -A
+
+`-A` alias is deprecated for running Clojure code via `clojure.main`.  In this case, the `-M` option should be used.
+
+`-A` should be used when adding libraries or paths when starting a REPL
+
+For example, adding a `dev` directory to the class path that contains a `user.clj` file that will automatically load code from the `user` namespace defined in that file.
+
+Also adding a dependency to [provide hotloading of other dependencies](https://practical.li/clojure/alternative-tools/clojure-tools/hotload-libraries.html) (note: this approach is not official and may change)
+
+```clojure
+:env/dev
+{:extra-paths ["dev"]
+ :extra-deps {org.clojure/tools.deps.alpha
+                {:git/url "https://github.com/clojure/tools.deps.alpha"
+                 :sha     "d77476f3d5f624249462e275ae62d26da89f320b"}
+              org.slf4j/slf4j-nop {:mvn/version "1.7.32"}}}
+```
+
+Start a REPL process with this alias
+
+```bash
+clojure -A:env/dev
+```
 
 ## clojure.main -M
 
