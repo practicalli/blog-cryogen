@@ -191,7 +191,7 @@ clojure -Ttools remove :tool antq
 ```
 
 
-> Minimise installs between computers by placing the `.clojure/tools` directory in version control. It would be great to have antq also update tools aliases to their latest versions as it does with other aliases (assuming this doesn't already happen).
+> antq is useful for updating the libraries used in the user wide aliases. Something to test is if antq can also help keep tools up to date.
 
 
 Example tools include
