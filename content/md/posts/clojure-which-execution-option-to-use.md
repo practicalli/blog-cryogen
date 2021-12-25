@@ -164,7 +164,7 @@ The `-T` execution option is the same as the `clojure.exec` approach, although t
 
 `-Ttools` is a built in tool for `install` and `remove` of other tools, with the `:as` directive providing a specific name for the tool.
 
-In this example, the antq tool is installed using the name `libs-outdated`
+In this example, the antq tool is installed using the name `antq`
 
 ```bash
 clojure -Ttools install com.github.liquidz/antq '{:git/tag "1.3.1"}' :as antq
