@@ -170,7 +170,7 @@ In this example, the antq tool is installed using the name `antq`
 clojure -Ttools install com.github.liquidz/antq '{:git/tag "1.3.1"}' :as antq
 ```
 
-Installing a tool adds an EDN configuration file using the name of the tool in `$HOME/.clojure/tools/` (or $XDG_HOME/.clojure/tools/) directory.
+Installing a tool adds an EDN configuration file using the name of the tool in `$HOME/.clojure/tools/` (or `$XDG_HOME/.clojure/tools/`) directory.
 
 Once a tool is installed, run by using the name of the tool.
 
@@ -191,7 +191,7 @@ clojure -Ttools remove :tool antq
 ```
 
 
-> antq is useful for updating the libraries used in the user wide aliases. Something to test is if antq can also help keep tools up to date.
+> Aliases defined with an `:exec-fn` can also be called with the `-T` flag.  This has the advantage of providing a specific function to use with the tool along with default arguments with `:exec-args`
 
 
 Example tools include
