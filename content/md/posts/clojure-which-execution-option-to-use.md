@@ -191,14 +191,50 @@ clojure -Ttools remove :tool antq
 ```
 
 
-> Aliases defined with an `:exec-fn` can also be called with the `-T` flag.  This has the advantage of providing a specific function to use with the tool along with default arguments with `:exec-args`
+### Tools install or aliases
+
+Tools can also be defined in an alias with `:exec-fn` can be run via `-T:alias-name` as they are both executed using `clojure.exec`.
+
+> When using the `-X` execution option, keys `:replace-paths` and `:replace-deps` should be used instead of `:extra-paths` and `:extra-deps` so that project paths and dependencies are not included within the alias.  Using the `-T` execution option, these are automatically ignored.
+
+Using an alias for a tool has the advantage allowing a use to define their preferred default arguments that are passed to the `:exec-fn`, using the `:exec-args` key.
+
+Default arguments could be included in the `deps.edn` of the installed tool itself, although this is controlled by the developer of that tool project.
+
+The `:project/outdated` alias defined in the `practicalli/clojure-deps-edn` user level configuration is an example of a tool alias with default arguments
+
+```clojure
+  :project/outdated
+  {:replace-paths ["."]
+   :replace-deps  {com.github.liquidz/antq {:mvn/version "1.3.1"}
+                   org.slf4j/slf4j-nop     {:mvn/version "1.7.32"}}
+   :main-opts     ["-m" "antq.core"]
+   :exec-fn antq.tool/outdated
+   :exec-args {:directory ["."] ; default
+               :exclude ["com.cognitect/rebl"
+                         "org.openjfx/javafx-base"
+                         "org.openjfx/javafx-controls"
+                         "org.openjfx/javafx-fxml"
+                         "org.openjfx/javafx-swing"
+                         "org.openjfx/javafx-web"]
+               ;; :focus ["com.github.liquidz/antq"]
+               :skip ["boot" "leiningen"]
+               :reporter "table" ; json edn format
+               :verbose false
+               :upgrade false
+               :force   false}}
+```
+
+This alias is called using `clojure -T:project/outdated` and is the same as calling `clojure -Tantq outdated ,,, ,,,` with a long list of key value options that represent the arguments in the alias.
+
+As the output is a table of results, the command output is typically pushed to a file: `clojure -T:project/outdated > outdated-2021-12-24.txt`
 
 
 Example tools include
 
 * [liquidz/antq](https://github.com/liquidz/antq) - search dependencies for newer library versions
 * [seancorfield/deps-new](https://github.com/seancorfield/deps-new) - create new projects using templates
-
+* [clojure-nvd](https://github.com/rm-hull/nvd-clojure) - check dependencies against National Vunerability Database
 
 ## Prepare -P
 
