@@ -85,7 +85,7 @@ Rather than edit the cider jack-in command options each time, a local configurat
 
 This  variable will be used with the `clojure-mode` (using `nil` rather than `clojure-mode` the variable would be applied to all modes).
 
-A variable called `cider-clojure-clj-global-options` will be used to set the `:fig` alias.
+A variable called `cider-clojure-cli-global-options` will be used to set the `:fig` alias.
 
 ```clojure
 ((clojure-mode . ((cider-clojure-cli-global-options . "-M:fig"))))
