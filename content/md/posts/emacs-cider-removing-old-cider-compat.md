@@ -16,7 +16,7 @@ helm-cider-spec.el:27:1:Error: Cannot open load file: No such file or directory,
 
 Here are a few options to work around this issue
 
-> The maintainer of helm-cider has merged a fix for this already (Thank you Bozhidar), so the options below will not be necessary once a new package has been built by MELPA - https://melpa.org/#/?q=helm-cider
+> The maintainer of helm-cider has merged a fix for this already (Thank you Bozhidar), so the options below will not be necessary once a new package has been built by MELPA - https://melpa.org/#/helm-cider (see Build log for details)
 
 
 <!-- more -->
