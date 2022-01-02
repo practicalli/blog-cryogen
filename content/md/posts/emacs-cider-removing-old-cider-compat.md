@@ -72,8 +72,9 @@ If you have clojure variables set in the layer list, then you can uncomment them
 
 All of Doom's packages are pinned by default. A pinned package is a package locked to a specific commit. So to pin CIDER to a version is of the form:
 
+```elisp
 (package! cider :pin "ae376429a8")
-
+```
 
 > Practicalli has only dabbled with Doom, so this hasn't been tested yet.  Please let me know if this needs altering.
 
