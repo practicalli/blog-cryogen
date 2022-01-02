@@ -10,52 +10,57 @@ Running a Clojure project created with CLI tools or `clj-new` may require you to
 
 This article covers two approaches to running Clojure CLI projects from CIDER jack-in that require setting of an alias or multiple aliases e.g. `-A:fig:build:party:hammock`
 
-> See [Getting started with Clojure CLI tools](http://jr0cket.co.uk/2019/07/getting-started-with-Clojure-CLI-tools.html) for background to this article.
+> See [Practicalli Clojure: Clojure and Clojure CLI](https://practical.li/clojure/clojure-cli/) for details on using the Clojure CLI
+
+> Article updated on 2nd Janauary 2022
 
 <!-- more -->
 
 ## Understanding the problem
 
-I created a new project with the Clojure CLI tools and the figwheel-main template (using clj-new).  This is the first time with this approach, so I may have missed something.
+I created a new project with the Clojure CLI tools and the figwheel-main template (using the `:project/new` alias from [practicalli/clojure-deps-edn](https://github.com/practicalli/clojure-deps-edn)).
 
 ```shell
-clj -A:new figwheel-main practicalli/study-group-guide -- --reagent
+clojure -M:project/new figwheel-main practicalli/study-group-guide -- --reagent
 ```
 
-I ran `cider-jack-in-cljs` from Spacemacs and was prompted for the build tool.  I selected `figwheel-main` and rather than being prompted for the name of the build to run, I got an error in the mini-buffer.
+The figwheel-main project template creates a `deps.edn` file in the project containing the alias `:fig` (typically renamed to `:env/figwheel` for better context).
+
+
+Running `cider-jack-in-cljs` from Spacemacs (`, m s`) prompted for the build tool.  `figwheel-main` was selected and rather than being prompted for the name of the build to run, the following error was displayed in the Emacs mini-buffer.
 
 ```
 error in process filter: Figwheel-main is not available.  Please check https://docs.cider.mx/cider/basics/clojurescript
 ```
 
-The same error was seen when looking at the output in the `*messages*` buffer.
+The same error was seen when looking at the output in the `*messages*` buffer, (`SPC b m`).
 
 ```
-[nREPL] Starting server via /usr/local/bin/clojure -Sdeps '{:deps {nrepl {:mvn/version "0.6.0"} cider/piggieback {:mvn/version "0.4.1"} refactor-nrepl {:mvn/version "2.5.0-SNAPSHOT"} cider/cider-nrepl {:mvn/version "0.22.0-beta8"}}}' -m nrepl.cmdline --middleware '["refactor-nrepl.middleware/wrap-refactor", "cider.nrepl/cider-middleware", "cider.piggieback/wrap-cljs-repl"]'...
+Starting new CIDER session ...
+[nREPL] Starting server via /usr/local/bin/clojure -Sdeps '{:deps {nrepl/nrepl {:mvn/version "0.9.0"} cider/piggieback {:mvn/version "0.5.2"} cider/cider-nrepl {:mvn/version "0.27.4"}} :aliases {:cider/nrepl {:main-opts ["-m" "nrepl.cmdline" "--middleware" "[cider.nrepl/cider-middleware,cider.piggieback/wrap-cljs-repl]"]}}}' -M:cider/nrepl
 [nREPL] server started on 40737
 [nREPL] Establishing direct connection to localhost:40737 ...
 [nREPL] Direct connection to localhost:40737 established
  error in process filter: user-error: Figwheel-main is not available.
  ```
 
-  The web page for the ClojureScript did not automatically open because figwheel-main is not running and the application was not built.
-
+The web page for the ClojureScript did not automatically open because figwheel-main is not running and the application was not built.
 
 The project fails to run when using `cider-jack-in-cljs` as it cannot find the figwheel-main namespace.  This is because CIDER is not being called with the `-A:fig` alias, which has a configuration to include figwheel-main as a dependency.
 
 
 ## Hacking the CIDER jack-in command
 
-Its very easy to hack the cider-jack-in-* commands command that CIDER uses to start a REPL using the universal argument.
+Its easy to edit the `cider-jack-in-*` command that CIDER uses to start a REPL using the universal argument `C-u` (`SPC-u` in Spacemacs).
 
-`SPC u , "` or `SPC u , s j s` calls `cider-jack-in-cljs` with the universal argument.  This will display an editable prompt for Cider jack-in in the mini-buffer.
+`SPC u , m s` to call the Cider session manager or `SPC u , s j s` to call `cider-jack-in-cljs` with the universal argument.  This will display an editable prompt for Cider jack-in in the mini-buffer.
 
 ![Spacemacs Clojure - CIDER jack-in command line hacking](/images/spacemacs-clojure-cider-jack-in-command-line-hacking.png)
 
-Use the arrow keys to edit this command and  add the `-A:fig` option just after the `/usr/local/bin/clojure` executable name.
+Use the arrow keys to edit this command and add the `:fig` alias as the first alias to the `-M` execution option, so the option should be `-M:fig:cider/nrepl`
 
 ```shell
-/usr/local/bin/clojure -A:fig -Sdeps '{:deps {nrepl {:mvn/version "0.6.0"} cider/piggieback {:mvn/version "0.4.1"} refactor-nrepl {:mvn/version "2.5.0-SNAPSHOT"} cider/cider-nrepl {:mvn/version "0.22.0-beta8"}}}' -m nrepl.cmdline --middleware '["refactor-nrepl.middleware/wrap-refactor", "cider.nrepl/cider-middleware", "cider.piggieback/wrap-cljs-repl"]'...
+/usr/local/bin/clojure -Sdeps '{:deps {nrepl/nrepl {:mvn/version "0.9.0"} cider/piggieback {:mvn/version "0.5.2"} cider/cider-nrepl {:mvn/version "0.27.4"}} :aliases {:cider/nrepl {:main-opts ["-m" "nrepl.cmdline" "--middleware" "[cider.nrepl/cider-middleware,cider.piggieback/wrap-cljs-repl]"]}}}' -M:fig:cider/nrepl
 ```
 
 > Emacs would use C-u before a cider-jack-in-* keybinding, `C-u C-c M-J` for the same results.
@@ -63,7 +68,7 @@ Use the arrow keys to edit this command and  add the `-A:fig` option just after 
 The `*messages*` buffer also shows the edited command line used to start a ClojureScript REPL.
 
 ```
-[nREPL] Starting server via /usr/local/bin/clojure -A:fig -Sdeps '{:deps {nrepl {:mvn/version "0.6.0"} cider/piggieback {:mvn/version "0.4.1"} refactor-nrepl {:mvn/version "2.5.0-SNAPSHOT"} cider/cider-nrepl {:mvn/version "0.22.0-beta8"}}}' -m nrepl.cmdline --middleware '["refactor-nrepl.middleware/wrap-refactor", "cider.nrepl/cider-middleware", "cider.piggieback/wrap-cljs-repl"]'...
+[nREPL] Starting server via /usr/local/bin/clojure -Sdeps '{:deps {nrepl/nrepl {:mvn/version "0.9.0"} cider/piggieback {:mvn/version "0.5.2"} cider/cider-nrepl {:mvn/version "0.27.4"}} :aliases {:cider/nrepl {:main-opts ["-m" "nrepl.cmdline" "--middleware" "[cider.nrepl/cider-middleware,cider.piggieback/wrap-cljs-repl]"]}}}' -M:fig/cider/nrepl
 [nREPL] server started on 35247
 [nREPL] Establishing direct connection to localhost:35247 ...
 [nREPL] Direct connection to localhost:35247 established
@@ -76,14 +81,14 @@ Rather than edit the cider jack-in command options each time, a local configurat
 
 `.dir-locals.el` is an Emacs configuration file in which you can set variables for use with all files within the current directory or its child directories.
 
-`SPC SPC add-dir-local-variable` is a simple wizard function to help you create the `.dir-locals.el` file.  It will prompt you for the major mode, a variable name and variable value.
+`SPC p e` (`add-dir-local-variable`) is a simple wizard function to help you create a `.dir-locals.el` file.  First prompt is for the major mode, then a variable name and variable value.
 
 This  variable will be used with the `clojure-mode` (using `nil` rather than `clojure-mode` the variable would be applied to all modes).
 
 A variable called `cider-clojure-clj-global-options` will be used to set the `:fig` alias.
 
 ```clojure
-((clojure-mode . ((cider-clojure-cli-global-options . "-A:fig"))))
+((clojure-mode . ((cider-clojure-cli-global-options . "-M:fig"))))
 ```
 
 `SPC SPC revert-buffer` on one of the project source code files will load the variable from `.dir-locals.el` into Spacemacs.   Otherwise, you can close the project buffer(s) and re-open them to load this variable into Emacs.  Once the buffer is loaded again, running `cider-jack-in-cljs` works perfectly.
@@ -99,11 +104,12 @@ You can check the results by looking at the `*mesages*` buffer and you will see 
 deps.edn has a top-level key called `:aliases` that can include one or more alias definitions as maps.  This example is from the `figwheel-main` template and has an extra dependency for the `figwheel-main` and `rebel-readline-cljs` libraries.  So when starting a REPL with this alias, both those dependencies are available in the project.
 
 ```clojure
-:aliases
-  {:fig
-    {:extra-deps
-      {com.bhauman/rebel-readline-cljs {:mvn/version "0.1.4"}
-       com.bhauman/figwheel-main {:mvn/version "0.1.9"}}
+  :fig
+  {:extra-deps
+   {com.bhauman/rebel-readline-cljs {:mvn/version "0.1.4"}
+    com.bhauman/figwheel-main {:mvn/version "0.2.11"}}
+   :extra-paths ["target" "test"]}
+```
 ```
 
 The alias keeps these develop time libraries out of our application dependencies, as they are not required for running the application.
