@@ -2,8 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
     <meta charset="utf-8"/>
-    <title>Practicalli: A Post</title>
-    <link rel="canonical" href="http://practical.li/blog/posts/2014-03-10-first-post/">
+    <title>Practicalli: YASnippets for faster clojure coding</title>
+    <link rel="canonical" href="http://practical.li/blog/posts/yasnippets-for-faster-clojure-development/">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu|Ubuntu+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
@@ -57,31 +57,43 @@
 <div id="post">
     <div class="post-header">
     <div id="post-meta" class="row">
-        <div class="col-lg-6">March 10, 2014</div>
+        <div class="col-lg-6">July 23, 2016</div>
         
     </div>
-    <h2>A Post</h2>
+    <h2>YASnippets for faster clojure coding</h2>
 
     <!-- conditional topic logo displayed if :topic has value in a post -->
+    
+    <img class="topic" src="/blog/images/spacemacs-logo-name.png" alt="spacemacs logo" />
     
 </div>
 <div>
     
-    <h3 id="this-post-not-fetch-enough">This Post Not Fetch Enough</h3><p>some stuff happened</p><blockquote><p>Stop trying to make fetch happen.</p><ul><li>Regina</li></ul></blockquote>
+    <p>Yasnippets to minimise typing for commonly used Clojure forms and documentation structures, or any other text regularly created. Yasnippets have placeholders that allow jumping (tabbing) to points in the snippet, so specific text can be added to the more generic text of the snippet.</p><p>Emacs YASnippet package uses <a href="https://github.com/AndreaCrotti/yasnippet-snippets" title="Yasnippet official snippet collections">mode-specific snippets</a> that expand to anything from a simple text replacement to an intricate code block structure using placeholders to add specific values to the general form.</p><p>See YASnippet in action in this <a href="https://www.youtube.com/watch?v=-4O-ZYjQxks">Emacs Yasnippet video</a>.</p><p><a href="spacemacs-adding-your-own-yasnippets.html">Add custom snippets</a> for Clojure or any other language you use with Spacemacs / Emacs</p><blockquote><p>Additional ways to speed up typing Clojure code include creating projects from templates or general abbreviations with <a href="http://ergoemacs.org/emacs/emacs_abbrev_mode.html">Emacs Abbrev mode</a><a href="https://clojure-lsp.io/features/#snippets" title="Clojure LSP website">Snippets are also part of Clojure LSP</a> and can be used with any supporting editor.</p></blockquote><!-- more --><h2 id="using-snippets">Using snippets</h2><p>Start typing the snippet name and press <code>M-/</code> to <code>yas-expand</code> which replaces the name with the full text of the snippet.</p><p>Type <code>defn</code> and press <code>M-/</code> to expand to the code of a function definition form.  Use <code>TAB</code> to move through the placeholders to complete the name, doc-string, arguments and body of the function.</p><blockquote><p>Smartparens is disabled when tabbing through a snippet</p></blockquote><h2 id="list-snippets-for-current-major-mode">List snippets for current major mode</h2><p><code>SPC i s</code> (<code>helm-yas</code>) displays a completion buffer that lists the matching snippets available for the current major mode.</p><p><code>C-j</code> and <code>C-k</code> to navigate the list and <code>RET</code> to insert and expand the snippet.</p><p><img src="https://raw.githubusercontent.com/practicalli/graphic-design/live/spacemacs/screenshots/spacemacs-snippets-helm-yas-clojure-mode.png" alt="yasnippets yas-helm for clojure mode" /></p><h2 id="add-snippets-to-completion-menu">Add snippets to completion menu</h2><p>The auto-completion layer shows a completion popup menu, with matching functions and other names from the REPL or Clojure LSP (clj-kondo). Configure the <code>auto-completion</code> layer to show YASnippets when typing.</p><p>Add the <code>auto-completion-enable-snippets-in-popup</code> variable to show snippets in the auto-completion popup.</p><p>Add <code>auto-completion-enable-sort-by-usage</code> to show the most commonly used snippets first in the list.</p><pre><code class="lisp">(auto-completion :variables
+                 auto-completion-enable-snippets-in-popup t
+                 auto-completion-enable-sort-by-usage t)
+</code></pre><p>Matching snippets will now appear in the completion menu whilst typing</p><p><img src="https://raw.githubusercontent.com/practicalli/graphic-design/live/spacemacs/screenshots/spacemacs-helm-snippet-gitbook-deps-lein.png" alt="Spacemacs helm snippet gitbook example" /></p><h2 id="default-snippets-for-clojure">Default snippets for Clojure</h2><p>The snippets available in Spacemacs can be found in the <a href="https://github.com/AndreaCrotti/yasnippet-snippets">yasnippet github repository</a>.</p><p><code>defn</code>, <code>require</code>, <code>let</code>, <code>ifl</code> and <code>for</code> are often used by Practicalli.</p><blockquote><p>NOTE: The <code>test</code> snippet generates a <code>deftest</code> form which by convention uses a name post-fixed with <code>-test</code>.  Pressing <code>TAB</code> after <code>test</code> will expand that word into another deftest form within the current deftest form.</p><p>Press space after teh <code>-test</code> name to prevent <code>test</code> being expanded to a <code>deftest</code> form.</p></blockquote><p>The <a href="https://github.com/AndreaCrotti/yasnippet-snippets/tree/master/snippets/clojure-mode">current snippets for Clojure mode</a> are in the following table, indicating which tab stops they have.  <a href="https://github.com/mpenet/clojure-snippets">mpenet/clojure-snippets</a> include a few additional Clojure snippets (although are not part of yasnippets by default).</p><table><thead><tr><th>Snippet</th><th>Description</th><th>Tab Stops</th></tr></thead><tbody><tr><td>bench</td><td>benchmark an expression, using the <code>time</code> function</td><td>body</td></tr><tr><td>def</td><td><code>def</code> expression</td><td>N/A</td></tr><tr><td>defm</td><td><code>defmacro</code> expression, with name, doc-string, arguments &amp; body tabstops</td><td>name, docstring, args, body</td></tr><tr><td>defn</td><td><code>defn</code> expression, with name, doc-string, arguments &amp; body tabstops</td><td>name, docstring, args, body</td></tr><tr><td>fn</td><td><code>fn</code> - anonymous function</td><td>name, body</td></tr><tr><td>for</td><td><code>for</code></td><td>condition, body</td></tr><tr><td>if</td><td><code>if</code></td><td>condition, body</td></tr><tr><td>ifl</td><td><code>if-let</code> - if true, bind a local name</td><td>binding, body</td></tr><tr><td>import</td><td><code>import</code> java library</td><td>library name</td></tr><tr><td>is</td><td><code>is</code> - clojure test assertion</td><td>value, expected</td></tr><tr><td>let</td><td><code>let</code> - bind a local name to a value</td><td>name, value, body</td></tr><tr><td>map</td><td><code>map</code></td><td>fn, col, col</td></tr><tr><td>map.lambda</td><td><code>map</code> with anonymous function <code>#()</code></td><td>fn, body</td></tr><tr><td>mdoc</td><td>metadata docstring</td><td>docstring</td></tr><tr><td>ns</td><td><code>ns</code> - expression with the current namespace inserted automatically</td><td>N/A</td></tr><tr><td>opts</td><td><a href="http://clojure.org/guides/destructuring">destructure</a> map with <code>:keys</code>, <code>:or</code> for default values, <code>:as</code> for arg vector</td><td>:key binding, or defaults, :as binding</td></tr><tr><td>pr</td><td><code>prn</code> - print function</td><td>string/value</td></tr><tr><td>print</td><td><code>println</code> - print function</td><td>string/value</td></tr><tr><td>reduce</td><td><code>reduce</code> - reduce expression with an anonymous function</td><td>args, body</td></tr><tr><td>require</td><td><code>:require</code> expression with library and alias</td><td>library, alias</td></tr><tr><td>test</td><td><code>deftest</code> expression (not including testing part of a deftest expression)</td><td>test description, value/expected</td></tr><tr><td>try</td><td><code>try</code> &amp; <code>catch</code> expression</td><td>try expression, exception name, body</td></tr><tr><td>use</td><td>depreciated: use require instead</td><td> </td></tr><tr><td>when</td><td><code>when</code></td><td>when expression, body</td></tr><tr><td>whenl</td><td><code>when-let</code> - local binding on when condition</td><td>binding, body</td></tr></tbody></table><h2 id="summary">Summary</h2><p>Have fun speeding up the writing of your Clojure code (and any other common text structures) in <a href="https://spacemacs.org">Spacemacs</a> / <a href="https://www.gnu.org/software/emacs/">Emacs</a>.</p><p>Consider <a href="/blog/posts/writing-custom-snippets-for-yasnippets/">writing custom snippets</a> to extend those available via Yasnippets.</p><blockquote><p>Article originally published on <a href="https://jr0cket.co.uk/">jr0cket.co.uk</a> and has been migrated to <a href="https://practical.li/blog/">practical.li/blog</a> with some minor updates.</p></blockquote><p>Thank you.
+<a href="https://github.com/practicalli">practicalli GitHub profile</a> I <a href="https://twitter.com/practcial_li">@practical_li</a></p>
 </div>
 
 <div id="post-tags">
     <b>Tags: </b>
     
-    <a href="/blog/tags/not%20fetch/">not fetch</a>
+    <a href="/blog/tags/emacs/">emacs</a>
+    
+    <a href="/blog/tags/snippets/">snippets</a>
+    
+    <a href="/blog/tags/spacemacs/">spacemacs</a>
     
 </div>
 
 
     <div id="prev-next">
         
-        <a href="/blog/posts/2014-11-04-second-post/">&laquo; Yet Another Post</a>
+        <a href="/blog/posts/testing-live-coding/">&laquo; Testing Klipse Integration</a>
         
+        
+        <a class="right" href="/blog/posts/writing-custom-snippets-for-yasnippets/">Writing custom snippets for yasnippet &raquo;</a>
         
     </div>
 
@@ -89,8 +101,8 @@
     <div id="disqus_thread"></div>
     <script type="text/javascript">
         var disqus_config = function () {
-            this.page.url = "http://practical.li/blog/posts/2014-03-10-first-post/";
-            this.page.identifier = "A Post";
+            this.page.url = "http://practical.li/blog/posts/yasnippets-for-faster-clojure-development/";
+            this.page.identifier = "YASnippets for faster clojure coding";
         };
         (function() {
             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

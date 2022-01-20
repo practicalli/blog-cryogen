@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Practicalli: Writing custom snippets for yasnippet</title>
+    <link rel="canonical" href="http://practical.li/blog/posts/writing-custom-snippets-for-yasnippets/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu|Ubuntu+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/default.min.css">
+    <link href="/blog/css/screen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/blog/">
+              <img src="/blog//images/practicalli-logo-name.png" alt="Practicalli logo" />
+            </a>
+        </div>
+
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li ><a href="/blog/">Home</a></li>
+                <li
+                ><a href="/blog/archives/">Archives</a></li>
+                
+                <li
+                >
+                <a href="/blog/pages/about/">About</a>
+                </li>
+                
+                <li><a href="/blog/feed.xml">RSS</a></li>
+                <li><a href="https://github.com/practicalli/blog-content/projects/1">Feedback</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div><!--/.container-fluid -->
+</nav>
+
+
+<div class="container">
+
+
+    <div class="row">
+        <div class="col-lg-9">
+            <div id="content">
+                
+<div id="post">
+    <div class="post-header">
+    <div id="post-meta" class="row">
+        <div class="col-lg-6">July 23, 2016</div>
+        
+    </div>
+    <h2>Writing custom snippets for yasnippet</h2>
+
+    <!-- conditional topic logo displayed if :topic has value in a post -->
+    
+    <img class="topic" src="/blog/images/spacemacs-logo-name.png" alt="spacemacs logo" />
+    
+</div>
+<div>
+    
+    <p>Snippets are names that expand to code or documentation, to minimise typing commonly used code pattern and can serve as a reminder of common Clojure forms.</p><p>YASnippets templates are defined in plain text, so are very easy to learn and write.</p><p>The content of a snippet can be anything, from a simple piece of text or a more involved code structure with placeholders for tab stops.  Snippets can even include Emacs lisp (elisp) code which is evaluated, allowing the snippet to tap into all the features of Emacs.</p><blockquote><p>See a <a href="https://joaotavora.github.io/yasnippet/snippet-development.html">detailed writing snippets guide</a> for other example than presented here.</p></blockquote><!-- more --><h2 id="yasnippet-template-metadata">Yasnippet Template metadata</h2><p>Metadata directives have the form <code># property: value</code> and appear before a <code># --</code> line in the snippet file.</p><ul><li><code># key:</code> abbreviation typed to expand a snippet (not be expandable if not specified)</li><li><code># name:</code> one-line description of the snippet, displayed in the completion menu (ideally unique for the Emacs mode). File name used if not specified</li><li><code># uuid:</code> unique identifier for a snippet, independent of its name</li><li><code># contributor:</code> name of the snippet author</li><li><code># condition:</code> expansion condition in Elisp, snippet only expands if condition non-nil</li><li><code># group:</code> group snippets for a given Emacs mode into sub-menus (Yasnippet menu)</li><li><code># expand-env:</code> Elisp varlist to override variable values during snippet expansion</li><li><code># binding:</code> define Emacs keybinding to expand snippet</li><li><code># type:</code> body is <code>snippet</code> (parse text template) or <code>command</code> (interpret Elisp)</li></ul><p><code>key</code> and <code>name</code> directives should be part of all snippets for consistency and ease of use.</p><h2 id="creating-a-snippet">Creating a snippet</h2><p>Each snippet template is defined in its own file, named after the alias of the snippet and located in the directory names after the Emacs mode the snippet should be available in.</p><p>Load a new snippet using the <code>M-x yas-load-snippet-buffer</code> command in the buffer of the new snippet (or restart Emacs, <code>SPC q r</code>)</p><h3 id="example-simple-expansion">Example: Simple expansion</h3><p>Practicalli use markdown mode when writing book and blog content and it can be useful to mark some pages as work in progress</p><pre><code># contributor: Practicalli
+# key : todo-wip
+# name : TODO callout work in progress
+# --
+&gt; #### TODO::Work in progress
+</code></pre><p>When you expand this snippet with <code>M-/</code> then the snippet name is replaced by the content.</p><h2 id="tab-stops">Tab Stops</h2><p>Tab stops are fields to navigate forward or backward through the template using <code>TAB</code> and <code>S-TAB</code>.</p><p>A tab stop is defined with <code>$</code> followed with a number, e.g. <code>$1</code>, <code>$2</code>, <code>$3</code>, etc.</p><p><code>$0</code> defines the exit point of the snippet and navigation stops when reaching this point.</p><p><code>$&gt;</code> at the end of a line in the snippet ensures that line is correctly indented, according to the rules of the Emacs mode the snippet is from.</p><h3 id="example-end-tab-stop">Example: end tab stop</h3><p>An example snippet to add a section comment to logically separate sections of a Clojure namespace.  Section comments are useful for navigating a namespace and identifying opportunities to refactor one namespace into others.</p><pre><code># contributor: Practicalli
+# key : ns-section
+# name : namespace section separator
+# --
+;; $0
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+</code></pre><p><code>$0</code> is our exit point from the snippet, so pressing <code>TAB</code> reverts to the usual behaviour outside of YASnippet.</p><h3 id="example-multiple-tab-stops">Example: multiple tab stops</h3><p>An HTML form expressed in Clojure hiccup syntax has a standard structure with multiple custom values.  Adding tab stops within the snippet structure makes the form values simple to complete.</p><pre><code># contributor : Practicalli
+# key : hiccup-form
+# name : [:form {:method "..." :id "..." :action "..."}]
+# --
+[:form {:method "$1"$&gt;
+        :id "$2"$&gt;
+        :action "$3"}$&gt;
+$0
+</code></pre><p><code>TAB</code> will jump to each tab stop in turn, ending when <code>$0</code> location is reached.</p><p>Each line of the snippet will have the correct indentation applied from the Clojure mode.</p><h2 id="placeholders">Placeholders</h2><p>Snippets benefit from placeholders which can guide the completion of tab stop values by providing a default value.  That value is replaced when entering the tab stop so does not interfere with adding specific values into the expanded snippet.</p><p>A placeholder is defined using <code>{}</code> around the tab stop number and the default value, i.e. <code>${1:name}</code> is tab stop 1 with a default value of name.</p><h3 id="example-deftest">Example: deftest</h3><p>Expand to a complete <code>deftest</code> form, including a <code>testing</code> form for grouping assertions along with the first assertion.</p><p>The <code>deftest</code> name has a placeholder to update the specific part of the name, with <code>-test</code> post-fixed to the name (a common Clojure test naming convention).</p><p>The <code>testing</code> string has a placeholder between the <code>""</code> double quotes, so only the text within <code>""</code> are replaced when entering the tab stop</p><p>In <code>$3</code> the assertion-value is completely replaced when entering the tab stop.</p><pre><code># -*- mode: snippet -*-
+# name: deftest clojure.test function
+# key: deftest
+# contributor: practicalli
+# --
+(deftest ${1:name}-test
+  (testing "${2:Context of the test assertions}"$&gt;
+    (is (= ${3:assertion-values}))$4))$&gt;
+$0
+</code></pre><h2 id="mirrors">Mirrors</h2><p>Tab stops with the same number will mirror each other, so if the snippet has <code>$1</code> in multiple places, each value will be updated when any value at <code>$1</code> is updated.</p><pre><code># -*- mode: snippet -*-
+# contributor: Practicalli
+# name: for-let
+# key: for :let
+# --
+(for [$1 $2
+  :let [${3:local-name} $4]]$&gt;
+  $3)$&gt;
+</code></pre><p>Updating tab stop 3 will update the local-name and also the value to be returned (the last part of the <code>for</code> expression).</p><h2 id="creating-a-snippet-from-a-region">Creating a snippet from a region</h2><p>A quick way to create a snippet is to select a region of text that is a specific instance of what the snippet would be used to create.</p><p><code>v</code> and motion keys to select the relevant region of text</p><p><code>SPC SPC helm-yas-create-snippet-on-region</code> to start creating a snippet from that selected region</p><p>Enter a file name in the respective Emacs mode for the snippet, defaulting to the current mode.</p><p>A new file is created with the following metadata directives</p><pre><code class="none"># -*- mode: snippet -*-
+#name : delete-me
+#key : delete-me
+#contributor : Practicalli
+# --
+The region of text that was selected.  Edit me to make the desired snippet.
+</code></pre><p>Edit the body of your snippet to replace the specific names and values with tab stop placeholders, <code>$1</code> <code>$2</code>, <code>$3</code>, etc.</p><p><code>C-c C-c</code> to save the snippet buffer and load the snippet into the respective Emacs mode, making it immediately available.</p><h2 id="update-an-existing-snippet">Update an existing snippet</h2><p><code>SPC SPC helm-yas-visit-snippet-file</code> opens a helm popup.</p><p>Start typing the name of the snippet to narrow the list.</p><p><code>C-j</code> and <code>C-k</code> to navigate the list and <code>RET</code> to select the snippet.</p><p>Edit the snippet and <code>C-c C-c</code> to save and apply the changes, making the updated snippet immediately available.</p><h2 id="testing-your-snippets">Testing your snippets</h2><p>Once you have written your snippet, you can quickly test it using <code>M-x yas-tryout-snippet</code>.  This opens a new empty buffer in the appropriate major mode and inserts the snippet so you can then test it with <code>M-/</code>.</p><p>If you just want to try the snippet in an existing buffer, then use <code>M-x yas-load-snippet-buffer</code> to load this new snippet into the correct mode.  <code>M-x yas-load-snippet-buffer</code> does exactly the same except it kills the snippet buffer (prompting to save first if necessary).</p><blockquote><p>Spacemacs does not define key bindings for these commands, although bindings could be create under <code>SPC o</code>, for example <code>SPC o s t</code> to try a snippet and <code>SPC o s l</code> to load a snippet.</p></blockquote><h2 id="spacemacs-snippet-locations">Spacemacs snippet locations</h2><p>Using <code>~/.spacemacs.d/</code> directory for the Spacemacs configuration (rather than <code>.spacemacs</code>), adding <code>~/.spacemacs.d/snippets/</code> directory will automatically save custom snippets there. Snippets are saved in a directory named after the Emacs mode under that snippet directory, i.e. <code>~/.spacemacs.d/snippets/modename-mode/</code></p><p>Otherwise custom snippets are saved to the <code>~/.emacs.d/private/snippets</code> directory and their respective Emacs mode directory.</p><h2 id="summary">Summary</h2><p>Find out more about YASnippets and autocompletion from the <a href="https://github.com/syl20bnr/spacemacs/tree/master/layers/auto-completion">Github repository for Spacemacs autocompletion layer</a>.</p><p>For more details and examples on writing your own snipplets, take a look at:</p><ul><li><a href="https://www.youtube.com/watch?v=-4O-ZYjQxks">Emacs YASnippet video tutorial</a></li><li><a href="https://joaotavora.github.io/yasnippet/snippet-development.html">Snippet development</a>.</li><li><a href="http://jotham-city.com/blog/2015/03/21/adding-yasnippets-snippets/">Adding YASnippets snippets</a></li><li><a href="http://cupfullofcode.com/blog/2013/02/26/snippet-expansion-with-yasnippet/index.html">Snippet expansion with YASnippet</a></li></ul><blockquote><p>Article originally published on <a href="https://jr0cket.co.uk/">jr0cket.co.uk</a> and has been migrated to <a href="https://practical.li/blog/">practical.li/blog</a></p></blockquote><p>Thank you.
+<a href="https://github.com/practicalli">practicalli GitHub profile</a> I <a href="https://twitter.com/practcial_li">@practical_li</a></p>
+</div>
+
+<div id="post-tags">
+    <b>Tags: </b>
+    
+    <a href="/blog/tags/emacs/">emacs</a>
+    
+    <a href="/blog/tags/snippets/">snippets</a>
+    
+    <a href="/blog/tags/spacemacs/">spacemacs</a>
+    
+</div>
+
+
+    <div id="prev-next">
+        
+        <a href="/blog/posts/yasnippets-for-faster-clojure-development/">&laquo; YASnippets for faster clojure coding</a>
+        
+        
+        <a class="right" href="/blog/posts/2016-01-07-docs/">Quick Start Guide &raquo;</a>
+        
+    </div>
+
+    
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_config = function () {
+            this.page.url = "http://practical.li/blog/posts/writing-custom-snippets-for-yasnippets/";
+            this.page.identifier = "Writing custom snippets for yasnippet";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//practicalli-blog.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    
+
+
+</div>
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div id="sidebar">
+                <h3>Links</h3>
+                <ul id="links">
+                    <li><a href="http://practical.li/">Practicalli Home</a></li>
+                    <li><a href="http://yt.vu/+practicalli">YouTube channel</a></li>
+                    <li><a href="https://github.com/practicalli/blog-content/projects/1">Feeback / Issues</a></li>
+                    
+                    <li><a href="/blog/pages/contributing/">Contributing</a></li>
+                    
+                </ul>
+                
+                <div id="recent">
+                    <h3>Recent Posts</h3>
+                    <ul>
+                        
+                        <li><a href="/blog/posts/emacs-cider-removing-old-cider-compat/">Emacs CIDER removing old cider-compat namespace</a></li>
+                        
+                        <li><a href="/blog/posts/clojure-which-execution-option-to-use/">Clojure CLI tools - which execution option to use</a></li>
+                        
+                        <li><a href="/blog/posts/clojure-cli-tools-understanding-aliases/">Clojure CLI tools - understanding aliases</a></li>
+                        
+                        <li><a href="/blog/posts/automate-cryogen-clojure-blog-with-github-actions/">Automate Cryogen Clojure blog with GitHub Actions</a></li>
+                        
+                        <li><a href="/blog/posts/overview-of-language-server-protocol-lsp-for-clojure-development/">Overview of Language Server Protocol LSP for Clojure development</a></li>
+                        
+                        <li><a href="/blog/posts/brave-clojure-redux-part01-the-repl/">Brave Clojure redux - part 1 - the REPL</a></li>
+                        
+                        <li><a href="/blog/posts/clojure-repl-jack-in-or-connect/">Clojure CLI tools - To jack-in or connect, that is the question</a></li>
+                        
+                        <li><a href="/blog/posts/clojure-cli-aliases-deserve-designing-too/">Clojure CLI tools aliases deserve good design too</a></li>
+                        
+                        <li><a href="/blog/posts/cloure-community-getting-help/">Clojure community - getting help</a></li>
+                        
+                    </ul>
+                </div>
+                
+                
+                <div id="tags">
+                    <h3>Tags</h3>
+                    <ul>
+                        
+                        <li><a href="/blog/tags/json/">json</a></li>
+                        
+                        <li><a href="/blog/tags/ring/">ring</a></li>
+                        
+                        <li><a href="/blog/tags/very%20fetch/">very fetch</a></li>
+                        
+                        <li><a href="/blog/tags/ubuntu/">ubuntu</a></li>
+                        
+                        <li><a href="/blog/tags/lsp/">lsp</a></li>
+                        
+                        <li><a href="/blog/tags/cryogen/">cryogen</a></li>
+                        
+                        <li><a href="/blog/tags/aliases/">aliases</a></li>
+                        
+                        <li><a href="/blog/tags/challenges/">challenges</a></li>
+                        
+                        <li><a href="/blog/tags/github/">github</a></li>
+                        
+                        <li><a href="/blog/tags/clojure/">clojure</a></li>
+                        
+                        <li><a href="/blog/tags/httpkit/">httpkit</a></li>
+                        
+                        <li><a href="/blog/tags/webapps/">webapps</a></li>
+                        
+                        <li><a href="/blog/tags/clojure-cli/">clojure-cli</a></li>
+                        
+                        <li><a href="/blog/tags/pull-requests/">pull-requests</a></li>
+                        
+                        <li><a href="/blog/tags/editors/">editors</a></li>
+                        
+                        <li><a href="/blog/tags/tools-deps/">tools-deps</a></li>
+                        
+                        <li><a href="/blog/tags/hardware/">hardware</a></li>
+                        
+                        <li><a href="/blog/tags/cider/">cider</a></li>
+                        
+                        <li><a href="/blog/tags/emacs/">emacs</a></li>
+                        
+                        <li><a href="/blog/tags/clj-http/">clj-http</a></li>
+                        
+                        <li><a href="/blog/tags/calva/">calva</a></li>
+                        
+                        <li><a href="/blog/tags/snippets/">snippets</a></li>
+                        
+                        <li><a href="/blog/tags/thinkpad/">thinkpad</a></li>
+                        
+                        <li><a href="/blog/tags/events/">events</a></li>
+                        
+                        <li><a href="/blog/tags/community/">community</a></li>
+                        
+                        <li><a href="/blog/tags/advent-of-parens/">advent-of-parens</a></li>
+                        
+                        <li><a href="/blog/tags/spacemacs/">spacemacs</a></li>
+                        
+                        <li><a href="/blog/tags/help/">help</a></li>
+                        
+                        <li><a href="/blog/tags/lenovo/">lenovo</a></li>
+                        
+                        <li><a href="/blog/tags/compojure/">compojure</a></li>
+                        
+                        <li><a href="/blog/tags/klipse/">klipse</a></li>
+                        
+                        <li><a href="/blog/tags/figwheel-main/">figwheel-main</a></li>
+                        
+                        <li><a href="/blog/tags/not%20fetch/">not fetch</a></li>
+                        
+                        <li><a href="/blog/tags/web-scraper/">web-scraper</a></li>
+                        
+                        <li><a href="/blog/tags/blogging/">blogging</a></li>
+                        
+                        <li><a href="/blog/tags/conjure/">conjure</a></li>
+                        
+                        <li><a href="/blog/tags/github-actions/">github-actions</a></li>
+                        
+                        <li><a href="/blog/tags/apis/">apis</a></li>
+                        
+                        <li><a href="/blog/tags/static-sites/">static-sites</a></li>
+                        
+                        <li><a href="/blog/tags/re-clojure/">re-clojure</a></li>
+                        
+                        <li><a href="/blog/tags/packages/">packages</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <footer>
+      Copyright &copy; 2022 Practicalli
+      <p style="text-align: center;">Powered by <a href="http://cryogenweb.org">Cryogen</a></p>
+
+      <license id="license">
+        <div>
+          <p>This work is licensed under a <a href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution 4.0 ShareAlike License</a>, including custom images & stylesheets.</p>
+          <p>Permissions beyond the scope of this license may be available by contacting <a xmlns:cc="http://creativecommons.org/ns#" href="https://twitter.com/practical_li" rel="cc:morePermissions">@practical_li</a></p>
+          <br>
+          <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a>
+        </div>
+      </license>
+
+    </footer>
+</div>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="/blog/js/highlight.pack.js" type="application/javascript"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+</body>
+</html>
