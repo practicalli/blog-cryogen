@@ -2,8 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
     <meta charset="utf-8"/>
-    <title>Practicalli: Improving communication with GitHub issue templates</title>
-    <link rel="canonical" href="http://practical.li/blog/posts/improving-communication-with-github-issue-templates/">
+    <title>Practicalli: Clojure Transducers - Getting Started</title>
+    <link rel="canonical" href="http://practical.li/blog/posts/transducers-in-clojure-getting-started/">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu|Ubuntu+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
@@ -57,35 +57,106 @@
 <div id="post">
     <div class="post-header">
     <div id="post-meta" class="row">
-        <div class="col-lg-6">November 4, 2019</div>
+        <div class="col-lg-6">June 15, 2016</div>
         
     </div>
-    <h2>Improving communication with GitHub issue templates</h2>
+    <h2>Clojure Transducers - Getting Started</h2>
 
     <!-- conditional topic logo displayed if :topic has value in a post -->
     
-    <img class="topic" src="/blog/images/github-logo-name.png" alt="github logo" />
+    <img class="topic" src="/blog/images/clojure-logo-name.png" alt="clojure logo" />
     
 </div>
 <div>
     
-    <p>Create templates for issues and pull requests can greatly improve feedback and contributions, especially as an open source project maintainer.  We will look specifically at issue templates.</p><p>Templates can ask people to provide specific information, or request use of a tool for generating system information (e.g. Spacemacs).  Automatic assignment and labelling saves time on issue triage by the project maintainers.</p><p>Templates can be created for most shared Git repository services, i.e GitHub, GitLab, BitBucket, etc.</p><p>We will discuss what to include in these templates and use GitHub as an example of how to create and edit issue templates.</p><h2 id="creating-an-issue-template">Creating an issue template</h2><p>In your GitHub project, open the <strong>Settings</strong> tab and scroll down to the <strong>features</strong> section.</p><p>Ensure <strong>Issues</strong> is selected and click on the <strong>Set up templates</strong> button</p><p><img src="/blog/images/github-settings-features-templates.png" alt="GitHub features - templates setup" /></p><p>Select an existing template to change it or select <strong>Custom template</strong> to create a new blank template.</p><p><img src="/blog/images/github-templates-select-template.png" alt="GitHub templates - select template" /></p><h2 id="changing-an-existing-template">Changing an existing template</h2><p>You can change everything about an existing template, even the name.</p><p><img src="/blog/images/github-templates-bug-report-edit.png" alt="GitHub templates - edit issue bug report" /></p><p>Click the pencil icon to edit the template and change as much as you wish.</p><p>Click <strong>Close preview</strong> to finish editing.</p><p>The filename will be renamed to the <strong>Template name</strong> of the issue template once you save</p><p>Here is an example of changing the bug to an article template.</p><p><img src="/blog/images/github-templates-article-edit.png" alt="GitHub template - article edit" /></p><h2 id="saving-the-template">Saving the template</h2><p>Click the <strong>Propose changes</strong> button to make the change permanent, entering a commit message and committing changes.</p><p><img src="/blog/images/github-templates-propose-changes.png" alt="GitHub templates - propose change" /></p><p>Once you commit a template it can be found in the directory <strong>.github/ISSUE_TEMPLATE/</strong> directory.</p><p><img src="/blog/images/github-templates-committed-template.png" alt="GitHub templates - committed templates" /></p><h2 id="creating-an-issue-with-a-template">Creating an issue with a template</h2><p>Click the <strong>New issue</strong> button to choose a template for a new issue.</p><p><img src="/blog/images/github-templates-new-issue.png" alt="GitHub templates - new issue with template" /></p><p>All the available templates are now listed when creating a new issue.  There is also a link to <strong>Edit teamplates</strong> if you have access rights on the repository.</p><p>There is also a link to create a blank issue.</p><p><img src="/blog/images/github-templates-new-issue-article-template.png" alt="GitHub templates - new issue with article template" /></p><p>The issue has the article label and the text of the template, making it simple for a contributor to add information that helps the project maintainer.</p><p><img src="/blog/images/github-templates-new-issue-article-template-edit.png" alt="GitHub templates - new issue with article template - edit" /></p><p>A contributor can always choose a different type of issue template before submitting the issue.</p><h2 id="summary">Summary</h2><p>Adding Issue templates is really easy and saves a lot of time getting the basics of communication established between contributors and project maintainers.</p><p>Templates minimise the amount of work a project maintainer has to do for each issue and also supports contributors involvement be much more efficient.</p>
+    <p>Transducers are built upon the design principle in Clojure of composing functions together, allowing you to elegantly abstract functional composition and create a workflow that will transform data without being tied to a specific context.  So what does that actually mean and what does the code look like?  Is there a transducer function or is it just extensions to existing functions.  These are the questions we will explore and answer.</p><blockquote><p>A good understanding of functions such as map &amp; reduce and composing functions with the threading macros is recommended before writing code with Transducers.</p></blockquote><p>This is my interpretation of the really great introduction to Transducers from <a href="https://funcool.github.io/clojurescript-unraveled/">Clojurescript Unraveled</a>, expanded with additional code and my own comments.</p><!-- more --><h2 id="defining-a-data-structure">Defining a data structure</h2><p>Defining a data structure that will represent our fruit, including whether that fruit is rotten or clean.  We have two collections of grapes, one green, one black.  Each cluster has 2 grapes on it (not a very big cluster in this example)</p><pre><code class="clojure">(def grape-clusters
+  [{:grapes [{:rotten? false :clean? false}
+             {:rotten? true  :clean? false}]
+    :colour :green}
+   {:grapes [{:rotten? true  :clean? false}
+             {:rotten? false :clean? false}]}
+   :colour :black])
+</code></pre><p>Each grape cluster has the following structure</p><pre><code class="clojure">{:grapes [{:rotten? false :clean? false}
+          {:rotten? true  :clean? false}]
+ :colour :green}
+</code></pre><h2 id="splitting-into-grape-clusters">Splitting into grape clusters</h2><p>We want to split the grape clusters into individual grapes, discarding the rotten grapes.  The remaining grapes will be checked to see if they are clean.  We should be left with one green and one black grape.</p><p>First lets define a function that returns a collection of grapes, given a specific grape cluster.</p><pre><code class="clojure">(defn split-cluster
+"Takes a grape cluster and returns the vector of all the grapes in that cluster"
+  [cluster]
+  (:grapes cluster))
+</code></pre><p>The body of this function returns the value pointed to by the <code>:grapes</code> keyword, which will be a collection of grapes.  We do not ask for the value of :colours as in this case the colour of the grape is irrelevant.</p><h2 id="testing-our-code-in-the-repl">Testing our code in the REPL</h2><p>The grape-clusters data structure is a vector of two grape clusters.  To see what a grape cluster is, get the first element of that data structure</p><pre><code class="clojure">(first grape-clusters)
+;; =&gt; {:grapes [{:rotten? false, :clean? false} {:rotten? true, :clean? false}], :colour :green}
+</code></pre><p>For each cluster in grape-clusters, return just the :grapes data, ignoring the colour information</p><pre><code class="clojure">(split-cluster {:grapes [{:rotten? false :clean? false}
+                         {:rotten? true  :clean? false}]
+                :colour :green})
+;; =&gt;[{:rotten? false, :clean? false} {:rotten? true, :clean? false}]
+</code></pre><h2 id="a-filter-for-rotten-grapes">A filter for rotten grapes</h2><p>We don't want to include any rotten grapes after we have processed all our clusters, so here we define a simple filter to only return grapes where <code>:rotten?</code> is false.</p><p>This filter will be used on each individual grape extracted from the cluster.</p><pre><code class="clojure">(defn not-rotten
+  "Given a grape, only return it if it is not rotten.  A grape is defined as {:rotten? true|false :clean? true|false}"
+  [grape]
+  (not (:rotten? grape)))
+</code></pre><h2 id="cleaning-all-the-grapes">Cleaning all the grapes</h2><p>Any grapes we have left should be cleaned.  Rather than model the cleaning process, we have simply written a function that updates all the grapes with a value of <code>true</code> for the key <code>:clean?</code></p><pre><code class="clojure">(defn clean-grape
+  "Given a grape, updating the grapes :clean? value to true regardless of its current value.  A grape is defined as {:rotten? true|false :clean? true|false}"
+  [grape]
+  (assoc grape :clean? true))
+</code></pre><p>Lets give our clean grape function a quick test in the REPL.</p><pre><code class="clojure">(clean-grape {:rotten? false :clean? false})
+;; =&gt; {:rotten? false, :clean? true}
+</code></pre><h1 id="functional-composition-using-the-thread-last-macro">Functional composition using the thread last macro.</h1><p>Each line passes its evaluate value to the next line as its last argument.  Here is the algorithm we want to create with our code:</p><ul><li>evaluate the name grape-clusters and return the data structure it points to.</li><li>use mapcat to map the split-clusters function over each element in grape-clusters, returning 4 grapes concatenated into one collection</li><li>filter the 4 grapes, dropping the grapes where :rotten? equals true, returning 2 grapes</li><li>update each grape to have a :clean? value of true</li></ul><pre><code class="clojure">(-&gt;&gt; grape-clusters
+     (mapcat split-cluster)
+     (filter not-rotten)
+     (map clean-grape))
+
+;; =&gt; ({:rotten? false, :clean? true} {:rotten? false, :clean? true})
+</code></pre><h1 id="using-partial-to-compose-functions-together">Using partial to compose functions together</h1><p>Composing functions are read in the lisp way, so we pass the grape-clusters collection to the last composed function first</p><pre><code class="clojure">(def process-clusters
+  "Takes clusters of grapes and returns only the nice ones, that have been cleaned.  Using comp, read the function from the bottom up to understand the argument."
+  (comp
+   (partial map clean-grape)
+   (partial filter not-rotten)
+   (partial mapcat split-cluster)))
+</code></pre><p>Now lets call this composite function again...</p><pre><code class="clojure">(process-clusters grape-clusters)
+;; =&gt; ({:rotten? false, :clean? true} {:rotten? false, :clean? true})
+</code></pre><p>The <code>process-clusters</code> definition above uses the lisp way of evaluation - inside-out.</p><p>Here is a simple example of evaluating a maths expression from inside-out.  Each line is the same expression, but with the innermost expression replaced by its value.</p><pre><code class="clojure">(+ 2 3 (+ 4 5 (/ 24 6)))   ;; (/ 24 6)   =&gt; 4
+(+ 2 3 (+ 4 5 4))          ;; (+ 4 5 4)  =&gt; 13
+(+ 2 3 13)                 ;; (+ 2 3 13) =&gt; 18
+18
+</code></pre><h1 id="transducers-in-clojure">Transducers in Clojure</h1><p>There are several functions that work on sequences (collections) which will return what is referred to as a transducer if they are not passed a sequence as an argument.  For example, if you only pass map a function and not a collector, it returns a transducer that can be used with a collection that is passed to it later.</p><p>Using the transduce feature of each of the functions in process-clusters, we can actually remove the partial function from our code and redefine a simpler version of process-clusters</p><pre><code class="clojure">(def process-clusters
+  (comp
+   (mapcat split-cluster)
+   (filter not-rotten)
+   (map clean-grape)))
+</code></pre><p>A few things changed since our previous definition process-clusters. First of all, we are using the transducer-returning versions of mapcat, filter and map instead of partially applying them for working on sequences.</p><p>Also you may have noticed that the order in which they are composed is reversed, they appear in the order they are executed. Note that all map, filter and mapcat return a transducer. filter transforms the reducing function returned by map, applying the filtering before proceeding; mapcat transforms the reducing function returned by filter, applying the mapping and concatenation before proceeding.</p><p>One of the powerful properties of transducers is that they are combined using regular function composition. What’s even more elegant is that the composition of various transducers is itself a transducer! This means that our process-cluster is a transducer too, so we have defined a composable and context-independent algorithmic transformation.</p><p>Many of the core ClojureScript functions accept a transducer, let’s look at some examples with our newly defined version of <code>process-cluster</code>:</p><pre><code class="clojure">(into [] process-clusters grape-clusters)
+;; =&gt; [{:rotten? false, :clean? true} {:rotten? false, :clean? true}]
+
+
+(sequence process-clusters grape-clusters)
+;; =&gt; ({:rotten? false, :clean? true} {:rotten? false, :clean? true})
+
+
+(reduce (process-clusters conj) [] grape-clusters)
+;; =&gt; [{:rotten? false, :clean? true} {:rotten? false, :clean? true}]
+</code></pre><p>Since using reduce with the reducing function returned from a transducer is so common, there is a function for reducing with a transformation called transduce. We can now rewrite the previous call to reduce using transduce:</p><pre><code class="clojure">(transduce process-clusters conj [] grape-clusters)
+;; =&gt; [{:rotten? false, :clean? true} {:rotten? false, :clean? true}]
+</code></pre><h1 id="summary">Summary</h1><p>This was just a brief taste of Transducers in Clojure and I hope to create more examples of their use over time.  I don't see Transducers being used too much for my own code initially, but its a useful way to abstract functional composition and make your code more reusable within your project.</p><p>If you need more time for this concept to sink in, its quite alright to stay with threading macros and the partial function, or even just applying map.  I find Clojure more rewarding when you first get more comfortable with the core concepts and build on them when you are ready.</p><blockquote><p>Article originally published on <a href="https://jr0cket.co.uk/">jr0cket.co.uk</a> and has been migrated to <a href="https://practical.li/blog/">practical.li/blog</a></p></blockquote><p>Thank you</p><p><a href="https://github.com/practicalli">practicalli GitHub profile</a> I <a href="https://twitter.com/practcial_li">@practical_li</a></p>
 </div>
 
 <div id="post-tags">
     <b>Tags: </b>
     
-    <a href="/blog/tags/github/">github</a>
+    <a href="/blog/tags/clojure/">clojure</a>
+    
+    <a href="/blog/tags/transducers/">transducers</a>
+    
+    <a href="/blog/tags/reduce/">reduce</a>
+    
+    <a href="/blog/tags/clojure-core/">clojure-core</a>
     
 </div>
 
 
     <div id="prev-next">
         
-        <a href="/blog/posts/streamline-contributions-with-github-pull-request-templates/">&laquo; Streamline Contributions with GitHub Pull Request Templates</a>
+        <a href="/blog/posts/writing-custom-snippets-for-yasnippets/">&laquo; Writing custom snippets for yasnippet</a>
         
         
-        <a class="right" href="/blog/posts/clojure-powered-blogging-with-cryogen/">Clojure powered blogging with Cryogen &raquo;</a>
+        <a class="right" href="/blog/posts/2016-01-07-docs/">Quick Start Guide &raquo;</a>
         
     </div>
 
@@ -93,8 +164,8 @@
     <div id="disqus_thread"></div>
     <script type="text/javascript">
         var disqus_config = function () {
-            this.page.url = "http://practical.li/blog/posts/improving-communication-with-github-issue-templates/";
-            this.page.identifier = "Improving communication with GitHub issue templates";
+            this.page.url = "http://practical.li/blog/posts/transducers-in-clojure-getting-started/";
+            this.page.identifier = "Clojure Transducers - Getting Started";
         };
         (function() {
             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
