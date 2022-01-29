@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 ### Removed
 
+## [2.0.3] - 2022-01-28
+
+### Added
+* [YASnippets for faster clojure coding](https://practical.li/blog/posts/yasnippets-for-faster-clojure-development/)
+* [Writing custom snippets for yasnippet](https://practical.li/blog/posts/writing-custom-snippets-for-yasnippets/)
+* [Code Snippets for Clojure LSP](https://practical.li/blog-staging/posts/code-snippets-for-clojure-lsp/)
 
 ## [2.0.2] - 2021-12-20
 
