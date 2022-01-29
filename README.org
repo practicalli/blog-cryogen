@@ -6,31 +6,22 @@ A detailed description of putting this site together can be found in
 
 [[https://practicalli.github.io/blog/posts/clojure-powered-blogging-with-cryogen/][Clojure powered blogging with Cryogent]] explains in detail how this project was developed.  Here is just the essential information.
 
-The project was created with Leiningen
-
-#+BEGIN_SRC shell
-lein new cryogen practicalli-blog
-#+END_SRC
-
+** Local website
 
 Run a local server that generates the website
 
 #+BEGIN_SRC shell
-lein ring server
+clojure -X:serve
 #+END_SRC
 
-This generates all the files for the website the ~public~ directory
+This generates all the files for the website in the ~public~ directory
 
-** Deployment
+** GitHub Actions Deployment
+Pull requests are automatically built and deployed to https://practical.li/blog-staging/ to assist with reviewing articles.
 
-
-*** Manual deployment
-
-The ~deploy-to-gh-pages~ script will deploy to a test environment to review articles and other changes to the blog website.
- create a temporary git repository locally and use that to commit and push the site to the specified GitHub repository.  Update the address of the Github repository to use this script.
-
+Merged pull request and commits to the default branch will deploy to https://practical.li/blog/
 
 ** Suggestions / issues / bugs
-   Suggestions for posts, should be issues or bugs  [[https://practicalli.github.io/blog][Practicalli blog website]] reported as an issue on the practicalli/blog-content repository] should be reported as an issue or pull request on the practicalli/blog-content repository.
+Suggestions for posts, should be issues or bugs  [[https://practicalli.github.io/blog][Practicalli blog website]] reported as an issue on the practicalli/blog-content repository] should be reported as an issue or pull request on the practicalli/blog-content repository.
 
-   Deployment of the blog is not automated at the moment, but an updated site will be manually generated once any pull request is accepted by the maintainers.
+Deployment of the blog is not automated at the moment, but an updated site will be manually generated once any pull request is accepted by the maintainers.
