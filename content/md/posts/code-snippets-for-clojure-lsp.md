@@ -98,7 +98,7 @@ The syntax for built-in snippets is slightly different that the `:additional-syn
 > Clojure code only works for built-in snippets and not `:additional-snippets`. Clojure LSP is compiled by Graal to a native binary, including the built-in snippets.  To include Clojure code in a snippet then consider submitting a pull request to the Clojure LSP project to add a built-in snippet.
 
 
-Clojure LSP snippets are [defined in `clojure-lsp.feature.completion-snippet` namespace](https://github.com/clojure-lsp/clojure-lsp/blob/master/src/clojure_lsp/feature/completion_snippet.clj).
+Clojure LSP snippets are [defined in `clojure-lsp.feature.completion-snippet` namespace](https://github.com/clojure-lsp/clojure-lsp/blob/master/lib/src/clojure_lsp/feature/completion_snippet.clj).
 
 
 ## Summary
