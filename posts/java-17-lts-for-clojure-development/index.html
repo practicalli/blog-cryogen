@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Practicalli: Java 17 JDK for Clojure development</title>
+    <link rel="canonical" href="http://practical.li/blog/posts/java-17-lts-for-clojure-development/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu|Ubuntu+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/default.min.css">
+    <link href="/blog/css/screen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/blog/">
+              <img src="/blog//images/practicalli-logo-name.png" alt="Practicalli logo" />
+            </a>
+        </div>
+
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li ><a href="/blog/">Home</a></li>
+                <li
+                ><a href="/blog/archives/">Archives</a></li>
+                
+                <li
+                >
+                <a href="/blog/pages/about/">About</a>
+                </li>
+                
+                <li><a href="/blog/feed.xml">RSS</a></li>
+                <li><a href="https://github.com/practicalli/blog-content/projects/1">Feedback</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div><!--/.container-fluid -->
+</nav>
+
+
+<div class="container">
+
+
+    <div class="row">
+        <div class="col-lg-9">
+            <div id="content">
+                
+<div id="post">
+    <div class="post-header">
+    <div id="post-meta" class="row">
+        <div class="col-lg-6">January 31, 2022</div>
+        
+    </div>
+    <h2>Java 17 JDK for Clojure development</h2>
+
+    <!-- conditional topic logo displayed if :topic has value in a post -->
+    
+    <img class="topic" src="/blog/images/java-logo-name.png" alt="java logo" />
+    
+</div>
+<div>
+    
+    <p>Java JDK 17 is the latest Long Term Support version and ideally should be the default JVM for developing and deploying new Clojure projects (and existing projects after testing). There should be little risk upgrading, especially from Java 11 onward.  The 17.0.2 version has just been release, so has already been tested by many developers already.</p><p>Although the language features are of less interest, the security and performance improvements over the last 3 years (since Java 11) or 6 years (since Java 8) are valuable to Clojure development.</p><p><a href="https://www.infoq.com/news/2021/10/oracle-jdk-free-again/">Oracle JDK 17 is free again</a> for use in production and to redistribute, under the No-Fee Terms and Conditions License.  However, Practicalli recommends using OpenJDK anyway.</p><!-- more --><h2 id="long-term-support-lts">Long Term Support LTS</h2><p>The valuable part of a supported Java version is to receive timely security patches that should have no impact on running systems in production.</p><p>An LTS version is released every 3 years so minimises the churn that comes with intermediate versions, which are only supported for 6 months.</p><p>LTS versions receive security updates for a year after the next LTS version is release, leaving ample time to test and migrate to a new major version.</p><p>A 2 year LTS release cadence has been proposed by Mark Reinhold, Chief architect of the Java Platform Group, to encourage faster adoption especially by enterprise's who only sign-off on long-term support products.</p><blockquote><p><a href="https://en.wikipedia.org/wiki/Long-term_support">Wikipedia: Long-term support</a></p></blockquote><h2 id="where-to-get-java-17">Where to get Java 17</h2><p>Practicalli recommends using OpenJDK for Java, the community managed distribution of Java.  Practicalli is currently migrating to the latest Long Term Support version, OpenJDK 17.0.1+12.</p><p>Most Linux distributions have packages for OpenJDK, with the Long Term Support and intermediate versions available (usually Java 8 through to 18).  To install in Ubuntu:</p><pre><code class="shell">sudo apt install openjdk-17-jdk openjdk-17-source
+</code></pre><p>Installing the source package is optional, although it can be useful to <a href="https://github.com/practicalli/clojure-deps-edn#java-sources">add the Java Sources to a Clojure project classpath</a>, to help editors navigate to the definition of Java classes used when using Java interop.</p><p>The <a href="https://adoptium.net/">Adoptium website</a> is a community initiative that provides OpenJDK binaries for different versions of Java and multiple operating systems. Adoptium JDK downloads include a <code>lib/src.zip</code> file that contains the Java source code.</p><p><img src="https://raw.githubusercontent.com/practicalli/graphic-design/live/java/screenshots/java-adoptium-website-temurin-17.png" alt="Adoptium prebuilt OpenJDK binaries for free" /></p><h3 id="amazon-corretto">Amazon Corretto</h3><p>Install <a href="https://aws.amazon.com/corretto/">Amazon Corretto JDK</a> to have a consistent development and deployment environment when using Amazon Web Services (AWS).</p><p><a href="https://aws.amazon.com/corretto/">Amazon Corretto</a> is a no-cost, multi-platform, production-ready distribution of the Open Java Development Kit (OpenJDK). Corretto comes with long-term support and includes performance enhancements and security fixes.</p><ul><li><a href="https://docs.aws.amazon.com/corretto/latest/corretto-17-ug/downloads-list.html">Downloads for Amazon Corretto 17</a></li></ul><h2 id="java-17-for-continuous-integration">Java 17 for Continuous Integration</h2><p>Java 17 is available via the <a href="https://github.com/actions/setup-java">setup-java GitHub action</a>.  Practicalli uses the Eclipse Temurin (OpenJDK distribution).  Several <a href="https://github.com/actions/setup-java#supported-distributions">other OpenJDK distributions are available</a>.</p><pre><code class="yaml">steps:
+  - uses: actions/checkout@v2
+  - uses: actions/setup-java@v2
+    with:
+      distribution: 'temurin'
+      java-version: '17'
+</code></pre><p>setup-java can be used with <a href="https://github.com/DeLaGuardo/setup-clojure">setup-clojure GitHub action</a>, which supports Clojure CLI, Leiningen and Boot.</p><pre><code class="yaml">steps:
+  - name: Checkout
+    uses: actions/checkout@v2
+
+  - name: Prepare java
+    uses: actions/setup-java@v2
+    with:
+      distribution: 'temurin' # See 'Supported distributions' for available options
+      java-version: '17'
+
+  - name: Install clojure tools
+    uses: DeLaGuardo/setup-clojure@3.7
+</code></pre><h3 id="docker-images">Docker images</h3><p>There are <a href="https://hub.docker.com/_/clojure/">a wide range of Clojure Docker images</a> available, for various versions of Java, Clojure CLI (tools-deps), Leiningen (lein) and Boot (boot).</p><p><a href="https://github.com/Quantisan/docker-clojure/blob/730187eb7b737d288e3fd8b4cec0e85578c089d6/target/openjdk-17-slim-bullseye/tools-deps/Dockerfile">clojure:openjdk-17-tools-deps-bullseye</a> is a lightweight Linux docker image (<a href="https://www.debian.org/releases/">Debian 11 stable - bullseye</a>) with <a href="https://hub.docker.com/_/openjdk">Java 17 (OpenJDK)</a> and Clojure CLI installed.</p><p>An example <code>Dockerfile</code> for a Clojure project</p><pre><code class="yaml">FROM clojure:openjdk-17-tools-deps-bullseye
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+COPY deps.edn /usr/src/app/
+RUN clojure -X:test/run
+COPY . /usr/src/app
+RUN clojure -X:package/uberjar
+CMD ["java", "-jar", "service.jar"]
+</code></pre><p><code>deps.edn</code> should contain aliases to run tests, <code>test/run</code>, and to create an Uberjar, <code>:package/uberjar</code></p><blockquote><p>The <a href="https://hub.docker.com/layers/clojure/library/clojure/openjdk-17-tools-deps-bullseye/images/sha256-2ce9392f858cad109022f904177d592dad51548eba0c063e5ea5faa9de99f5f8?context=explore">layers used in the clojure:openjdk-17-tools-deps-bullseye image</a></p></blockquote><h2 id="any-risk-to-running-clojure-on-java-17">Any risk to running Clojure on Java 17</h2><p>No, (at least I havent found any reported issues by the community).  If you are already running OpenJDK, then it should be a smooth upgrade, especially if migrating from Java 11 or newer.</p><p>If migrating from Oracle Java, or Java version 8 or earlier, then there is a small risk of issues. From Java 9 a more modular approach to building Java was adopted as well and removing some code into their own libraries (e.g. JavaFX).</p><p>There is also a very small risk for Clojure libraries which haven't been updated since September 2017 (when Java 11 was released).</p><p>Naturally a good amount of testing in a non-production environment should be carried out before upgrading production systems, just to make sure.</p><h2 id="java-17-highlights">Java 17 highlights</h2><p>There are a <a href="https://docs.oracle.com/en/java/javase/17/migrate/significant-changes-jdk-release.html">few significant changes in Java 17</a>, more-so when considering all the changes since Java 11.</p><ul><li>Oracle Java is under a free licence again (although most developers now use OpenJDK)</li><li><a href="https://docs.oracle.com/en/java/javase/17/migrate/security-updates.html">Security updates</a></li><li>Performance tweaks to Hotspot JVM</li><li>Focus on Graal for AOT</li><li>Native JDK for Arm 64 Hardware on <a href="https://openjdk.java.net/jeps/391">MacOS</a> and <a href="https://openjdk.java.net/jeps/388">Windows</a></li></ul><blockquote><p><a href="https://www.oracle.com/java/technologies/javase/17-relnote-issues.html">JDK 17 release notes</a> also covers the new features in this release.</p></blockquote><h3 id="open-license-again">Open License again</h3><p>Oracle Java 17 is under the No-Fee Terms and Conditions (NFTC) license, allowing free production and commercial use.</p><p>The majority of developer shifted to OpenJDK Java distributions when Oracle put restrictions on Java back in October 2019(?) .  Practicalli recommends OpenJDK, which can also be obtained</p><blockquote><p>A recent Snyk survey showed the Oracle JDK version was only used by 23% of developers in a production environment.</p></blockquote><h3 id="focus-on-graal-for-aot">Focus on Graal for AOT</h3><p>The HotSpot Just-in-time compiler still exists although Oracle recommends AOT compilation via <a href="https://www.graalvm.org/">GraalVM</a>.</p><p>For Clojure, there are few cases where AOT is relevant.  Clojure Libraries should be published without AOT.  Clojure applications and services might be able to reduce start up time a little, but any significant performance needs should be addressed by GraalVM.</p><p>Command Line tools can benefit from GraalVM native compilation, e.g. <a href="https://babashka.org/">Babashka</a></p><h2 id="why-has-java-endured">Why has Java endured?</h2><p>Java as a platform endures as it delivers a high-performance platform, optimised over decades to meet the needs of millions of developers world-wide.  Over the last decade <a href="https://en.wikipedia.org/wiki/List_of_JVM_languages" title="Wikipedia: List of JVM Languages">a myriad of additional languages have been added to the platform</a> (Clojure, Scala, Jython)</p><p>Java as a language is still the workhorse of many enterprise development teams, with decades of experience with the langugage.  New language features are added at a considered cadence, via the Java Community Process (JCP), which ensures the Java community moves forward together.</p><p>The Clojure language design includes a focus on backwards compatibility and has this in common with Java and the JVM.</p><blockquote><p>"Backward compatibility. Applications written in Java 10, 15, 20 years ago are still running, and still run the backbone of organisations that make money," <a href="https://trishagee.com/">Trisha Gee, Java Champion and Developer Advocate</a></p></blockquote><h2 id="summary">Summary</h2><p>Java JDK was released on September 15, 2021 and 17.0.2 is released this month, so there has been enough time to iron out issues from a new major version.</p><p>Changes in the Java Development Kit rarely affect Clojure code, even if there has been significant Java Interop.  The only challenge for Clojure was the major refactor of the JDK internals in Java 9, helping move to a more modular and stream-lined JDK.</p><p>Clojure applications should be tested thoroughly when adopting a new version of the Java JDK.  Following an LTS release cadence limits that testing to a 3 year cycle, with plenty of overlap between LTS versions (usually 2 years more of security updates).</p><p>Using the Long Term Support (LTS) versions of Java is sufficient for any Clojure application or service, so long as security patches are regularly applied.</p><p>There is little advantage to following the non-LTS release cycle of every 6 months, although this is not much of a risk so long as dev&gt;test&gt;staging&gt;production environments are all using the same version.</p>
+</div>
+
+<div id="post-tags">
+    <b>Tags: </b>
+    
+    <a href="/blog/tags/java/">java</a>
+    
+    <a href="/blog/tags/jvm/">jvm</a>
+    
+</div>
+
+
+    <div id="prev-next">
+        
+        
+        <a class="right" href="/blog/posts/code-snippets-for-clojure-lsp/">Code Snippets for Clojure LSP &raquo;</a>
+        
+    </div>
+
+    
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_config = function () {
+            this.page.url = "http://practical.li/blog/posts/java-17-lts-for-clojure-development/";
+            this.page.identifier = "Java 17 JDK for Clojure development";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//practicalli-blog.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    
+
+
+</div>
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div id="sidebar">
+                <h3>Links</h3>
+                <ul id="links">
+                    <li><a href="http://practical.li/">Practicalli Home</a></li>
+                    <li><a href="http://yt.vu/+practicalli">YouTube channel</a></li>
+                    <li><a href="https://github.com/practicalli/blog-content/projects/1">Feeback / Issues</a></li>
+                    
+                    <li><a href="/blog/pages/contributing/">Contributing</a></li>
+                    
+                </ul>
+                
+                <div id="recent">
+                    <h3>Recent Posts</h3>
+                    <ul>
+                        
+                        <li><a href="/blog/posts/java-17-lts-for-clojure-development/">Java 17 JDK for Clojure development</a></li>
+                        
+                        <li><a href="/blog/posts/code-snippets-for-clojure-lsp/">Code Snippets for Clojure LSP</a></li>
+                        
+                        <li><a href="/blog/posts/emacs-cider-removing-old-cider-compat/">Emacs CIDER removing old cider-compat namespace</a></li>
+                        
+                        <li><a href="/blog/posts/clojure-which-execution-option-to-use/">Clojure CLI tools - which execution option to use</a></li>
+                        
+                        <li><a href="/blog/posts/clojure-cli-tools-understanding-aliases/">Clojure CLI tools - understanding aliases</a></li>
+                        
+                        <li><a href="/blog/posts/automate-cryogen-clojure-blog-with-github-actions/">Automate Cryogen Clojure blog with GitHub Actions</a></li>
+                        
+                        <li><a href="/blog/posts/overview-of-language-server-protocol-lsp-for-clojure-development/">Overview of Language Server Protocol LSP for Clojure development</a></li>
+                        
+                        <li><a href="/blog/posts/brave-clojure-redux-part01-the-repl/">Brave Clojure redux - part 1 - the REPL</a></li>
+                        
+                        <li><a href="/blog/posts/clojure-repl-jack-in-or-connect/">Clojure CLI tools - To jack-in or connect, that is the question</a></li>
+                        
+                    </ul>
+                </div>
+                
+                
+                <div id="tags">
+                    <h3>Tags</h3>
+                    <ul>
+                        
+                        <li><a href="/blog/tags/json/">json</a></li>
+                        
+                        <li><a href="/blog/tags/ring/">ring</a></li>
+                        
+                        <li><a href="/blog/tags/very%20fetch/">very fetch</a></li>
+                        
+                        <li><a href="/blog/tags/ubuntu/">ubuntu</a></li>
+                        
+                        <li><a href="/blog/tags/lsp/">lsp</a></li>
+                        
+                        <li><a href="/blog/tags/cryogen/">cryogen</a></li>
+                        
+                        <li><a href="/blog/tags/aliases/">aliases</a></li>
+                        
+                        <li><a href="/blog/tags/challenges/">challenges</a></li>
+                        
+                        <li><a href="/blog/tags/github/">github</a></li>
+                        
+                        <li><a href="/blog/tags/clojure/">clojure</a></li>
+                        
+                        <li><a href="/blog/tags/httpkit/">httpkit</a></li>
+                        
+                        <li><a href="/blog/tags/webapps/">webapps</a></li>
+                        
+                        <li><a href="/blog/tags/clojure-cli/">clojure-cli</a></li>
+                        
+                        <li><a href="/blog/tags/pull-requests/">pull-requests</a></li>
+                        
+                        <li><a href="/blog/tags/editors/">editors</a></li>
+                        
+                        <li><a href="/blog/tags/java/">java</a></li>
+                        
+                        <li><a href="/blog/tags/tools-deps/">tools-deps</a></li>
+                        
+                        <li><a href="/blog/tags/hardware/">hardware</a></li>
+                        
+                        <li><a href="/blog/tags/cider/">cider</a></li>
+                        
+                        <li><a href="/blog/tags/emacs/">emacs</a></li>
+                        
+                        <li><a href="/blog/tags/clj-http/">clj-http</a></li>
+                        
+                        <li><a href="/blog/tags/calva/">calva</a></li>
+                        
+                        <li><a href="/blog/tags/snippets/">snippets</a></li>
+                        
+                        <li><a href="/blog/tags/clojure-lsp/">clojure-lsp</a></li>
+                        
+                        <li><a href="/blog/tags/thinkpad/">thinkpad</a></li>
+                        
+                        <li><a href="/blog/tags/events/">events</a></li>
+                        
+                        <li><a href="/blog/tags/community/">community</a></li>
+                        
+                        <li><a href="/blog/tags/advent-of-parens/">advent-of-parens</a></li>
+                        
+                        <li><a href="/blog/tags/spacemacs/">spacemacs</a></li>
+                        
+                        <li><a href="/blog/tags/help/">help</a></li>
+                        
+                        <li><a href="/blog/tags/transducers/">transducers</a></li>
+                        
+                        <li><a href="/blog/tags/lenovo/">lenovo</a></li>
+                        
+                        <li><a href="/blog/tags/reduce/">reduce</a></li>
+                        
+                        <li><a href="/blog/tags/compojure/">compojure</a></li>
+                        
+                        <li><a href="/blog/tags/klipse/">klipse</a></li>
+                        
+                        <li><a href="/blog/tags/figwheel-main/">figwheel-main</a></li>
+                        
+                        <li><a href="/blog/tags/not%20fetch/">not fetch</a></li>
+                        
+                        <li><a href="/blog/tags/clojure-core/">clojure-core</a></li>
+                        
+                        <li><a href="/blog/tags/web-scraper/">web-scraper</a></li>
+                        
+                        <li><a href="/blog/tags/blogging/">blogging</a></li>
+                        
+                        <li><a href="/blog/tags/conjure/">conjure</a></li>
+                        
+                        <li><a href="/blog/tags/github-actions/">github-actions</a></li>
+                        
+                        <li><a href="/blog/tags/apis/">apis</a></li>
+                        
+                        <li><a href="/blog/tags/jvm/">jvm</a></li>
+                        
+                        <li><a href="/blog/tags/static-sites/">static-sites</a></li>
+                        
+                        <li><a href="/blog/tags/re-clojure/">re-clojure</a></li>
+                        
+                        <li><a href="/blog/tags/packages/">packages</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <footer>
+      Copyright &copy; 2022 Practicalli
+      <p style="text-align: center;">Powered by <a href="http://cryogenweb.org">Cryogen</a></p>
+
+      <license id="license">
+        <div>
+          <p>This work is licensed under a <a href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution 4.0 ShareAlike License</a>, including custom images & stylesheets.</p>
+          <p>Permissions beyond the scope of this license may be available by contacting <a xmlns:cc="http://creativecommons.org/ns#" href="https://twitter.com/practical_li" rel="cc:morePermissions">@practical_li</a></p>
+          <br>
+          <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a>
+        </div>
+      </license>
+
+    </footer>
+</div>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="/blog/js/highlight.pack.js" type="application/javascript"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+</body>
+</html>
