@@ -5,7 +5,7 @@
 :tags  ["java" "jvm"]}
 
 
-Java JDK 17 is the latest Long Term Support version and ideally should be the default JVM for developing and deploying new Clojure projects (and existing projects after testing). There should be little risk upgrading, especially from Java 11 onward.  The 17.0.2 version has just been release, so has already been tested by many developers already.
+Java JDK 17 is the latest Long Term Support version and ideally should be the default JVM for developing and deploying new Clojure projects (and existing projects after testing). There should be little risk upgrading, especially from Java 11 onward.  The 17.0.2 version has just been release, so has been tested by many development teams already.
 
 Although the language features are of less interest, the security and performance improvements over the last 3 years (since Java 11) or 6 years (since Java 8) are valuable to Clojure development.
 
@@ -29,9 +29,11 @@ A 2 year LTS release cadence has been proposed by Mark Reinhold, Chief architect
 
 ## Where to get Java 17
 
-Practicalli recommends using OpenJDK for Java, the community managed distribution of Java.  Practicalli is currently migrating to the latest Long Term Support version, OpenJDK 17.0.1+12.
+Practicalli recommends using OpenJDK for Java, the community managed distribution of Java.  Practicalli is currently migrating to the latest Long Term Support version, OpenJDK 17.0.2.
 
-Most Linux distributions have packages for OpenJDK, with the Long Term Support and intermediate versions available (usually Java 8 through to 18).  To install in Ubuntu:
+Most Linux distributions have packages for OpenJDK, with the Long Term Support and intermediate versions available (usually Java 8 through to 18).
+
+To install on Ubuntu / Debian Linux:
 
 ```shell
 sudo apt install openjdk-17-jdk openjdk-17-source
@@ -41,7 +43,7 @@ Installing the source package is optional, although it can be useful to [add the
 
 The [Adoptium website](https://adoptium.net/) is a community initiative that provides OpenJDK binaries for different versions of Java and multiple operating systems. Adoptium JDK downloads include a `lib/src.zip` file that contains the Java source code.
 
-![Adoptium prebuilt OpenJDK binaries for free](https://raw.githubusercontent.com/practicalli/graphic-design/live/java/screenshots/java-adoptium-website-temurin-17.png)
+[![Adoptium prebuilt OpenJDK binaries for free](https://raw.githubusercontent.com/practicalli/graphic-design/live/java/screenshots/java-adoptium-website-temurin-17.png)](https://adoptium.net/)
 
 
 ### Amazon Corretto
@@ -87,7 +89,7 @@ steps:
 
 There are [a wide range of Clojure Docker images](https://hub.docker.com/_/clojure/) available, for various versions of Java, Clojure CLI (tools-deps), Leiningen (lein) and Boot (boot).
 
-[clojure:openjdk-17-tools-deps-bullseye](https://github.com/Quantisan/docker-clojure/blob/730187eb7b737d288e3fd8b4cec0e85578c089d6/target/openjdk-17-slim-bullseye/tools-deps/Dockerfile) is a lightweight Linux docker image ([Debian 11 stable - bullseye](https://www.debian.org/releases/)) with [Java 17 (OpenJDK)](https://hub.docker.com/_/openjdk) and Clojure CLI installed.
+[clojure:openjdk-17-tools-deps-bullseye](https://github.com/Quantisan/docker-clojure/blob/730187eb7b737d288e3fd8b4cec0e85578c089d6/target/openjdk-17-slim-bullseye/tools-deps/Dockerfile) is a lightweight Linux docker image ([Debian 11 stable - bullseye](https://www.debian.org/releases/)) with [Java 17.0.2 (OpenJDK)](https://hub.docker.com/_/openjdk) and Clojure CLI installed.
 
 An example `Dockerfile` for a Clojure project
 
