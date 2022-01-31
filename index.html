@@ -66,7 +66,7 @@
         </div>
         <!-- conditional topic logo displayed if :topic has value in a post -->
         
-        <img class="topic" src="/blog/images/java-logo-name.png" alt="java logo" />
+        <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/java-logo-name.png" alt="java logo" />
         
     </div>
     <p>Java JDK 17 is the latest Long Term Support version and ideally should be the default JVM for developing and deploying new Clojure projects (and existing projects after testing). There should be little risk upgrading, especially from Java 11 onward.  The 17.0.2 version has just been release, so has been tested by many development teams already.</p><p>Although the language features are of less interest, the security and performance improvements over the last 3 years (since Java 11) or 6 years (since Java 8) are valuable to Clojure development.</p><p><a href="https://www.infoq.com/news/2021/10/oracle-jdk-free-again/">Oracle JDK 17 is free again</a> for use in production and to redistribute, under the No-Fee Terms and Conditions License.  However, Practicalli recommends using OpenJDK anyway.</p>
@@ -83,7 +83,7 @@
         </div>
         <!-- conditional topic logo displayed if :topic has value in a post -->
         
-        <img class="topic" src="/blog/images/clojure-logo-name.png" alt="clojure logo" />
+        <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/clojure-logo-name.png" alt="clojure logo" />
         
     </div>
     <p><a href="https://clojure-lsp.io/features/#snippets">Clojure LSP snippets</a> are an editor agnostic approach to expanding common code forms from snippet names, saving typing and acting as a guide to the syntax of a Clojure form.  Practicalli also uses snippets for rich comments, documentation and highlighting logical sections of code in a namespace.</p><p>Clojure LSP snippets are defined using the EDN syntax and have the same tab stop syntax as <a href="/blog/posts/yasnippets-for-faster-clojure-development/">Yasnippets</a> and other snippet tools.</p><blockquote><p><a href="https://practical.li/spacemacs/snippets/clojure-lsp/">Clojure LSP snippets are covered in Practiclli Spacemacs</a>, including a large number of examples of custom snippets</p></blockquote>
@@ -100,7 +100,7 @@
         </div>
         <!-- conditional topic logo displayed if :topic has value in a post -->
         
-        <img class="topic" src="/blog/images/spacemacs-logo-name.png" alt="spacemacs logo" />
+        <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/spacemacs-logo-name.png" alt="spacemacs logo" />
         
     </div>
     <p>The latest snapshot of CIDER includes some welcome tidy up of the code.  One <a href="https://github.com/clojure-emacs/cider/commit/c60598fa4df6cdd3331c29b8e319cc23de1b7cc6">notable removal is <code>cider-compat</code></a> which was added to support Emacs versions previous to 25.  As most of the Emacs world is on version 27 (or 28 / 29) then there is no need to include <code>cider-compat</code> any more.</p><p>However, some Emacs packages that haven't change in a while may still used <code>cider-compat</code>, although the only one to date that has been found is <code>helm-cider</code>.  Unfortunately is causing Clojure file to fail to load when used with the latest CIDER snapshot.</p><p>When helm-cider is enabled, Emacs is unable to load Clojure files.  The error reported is:</p>
@@ -117,7 +117,7 @@
         </div>
         <!-- conditional topic logo displayed if :topic has value in a post -->
         
-        <img class="topic" src="/blog/images/clojure-cli-logo-name.png" alt="clojure-cli logo" />
+        <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/clojure-cli-logo-name.png" alt="clojure-cli logo" />
         
     </div>
     <p>Clojure CLI tools provide a very flexible way to run Clojure, using aliases to include community libraries and tools to enhance clojure projects and provide independent tools. Understand the execution options (exec-opts) on the command line options ensures an effective use of Clojure CLI tools.</p><blockquote><p>Updated on 24th December 2021 with feedback from Alex, Sean and other community members.  Thank you.</p></blockquote><p>Clojure CLI tools <a href="https://clojure.org/releases/tools#v1.10.1.510">first documented released in February 2020</a> with a specific focus on running Clojure code quickly and easily, which also required the management of dependencies from Maven, Git and a local file space.</p>
@@ -134,7 +134,7 @@
         </div>
         <!-- conditional topic logo displayed if :topic has value in a post -->
         
-        <img class="topic" src="/blog/images/clojure-cli-logo-name.png" alt="clojure-cli logo" />
+        <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/clojure-cli-logo-name.png" alt="clojure-cli logo" />
         
     </div>
     <p>Clojure CLI tools provide a very flexible way to run Clojure and uses aliases to include community libraries and tools for working with Clojure projects. Understand what an alias is and how to define them ensures an effective use of Clojure CLI tools.</p><p>This first article focuses on what an alias is and how to define them. The Clojure CLI tools - understanding flags article describes the different options for using aliases, with clojure.main, clojure.exec and as tools, from a user perspective.</p><p><a href="https://github.com/practicalli/clojure-deps-edn">practicalli/clojure-deps-edn</a> provides a great many examples of defining aliases, as well as providing a quick way to add <a href="https://practical.li/clojure/clojure-tools/install/community-tools-available.html">many community tools</a> on top of Clojure CLI tools.</p>
