@@ -59,6 +59,25 @@ Install [Amazon Corretto JDK](https://aws.amazon.com/corretto/) to have a consis
 
 Java 17 is available via the [setup-java GitHub action](https://github.com/actions/setup-java).  Practicalli uses the Eclipse Temurin (OpenJDK distribution).  Several [other OpenJDK distributions are available](https://github.com/actions/setup-java#supported-distributions).
 
+## Circle CI
+
+Recommended image for Clojure projects is `cimg/clojure:1.10`
+
+The image contains OpenJDK 17 and the latest version of Clojure CLI, Leiningen and Babashka
+
+Example `.circleci/config.yml` configuration file with latest image
+
+```yaml
+jobs:    # basic units of work in a run
+  build: # runs not using Workflows must have a `build` job as entry point
+    working_directory: ~/build # directory where steps will run
+    docker:                      # run the steps with Docker
+      - image: cimg/clojure:1.10 # image is primary container where `steps` are run
+```
+
+
+## GitHub actions
+
 ```yaml
 steps:
   - uses: actions/checkout@v2
