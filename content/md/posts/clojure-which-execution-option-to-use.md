@@ -1,71 +1,39 @@
-{:title "Clojure CLI tools - which execution option to use"
+{:title "Clojure CLI - which execution option to use"
  :layout :post
  :date "2021-12-24"
  :topic "clojure-cli"
  :tags  ["clojure-cli" "tools-deps"]}
 
-Clojure CLI tools provide a very flexible way to run Clojure, using aliases to include community libraries and tools to enhance clojure projects and provide independent tools. Understand the execution options (exec-opts) on the command line options ensures an effective use of Clojure CLI tools.
+Execution options (-A -M -T -X) define how aliases are used with the Clojure CLI. Aliases are included via one of these execution options and each option can affect how the alias is used.
 
-> Updated on 24th December 2021 with feedback from Alex, Sean and other community members.  Thank you.
-
-Clojure CLI tools [first documented released in February 2020](https://clojure.org/releases/tools#v1.10.1.510) with a specific focus on running Clojure code quickly and easily, which also required the management of dependencies from Maven, Git and a local file space.
-
-Since that release the design has evolved to provide clojure.exec (`-X`) to run any Clojure function not just `-main` as with clojure.main (`-M`). In July 2021, the ability to run tools (`-T`) which are independent from the Clojure project classpath was also introduced.
+Since the [first documented released](https://clojure.org/releases/tools#v1.10.1.510) which exclusively used the `-A` execution option to include aliases, the design has evolved to provide specific execution options to run code via clojure.main (`-M`) and clojure.exec (`-X`). In July 2021, the ability to run tools (`-T`) independent from the Clojure project classpath was also introduced.
 
 The exec-opts command line flags have evolved to enable these features, so lets explore those flags and show how each flag is typically used.
 
+> [Understand aliases in more detail](https://practical.li/blog/posts/clojure-cli-tools-understanding-aliases/)
 
 <!-- more -->
 
-## Summary of use
+## Quick summary
 
-In very simple terms, the Clojure CLI tools flags are used as follows
+Use `-M` for code that should be called via the `-main` function in a specified namespace, passing string-based arguments.
 
-`-A` to configure paths and dependencies when running the Clojure CLI tools REPL
+Use `-X` to run a specified function, passing arguments as key and value pairs (not hash-maps yet)
 
-`-M` using `clojure.main` to run the `-main` function of a Clojure project or tool, using the `-m` flag to specify the namespace containing `-main` ([clojure.main has other features too](https://clojure.org/reference/repl_and_main))
+Use `-T` to run a tool independently from any libraries defined in a project.  Only the libraries in the alias are included in the ClassPath.  The path is defined as `"."` by default.
 
-`-X` for running any fully qualified function from a Clojure project or tool
+Use `-P` to download libraries on the class path, including those from specified aliases
 
-`-P` a dry run, downloading all dependencies (must use flag in first position)
+Use `-A` in the specific case of running a basic terminal UI REPL with the `clojure` command (or `clj` wrapper).
 
-`-T` running a tool separate from a Clojure project (class path)
-
-> The tools flag, `-T` removes the need for other aliases to run tools and eventually all community tools should move to use the `-T` approach.  However, some tools still need to be run using the `-M` or `-X` flag (as the `-T` flag is quite new).
+Common aliases will be used to explain the use of these execution options in more detail.
 
 
-## Alias with REPL -A
+## Run a Clojure project with clojure.main
 
-`-A` alias is deprecated for running Clojure code via `clojure.main`.  In this case, the `-M` option should be used.
+`-M` execution option uses `clojure.main` to run Clojure code.
 
-`-A` should be used when adding libraries or paths when starting a REPL
-
-For example, adding a `dev` directory to the class path that contains a `user.clj` file that will automatically load code from the `user` namespace defined in that file.
-
-Also adding a dependency to [provide hotloading of other dependencies](https://practical.li/clojure/alternative-tools/clojure-tools/hotload-libraries.html) (note: this approach is not official and may change)
-
-```clojure
-:env/dev
-{:extra-paths ["dev"]
- :extra-deps {org.clojure/tools.deps.alpha
-                {:git/url "https://github.com/clojure/tools.deps.alpha"
-                 :sha     "d77476f3d5f624249462e275ae62d26da89f320b"}
-              org.slf4j/slf4j-nop {:mvn/version "1.7.32"}}}
-```
-
-Start a REPL process with this alias
-
-```bash
-clojure -A:env/dev
-```
-
-## clojure.main -M
-
-[`clojure.main` namespace](https://clojure.org/reference/repl_and_main) has been the way Clojure code was run (including a REPL) for most of its history.  This is now evolving with the addition of [clojure.exec](#clojure-exec--X).
-
-`clojure.main/main` function looks for a `-main` function in the given namespace (`-m fully-qualified.namespace`) or if no main namespace is found then a REPL session is run.  This is the approach Leiningen has always used and still uses today.
-
-Running a project using Clojure CLI tools without any additional aliases on the command line
+Run a project with the main namespace `practicalli.sudoku-solver`, without any additional aliases on the command line
 
 ```bash
 clojure -M -m practicalli.sudoku-solver
@@ -75,23 +43,11 @@ clojure -M -m practicalli.sudoku-solver
 
 `-m` flag is an argument to `clojure.main` which specifies the namespace to search for a `-main` function.
 
-The same approach is taken when including an alias, in this example `:alias/name`.
-
-```bash
-clojure -M:alias/name -m practicalli.sudoku-solver
-```
-
-This command will merge values defined in the alias for `:extra-paths` and `extra-deps` into the call.
-
-> When the command line includes the `-m` flag with a namespace it will over-ride the `:main-opts` value if defined in the alias
-
 
 Adding a `:project/run` alias to the project `deps.edn` file provides a simpler way to run the project on the command line
 
 ```clojure
-  :project/run
-  {:main-opts ["-m" "practicalli.sudoku-solver"]}
-
+:project/run {:main-opts ["-m" "practicalli.sudoku-solver"]}
 ```
 
 Now the project code can be run using the simple command line form
@@ -100,27 +56,71 @@ Now the project code can be run using the simple command line form
 clojure -M:project/run
 ```
 
-[clojure.main has other features, as covered in the REPL and main entrypoints article](https://clojure.org/reference/repl_and_main)) on clojure.org.
+
+### How clojure.main works
+
+`clojure.main/main` function searches for a `-main` function in the given namespace (`-m fully-qualified.namespace`)
+
+If no -main function is found or the namespace is not specified, then a REPL session is run.  This is the approach Leiningen has always used and still uses today.
+
+> [`clojure.main` namespace](https://clojure.org/reference/repl_and_main) has been the way Clojure code was run (including a REPL) for most of its history.  This is now evolving with the addition of [clojure.exec](#clojure-exec--X).
+> [clojure.main has other features, as covered in the REPL and main entrypoints article](https://clojure.org/reference/repl_and_main)) on clojure.org.
 
 
-### Chaining aliases together
+## Run a rich terminal REPL with clojure.main
+
+[Rebel readline](https://practical.li/clojure/clojure-cli/repl/) provides a terminal UI REPL, providing auto-completion, function signatures, documentation, etc.
+
+`:repl/rebel` is an alias that includes nrepl, cider-nrepl and rebel-readline libraries, with a `:main-opts` to run the `rebel-readline.main/-main` function via `clojure.main`.
+
+```clojure
+:repl/rebel
+{:extra-deps {nrepl/nrepl                {:mvn/version "0.9.0"}
+              cider/cider-nrepl          {:mvn/version "0.28.2"}
+              com.bhauman/rebel-readline {:mvn/version "0.1.4"}}
+ :main-opts  ["-m" "nrepl.cmdline"
+              "--middleware" "[cider.nrepl/cider-middleware]"
+              "--interactive"
+              "-f" "rebel-readline.main/-main"]}
+```
+
+Use the `:repl/rebel` alias with the `-M` execution option
+
+```bash
+clojure -M:repl/rebel
+```
+
+Multiple aliases can be specified to include additional paths and libraries. Aliases chained together have their configuration merged
+
+`:env/dev` adds "dev" as an extra path, with the `dev/user.clj` file automatically loading its code into the `user` namespace when the REPL starts
+
+`:lib/hotload` alias adds the `org.clojure/tools.deps.alpha` library to [provide hotloading of dependencies into the running REPL](https://practical.li/clojure/alternative-tools/clojure-tools/hotload-libraries.html)
+
+Start a REPL process with this alias
+
+```bash
+clojure -M:env/dev:lib/hotload:repl/rebel
+```
+
+The Rebel REPL UI will start, include the dev directory on the class path and the `org.clojure/tools.deps.alpha` library loaded into the REPL
+
+
+### Chaining aliases together with clojure.main
 
 Alises can be used together by chaining their names on the command line
 
 ```bash
-clojure -M:env/dev:env/test:lib/cider:repl/rebel
+clojure -M:env/dev:lib/hotload:repl/rebel
 ```
 
-Using several aliases on the command line will merge their `:extra-paths` and `:extra-deps` values.
+The `clojure` command will merge the `:extra-paths` and `:extra-deps` values from each alias in the chain.
 
-The `:main-opts` values are not merged and the value from the last `:main-opts` in the alias chain is used with `clojure.main`
+The `:main-opts` values from the aliases are not merged. Only the `:main-opts` value from the last alias in the chain is used with `clojure.main` to run the Clojure code.
 
-Again, if the command line includes the `-m` flag with a namespace, then that namespace is passed to `clojure.main`, ignoring the values from the aliases.  The [`-i` and `-e` flags for clojure.main](https://clojure.org/reference/repl_and_main) also replace `:main-opts` values.
-
-> Aliases can be chained together to merge their configuration, e.g. `clojure -M:env/dev:repl/rebel` will included the configuration from both `:env/dev` and `:repl/rebel`.  With the `-M` flag, only the `:main-opts` from the last alias in the chain is used.  If `-m namespace/name` is also part of the command, this will be used instead of any values from alias `:main-opts` keys.
+If the command line includes the `-m` flag with a namespace, then that namespace is passed to `clojure.main`, ignoring all `:main-opts` values from the aliases.  The [`-i` and `-e` flags for clojure.main](https://clojure.org/reference/repl_and_main) also replace `:main-opts` values.
 
 
-## clojure.exec -X
+## Run a specific function with clojure.exec
 
 `-X` flag provides the flexibility to call any fully qualified function, so Clojure code is no longer tied to `-main`
 
@@ -141,6 +141,7 @@ clojure -X practicalli.service/start :port 8080 :join? false
 As the arguments are key/value pairs, it does not matter in which order the pairs are used in the command line.
 
 ### Built in clojure.exec functions
+
 Clojure CLI tools has some built in tools under the special `:deps` alias (not to be confused with the `:deps` configuration in a `deps.edn` file)
 
 * `-X:deps mvn-install` - install a maven jar to the local repository cache
@@ -150,19 +151,24 @@ Clojure CLI tools has some built in tools under the special `:deps` alias (not t
 > See `clojure --help` for an overview or `man clojure` for detailed descriptions
 
 
-## Tools -T
+## Run an independent Tool -T
 
-Install, run and remove a tool that can be used independently from a Clojure project configuration.
+`-T` install, run and remove a tool, by the tool name or an alias.
+
+The `-T` execution option also uses the `clojure.exec` approach, although the `:deps` and `:path` values from a project `deps.edn` file are ignored.  This isolates the tool from the dependencies in a Clojure project.
 
 Calling Tools on the command line has the general form:
 
+```bash
 clojure -Ttool-name function-name :key "value" ,,,
+```
 
-A tool may provide many functions, so the specific function name is provided when calling the tool.  key/value pairs can be passed to form a hash-map of arguments to that function
+A tool may provide many functions, so the specific function name is provided when calling the tool.
 
-The `-T` execution option is the same as the `clojure.exec` approach, although the `:deps` and `:path` values from a project `deps.edn` file are ignored.  This isolates the tool from the dependencies in a Clojure project.
+key/value pairs can be passed as arguments to that function (as with the -X execution option)
 
-`-Ttools` is a built in tool for `install` and `remove` of other tools, with the `:as` directive providing a specific name for the tool.
+
+`-Ttools` is a built-in tool to `install` and `remove` other tools, with the `:as` directive providing a specific name for the tool.
 
 In this example, the antq tool is installed using the name `antq`
 
@@ -170,7 +176,7 @@ In this example, the antq tool is installed using the name `antq`
 clojure -Ttools install com.github.liquidz/antq '{:git/tag "1.3.1"}' :as antq
 ```
 
-Installing a tool adds an EDN configuration file using the name of the tool in `$HOME/.clojure/tools/` (or `$XDG_HOME/.clojure/tools/`) directory.
+Installing a tool adds an EDN configuration file using the name of the tool in `$XDG_HOME/.clojure/tools/` or `$HOME/.clojure/tools/` directory.
 
 Once a tool is installed, run by using the name of the tool.
 
@@ -195,16 +201,16 @@ clojure -Ttools remove :tool antq
 
 Tools can also be defined in an alias with `:exec-fn` can be run via `-T:alias-name` as they are both executed using `clojure.exec`.
 
-> When using the `-X` execution option, keys `:replace-paths` and `:replace-deps` should be used instead of `:extra-paths` and `:extra-deps` so that project paths and dependencies are not included within the alias.  Using the `-T` execution option, these are automatically ignored.
+> `-X` execution option can emulate `-T` behaviour when an alias uses `:replace-paths` and `:replace-deps` keys, instead of `:extra-paths` and `:extra-deps`, so project paths and dependencies are not included loaded by the alias.
 
 Using an alias for a tool has the advantage allowing a use to define their preferred default arguments that are passed to the `:exec-fn`, using the `:exec-args` key.
 
 Default arguments could be included in the `deps.edn` of the installed tool itself, although this is controlled by the developer of that tool project.
 
-The `:project/outdated` alias defined in the `practicalli/clojure-deps-edn` user level configuration is an example of a tool alias with default arguments
+The `:search/outdated` alias defined in the `practicalli/clojure-deps-edn` user level configuration is an example of a tool alias with default arguments
 
 ```clojure
-  :project/outdated
+  :search/outdated
   {:replace-paths ["."]
    :replace-deps  {com.github.liquidz/antq {:mvn/version "1.3.1"}
                    org.slf4j/slf4j-nop     {:mvn/version "1.7.32"}}
@@ -225,10 +231,9 @@ The `:project/outdated` alias defined in the `practicalli/clojure-deps-edn` user
                :force   false}}
 ```
 
-This alias is called using `clojure -T:project/outdated` and is the same as calling `clojure -Tantq outdated ,,, ,,,` with a long list of key value options that represent the arguments in the alias.
+This alias is called using `clojure -T:search/outdated` and is the same as calling `clojure -Tantq outdated ,,, ,,,` with a long list of key value options that represent the arguments in the alias.
 
-As the output is a table of results, the command output is typically pushed to a file: `clojure -T:project/outdated > outdated-2021-12-24.txt`
-
+As the output is a table of results, the command output is typically pushed to a file: `clojure -T:search/outdated > outdated-2021-12-24.txt`
 
 Example tools include
 
@@ -236,7 +241,8 @@ Example tools include
 * [seancorfield/deps-new](https://github.com/seancorfield/deps-new) - create new projects using templates
 * [clojure-nvd](https://github.com/rm-hull/nvd-clojure) - check dependencies against National Vunerability Database
 
-## Prepare -P
+
+## Prepare by downloading dependencies -P
 
 `-P` flag instructs the `clojure` command to download all library dependencies to the local cache and then stop without executing a function call.
 
@@ -255,7 +261,7 @@ clojure -P
 Including one or more aliases will preparing all the dependencies from every alias specified
 
 ```bash
-clojure -P -M:project/hotload:env/dev:lib/cider
+clojure -P -M:env/dev:lib/hotload:repl/cider
 ```
 
 > `-P` flag must be used before any subsequent arguments, i.e. before `-M`, `-X`, `-T`
@@ -263,6 +269,42 @@ clojure -P -M:project/hotload:env/dev:lib/cider
 As prepare is essentially a dry run, then the `clojure` command does not call `:main-opts` or `:exec-fn` functions, even if they exist in an alias or on the command line.
 
 `-P` will warn if a project has dependencies that [require building from source](https://clojure.org/reference/deps_and_cli#prep) (i.e Java code) or resource file manipulation.  If so then `clojure -X:deps prep` will prepare these source based dependencies.
+
+
+## Alias with built-in terminal UI REPL -A
+
+`-A` is stated as the official way to include an alias when running a REPL terminal UI `clojure` or `clj`.
+
+> [Practicalli recommends using Rebel Readline](https://practical.li/clojure/clojure-cli/repl/) which uses -M execution option, so -A execution option is rarely used by Practicalli.
+
+The `:env/dev` alias adds "dev" directory to the class path, [typically used to add a `user.clj` that will automatically load code from the `user` namespace defined in that file](https://practical.li/clojure/clojure-cli/projects/configure-repl-startup.html).
+
+```bash
+clojure -A:env/dev
+```
+
+The alias definition is `:env/dev {:extra-paths ["dev"]}`
+
+Aliases can be chained together and their configuration will be merged
+
+`:lib/hotload` adds a dependency to [provide hotloading of other dependencies](https://practical.li/clojure/alternative-tools/clojure-tools/hotload-libraries.html)
+
+```clojure
+:lib/hotload
+{:extra-deps {org.clojure/tools.deps.alpha
+                {:git/url "https://github.com/clojure/tools.deps.alpha"
+                 :sha     "d77476f3d5f624249462e275ae62d26da89f320b"}
+              org.slf4j/slf4j-nop {:mvn/version "1.7.32"}}}
+```
+
+Start a REPL process with this alias
+
+```bash
+clojure -A:env/dev:lib/hotload
+```
+
+> Using an alias that contains a `:main-opts` key with `-A` will fail to run a REPL and print a warning to use `-M` execution option
+> The `:main-opts` configuration for `-A` execution option is deprecated (although currently works in 1.10.x). To run Clojure code via `clojure.main` the `-M` option should be with aliases that includes `:main-opts`.
 
 
 ## Summary
@@ -282,3 +324,7 @@ See the [Deps and CLI Reference Rationale for more details and description of th
 
 * [Inside Clojure - clj exec](https://insideclojure.org/2020/07/28/clj-exec/)
 * [Inside Clojure - clj exec update](https://insideclojure.org/2020/09/04/clj-exec/)
+
+Thank you
+
+[practicalli GitHub profile](https://github.com/practicalli) I [@practical_li](https://twitter.com/practcial_li)
