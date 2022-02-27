@@ -192,3 +192,7 @@ Clojure applications should be tested thoroughly when adopting a new version of 
 Using the Long Term Support (LTS) versions of Java is sufficient for any Clojure application or service, so long as security patches are regularly applied.
 
 There is little advantage to following the non-LTS release cycle of every 6 months, although this is not much of a risk so long as dev>test>staging>production environments are all using the same version.
+
+Thank you
+
+[practicalli GitHub profile](https://github.com/practicalli) I [@practical_li](https://twitter.com/practcial_li)
