@@ -8,7 +8,7 @@
 
 Clojure LSP snippets are defined using the EDN syntax and have the same tab stop syntax as [Yasnippets](/posts/yasnippets-for-faster-clojure-development/) and other snippet tools.
 
-> [Clojure LSP snippets are covered in Practiclli Spacemacs](https://practical.li/spacemacs/snippets/clojure-lsp/), including a large number of examples of custom snippets
+> [Clojure LSP snippets are covered in Practiclli Spacemacs](https://practical.li/spacemacs/snippets/clojure-lsp/), including a large number of examples of custom snippets.  Install [practicalli/clojure-lsp-config](https://github.com/practicalli/clojure-lsp-config) for additions to the built-in snippets.
 
 <!-- more -->
 
@@ -19,8 +19,7 @@ Clojure LSP includes snippets as part of the completion feature, so when typing 
 ![Spacemacs LSP snippets - deps snippets in completion menu](https://raw.githubusercontent.com/practicalli/graphic-design/live/spacemacs/screenshots/spacemcs-snippets-completion-menu-deps-snippets.png)
 
 * [Built-in clojure-lsp snippets ](https://clojure-lsp.io/features/#snippets)
-
-> The current 2022.01.22-01.31.09 release of Clojure LSP only supports snippets within an existing form, such as a `(comment ,,)` form.  A fix has already been applied to the main branch and will be included in the next release.
+* [practicalli/clojure-lsp-config](https://github.com/practicalli/clojure-lsp-config) with additional snippets
 
 
 ## Writing Custom snippets
@@ -57,14 +56,14 @@ Using a tab stop number multiple times will concurrently add text to all matchin
  :detail "Git URL dependency"
  :snippet
  "${1:domain/library-name}
-    {:git/url \"https://github.com/$1:\"
+    {:git/url \"https://github.com/$1\"
      :git/sha \"${2:git-sha-value}\"}$0"}
 ```
 
 
 ### Snippet current-form
 
-Snippets using `$current-form` will pull in the next Clojure form when expanding the snippet
+Snippets using `$current-form` will pull in the next Clojure form when expanding the snippet.
 
 ```clojure
 {:additional-snippets
@@ -74,6 +73,8 @@ Snippets using `$current-form` will pull in the next Clojure form when expanding
 ```
 
 Expanding `wrap-let-sexp` before the form `(* 2 21)` will create the form `(let [life (* 2 21)])` (when `life` is typed into the first tab stop placeholder).
+
+> Note that a snippet containing $current-form will only be active when typing directly in front of an existing Clojure expression. At the top level LSP will act like the Snippet does not exist.
 
 
 ### Clojure code driven snippet - built-in snippets only
@@ -107,4 +108,6 @@ Clojure LSP can define quite rich text expansions and built-in snippets can go f
 
 [Clojure LSP snippets and Yasnippets are covered in more detail in Practiclli Spacemacs](https://practical.li/spacemacs/snippets/clojure-lsp/), including a large number of examples of custom snippets
 
-[practicalli GitHub profile](https://github.com/practicalli) I [@practical_li](https://twitter.com/practcial_li)
+[practicalli/clojure-lsp-config](https://github.com/practicalli/clojure-lsp-config) repository contains numerous additional snippets (that hopefully will be added to the built-in snippets).
+
+[practicalli GitHub Org](https://github.com/practicalli) I [@practical_li](https://twitter.com/practcial_li)
