@@ -32,23 +32,21 @@ Restarting Emacs after this removal should resolve the issue.
 
 The helm-cider package has not been updated since 2018 (it works very well, so no reason for an update until now).  So hacking the helm-cider code should be a relatively quick and safe option
 
+
 ## Fixing Helm-cider
 
 An [issue was raised on the helm-cider repository](https://github.com/clojure-emacs/helm-cider/issues/12) describing the issue.
 
-It would seem that cider-compat namespace is not actually used by helm-cider-spec.el namespace, so the fix would be to remove the `(reqiure 'cider-compat)` line.
+It would seem that cider-compat namespace is not actually used by `helm-cider-spec.el` namespace, so the fix would be to remove the `(reqiure 'cider-compat)` line.
 
 `cider-compat` provides macros to define `if-let*` and `when-let*` if they are not already present.  The helm-cider-spec namespace does not actually call either of these with the current code, so its superfluous anyway.
 
 A [pull request has been raised to delete the require](https://github.com/clojure-emacs/helm-cider/pull/13).  Hopefully the maintainer is able to push out a new version of the package.
 
 
-## Pinning CIDER package
+## Pinning a package in Spacemacs
 
-Emacs configuations such as Spacemacs and Doom tend to use the latest snapshot available for a package.  In this case you could either use a backup of a version of CIDER from before 29th December, or pin an earlier version.
-
-
-#### Pinning a package in Spacemacs
+Spacemacs uses packages from MELPA, where packages are generated daily from the latest commits of each package GitHub/GitLab repository.
 
 Pin CIDER to an earlier version by adding the following recipe to `dotspacemacs/additional-packages`
 
@@ -61,14 +59,10 @@ Pin CIDER to an earlier version by adding the following recipe to `dotspacemacs/
 
 Delete the packages `cider-*`, `clojure-mode-*` and `cider-eval-sexp-fu-*` from `~/.emacs.d/elpa/<emacs-version>/develop/`
 
-Comment out `cider` or `(cider ,,,)` from the `dotspacemacs-configuration-layers` (as that will automatically download the latest version)
-
-Restart and the pinned version of Cider will be installed.
-
-If you have clojure variables set in the layer list, then you can uncomment them and restart for those to take effect (this will not update the package, that will only be done if using `SPC f e U` )
+Reload the Spacemacs configuration, `SPC f e R`, or restart Emacs, `SPC q r` and the pinned version of Cider will be installed.
 
 
-#### Pinning a package in Doom
+## Pinning a package in Doom
 
 All of Doom's packages are pinned by default. A pinned package is a package locked to a specific commit. So to pin CIDER to a version is of the form:
 
