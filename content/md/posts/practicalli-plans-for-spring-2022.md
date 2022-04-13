@@ -30,7 +30,7 @@ Each book GitHub repository lists additional ideas as issues for the community t
 
 A book for those starting their journey into Clojure, taking the [REPL driven development approach](https://practical.li/clojure/repl-driven-development.html).  The book covers install and configuration of Clojure CLI, Clojure aware editors and data inspectors.  Using those tools to learn Clojure through a series of challenges and small projects.  Complementing REPL Driven Development with Test Driven Development
 
-![Practicalli Clojure book banner](https://raw.githubusercontent.com/practicalli/graphic-design/live/book-covers/practicalli-clojure-web-services-book-banner.png)
+![Practicalli Clojure book banner](https://raw.githubusercontent.com/practicalli/graphic-design/live/book-covers/practicalli-clojure-book-banner.png)
 
 The plan is to migrate to the [tools.build approach](https://clojure.org/guides/tools_build) and adopt more tools using the `-T` execution option, both as installed tools and via user level aliases.
 
