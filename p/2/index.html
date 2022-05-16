@@ -58,6 +58,23 @@
     
     <div class="post-header">
         <h2>
+            <a href="/blog/posts/clojure-which-execution-option-to-use/">Clojure CLI - which execution option to use</a>
+        </h2>
+        <div id="post-meta">
+            
+            <div class="date">December 24, 2021</div>
+        </div>
+        <!-- conditional topic logo displayed if :topic has value in a post -->
+        
+        <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/clojure-cli-logo-name.png" alt="clojure-cli logo" />
+        
+    </div>
+    <p>Execution options (-A -M -T -X) define how aliases are used with the Clojure CLI. Aliases are included via one of these execution options and each option can affect how the alias is used.</p><p>Since the <a href="https://clojure.org/releases/tools#v1.10.1.510">first documented released</a> which exclusively used the <code>-A</code> execution option to include aliases, the design has evolved to provide specific execution options to run code via clojure.main (<code>-M</code>) and clojure.exec (<code>-X</code>). In July 2021, the ability to run tools (<code>-T</code>) independent from the Clojure project classpath was also introduced.</p><p>The exec-opts command line flags have evolved to enable these features, so lets explore those flags and show how each flag is typically used.</p>
+    <a href="/blog/posts/clojure-which-execution-option-to-use/">Continue reading &#8594;</a>
+    <hr>
+    
+    <div class="post-header">
+        <h2>
             <a href="/blog/posts/clojure-cli-tools-understanding-aliases/">Clojure CLI tools - understanding aliases</a>
         </h2>
         <div id="post-meta">
@@ -124,24 +141,6 @@
     <a href="/blog/posts/brave-clojure-redux-part01-the-repl/">Continue reading &#8594;</a>
     <hr>
     
-    <div class="post-header">
-        <h2>
-            <a href="/blog/posts/clojure-repl-jack-in-or-connect/">Clojure CLI tools - To jack-in or connect, that is the question</a>
-        </h2>
-        <div id="post-meta">
-            
-            <div class="date">December 31, 2020</div>
-        </div>
-        <!-- conditional topic logo displayed if :topic has value in a post -->
-        
-        <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/clojure-cli-logo-name.png" alt="clojure-cli logo" />
-        
-    </div>
-    <p><em>To jack-in or connect, that is the question</em>.
-<em>Whether it is more effective to relying on the editor to auto-inject the required dependencies for every workflow, or assemble your own aliases them include any editor</em> - William "Hacker" Shakespear</p><p>A REPL is the central part of Clojure development. For the full workflow, an editor connects to the REPL to evaluate code and show instant results.</p><p>The developer can be in control of how the REPL starts, managing libraries and tools used alongside the REPL.  Or the editor can automate the process and control how the REPL is started.</p>
-    <a href="/blog/posts/clojure-repl-jack-in-or-connect/">Continue reading &#8594;</a>
-    <hr>
-    
 
     <div id="prev-next">
         
@@ -172,6 +171,8 @@
                     <h3>Recent Posts</h3>
                     <ul>
                         
+                        <li><a href="/blog/posts/build-emacs-28-on-ubuntu/">Building Emacs 28 on Ubuntu Linux</a></li>
+                        
                         <li><a href="/blog/posts/practicalli-plans-for-spring-2022/">Practicalli content plans for Spring 2022</a></li>
                         
                         <li><a href="/blog/posts/java-17-lts-for-clojure-development/">Java 17 JDK for Clojure development</a></li>
@@ -187,8 +188,6 @@
                         <li><a href="/blog/posts/automate-cryogen-clojure-blog-with-github-actions/">Automate Cryogen Clojure blog with GitHub Actions</a></li>
                         
                         <li><a href="/blog/posts/overview-of-language-server-protocol-lsp-for-clojure-development/">Overview of Language Server Protocol LSP for Clojure development</a></li>
-                        
-                        <li><a href="/blog/posts/brave-clojure-redux-part01-the-repl/">Brave Clojure redux - part 1 - the REPL</a></li>
                         
                     </ul>
                 </div>
