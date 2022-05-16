@@ -69,14 +69,7 @@
         <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/ubuntu-logo-name.png" alt="ubuntu logo" />
         
     </div>
-    <p>Emacs 28.1 is <a href="https://www.masteringemacs.org/article/whats-new-in-emacs-28-1" title="What is new in Emacs 28.1">a feature packed release</a> and includes native compilation to significantly increase the speed of all Emacs software packages installed.  This is a very noticable difference, especially when Emacs is at the center of your developer workflow.</p><p>Ubuntu hasn't packaged Emacs 28.1 yet, although its <em>usually</em> straight forward to build Emacs yourself.  A very brief summary:</p><pre><code>sudo apt build-dep emacs &amp;&amp; /
-sudo apt install libgccjit0 libgccjit-10-dev libjansson4 libjansson-dev gnutls-bin &amp;&amp; /
-## Download Emacs source and extract to ~/Download/emacs28-1 &amp;&amp; /
-cd ~/Downloads/emacs28-1 &amp;&amp; /
-export CC=/usr/bin/gcc-10  &amp;&amp; export CXX=/usr/bin/gcc-10 &amp;&amp; ./autogen.sh &amp;&amp; ./configure --with-native-compilation --with-x-toolkit=gtk3 &amp;&amp; /
-make -j$(proc)  &amp;&amp; /
-make install
-</code></pre>
+    <p>Emacs 28.1 is <a href="https://www.masteringemacs.org/article/whats-new-in-emacs-28-1" title="What is new in Emacs 28.1">a feature packed release</a> and includes native compilation to significantly increase the speed of all Emacs software packages installed.  This is a very noticable difference, especially when Emacs is at the center of your developer workflow.</p><p>Ubuntu hasn't packaged Emacs 28.1 yet, although its <em>usually</em> straight forward to build Emacs yourself.</p><!-- more -->
     <a href="/blog/posts/build-emacs-28-on-ubuntu/">Continue reading &#8594;</a>
     <hr>
     
