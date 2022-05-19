@@ -153,6 +153,10 @@ For example, Magit Forge uses authinfo.gpg to define a connection to GitHub or G
                       "~/.authinfo.gpg"))
 ```
 
+## Doom Emacs
+
+If Emacs configuration is detected in ~/.config/emacs then Doom will install its configuration in `~/.config/doom`, so long as `DOOMDIR` has not already been configured to a different location by the user.
+
 
 ## Git
 
