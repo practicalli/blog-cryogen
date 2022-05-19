@@ -172,11 +172,15 @@ git config --global user.email "123456+practicalli-john@users.noreply.github.com
 git config --global merge.conflictstyle diff3
 ```
 
-Add the global excludes file to the Git config file using relative location (add your ignore-global file to the `XDG_CONFIG_HOME/git` directory)
+Add an ignore-global file to the `XDG_CONFIG_HOME/git` directory. Example excludes files can be found at [github/gitignore repository](https://github.com/github/gitignore) or at [practicalli/dotfiles](https://github.com/practicalli/dotfiles)
+
+Add an excludes file to the Git config file containing the patterns used across all the users projects.
 
 ```
-git config --global core.excludesFile ignore-global
+git config --global core.excludesFile ~/.config/git/ignore-global
 ```
+
+> The git ignore file should be defined with the full path so tools like projectile can find that ignore file.
 
 `XDG_CONFIG_HOME/git/template` is a common location for scripts and hooks that should be added to a newly created Git repository, in the `.git` directory.  The template location is set by `init.templatedir`
 
