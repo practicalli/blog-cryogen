@@ -74,6 +74,12 @@ export XDG_STATE_HOME=$HOME/.local/state`
 export XDG_CACHE_HOME=$HOME/.cache`
 ```
 
+To apply these environment variables, logout of the desktop environment, then login again.  Now the environment variables are set.
+
+To test before logout/login, in a terminal run the command `source ~/.profile` and the environment variables will be available in that terminal session.
+
+### Command Line
+
 The shell and all command line tools will use environment variables in `~/.profile`.  Or they can be set in the respective resource files for the terminal shell to add environment variables
 
 * bash - use `~/.bashrc`
