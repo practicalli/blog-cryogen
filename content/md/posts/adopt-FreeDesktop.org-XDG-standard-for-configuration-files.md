@@ -113,7 +113,7 @@ Other application specific environment variables should be added to `.zshevn` fi
 > TIP: Once installed, any prezto configuration files that will be added can be copied from the `.zprezto/runcoms` directory to `XDG_CONFIG_HOME/zsh`, rather than linking as the documentation suggests. This approach minimises the need to merge changes when updating prezto.
 
 
-## Neovim XDG/nvim
+## Neovim
 
 Neovim supports the XDG basedir specification and will use `~/.config/nvim` directory by default.
 
