@@ -92,7 +92,7 @@ export SPACEMACSDIR="$XDG_CONFIG_HOME/spacemacs"
   (setq auth-sources (list
                       (concat (getenv "XDG_CONFIG_HOME") "/authinfo.gpg")
                       "~/.authinfo.gpg"))
-</code></pre><h2 id="git">Git</h2><p>Git will write to and read from <code>XDG_CONFIG_HOME/git/config</code> as its configuration, if that file exists and <code>~/.gitconfg</code> does not exist.  Otherwise <code>~/.gitconfg</code> is used.</p><p>Before running any <code>git</code> commands, create a config file in the XDG location</p><pre><code class="bash">mkdir  $XDG_CONFIG_HOME/git &amp;&amp; touch  $XDG_CONFIG_HOME/git/config
+</code></pre><h2 id="doom-emacs">Doom Emacs</h2><p>If Emacs configuration is detected in ~/.config/emacs then Doom will install its configuration in <code>~/.config/doom</code>, so long as <code>DOOMDIR</code> has not already been configured by the user.</p><h2 id="git">Git</h2><p>Git will write to and read from <code>XDG_CONFIG_HOME/git/config</code> as its configuration, if that file exists and <code>~/.gitconfg</code> does not exist.  Otherwise <code>~/.gitconfg</code> is used.</p><p>Before running any <code>git</code> commands, create a config file in the XDG location</p><pre><code class="bash">mkdir  $XDG_CONFIG_HOME/git &amp;&amp; touch  $XDG_CONFIG_HOME/git/config
 </code></pre><p><code>git config</code> commands will now update the XDG configuration file, e.g. setting the user identity and configure diff to use the diff3 (shared parent) for merge conflicts</p><pre><code class="bash">git config --global user.name "John Practicalli"
 git config --global user.email "123456+practicalli-john@users.noreply.github.com"
 git config --global merge.conflictstyle diff3
