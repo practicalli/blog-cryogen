@@ -126,8 +126,11 @@ Other application specific environment variables should be added to `.zshevn` fi
 
 Neovim supports the XDG basedir specification and will use `~/.config/nvim` directory by default.
 
+All the packages installed, such as the excellent [Conjure](https://github.com/Olical/conjure) for Clojure development (and many other fun languages), will therefore be part of the `~/.config/neovim` configuration.
+
 Vim does not support the basedir.  However, when Neovim is installed as a .deb package it will be used for the vim command (set via `/etc/alternatives/vim`)
 
+> [Practicalli Neovim](https://practical.li/neovim/) is the start of a new book on setting up Neovim with Clojure, LSP, Treesitter and many other packages, using fennel (a lisp dialect) for its configuration.  More details coming soon.
 
 ## Emacs and Spacemacs Configuration
 
