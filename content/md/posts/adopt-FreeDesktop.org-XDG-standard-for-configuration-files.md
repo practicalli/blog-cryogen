@@ -65,13 +65,16 @@ For example, the `XDG_CONFIG_HOME` is defined for all applications and `SPACEMAC
 # Ensure XDG_CONFIG_HOME is set when launching apps from destktop
 export XDG_CONFIG_HOME="$HOME/.config"
 
+# Application specific
+export SPACEMACSDIR="$XDG_CONFIG_HOME/spacemacs"
+
 # Optional extra
 export XDG_DATA_HOME=$HOME/.local/share`
 export XDG_STATE_HOME=$HOME/.local/state`
 export XDG_CACHE_HOME=$HOME/.cache`
 ```
 
-The shell and therefore command line tools also use environment variables in `~/.profile`.  Or they can be set in the respective resource files for the terminal shell to add environment variables
+The shell and all command line tools will use environment variables in `~/.profile`.  Or they can be set in the respective resource files for the terminal shell to add environment variables
 
 * bash - use `~/.bashrc`
 * zsh - use `~/.zprofile` or `.zshenv`
