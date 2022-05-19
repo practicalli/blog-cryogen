@@ -96,8 +96,8 @@ export SPACEMACSDIR="$XDG_CONFIG_HOME/spacemacs"
 </code></pre><p><code>git config</code> commands will now update the XDG configuration file, e.g. setting the user identity and configure diff to use the diff3 (shared parent) for merge conflicts</p><pre><code class="bash">git config --global user.name "John Practicalli"
 git config --global user.email "123456+practicalli-john@users.noreply.github.com"
 git config --global merge.conflictstyle diff3
-</code></pre><p>Add the global excludes file to the Git config file using relative location (add your ignore-global file to the <code>XDG_CONFIG_HOME/git</code> directory)</p><pre><code>git config --global core.excludesFile ignore-global
-</code></pre><p><code>XDG_CONFIG_HOME/git/template</code> is a common location for scripts and hooks that should be added to a newly created Git repository, in the <code>.git</code> directory.  The template location is set by <code>init.templatedir</code></p><pre><code>mkdir  $XDG_CONFIG_HOME/git/template
+</code></pre><p>Add an ignore-global file to the <code>XDG_CONFIG_HOME/git</code> directory. Example excludes files can be found at <a href="https://github.com/github/gitignore">github/gitignore repository</a> or at <a href="https://github.com/practicalli/dotfiles">practicalli/dotfiles</a></p><p>Add an excludes file to the Git config file containing the patterns used across all the users projects.</p><pre><code>git config --global core.excludesFile ~/.config/git/ignore-global
+</code></pre><blockquote><p>The git ignore file should be defined with the full path so tools like projectile can find that ignore file.</p></blockquote><p><code>XDG_CONFIG_HOME/git/template</code> is a common location for scripts and hooks that should be added to a newly created Git repository, in the <code>.git</code> directory.  The template location is set by <code>init.templatedir</code></p><pre><code>mkdir  $XDG_CONFIG_HOME/git/template
 
 git config --global init.templatedir template
 </code></pre><h2 id="clojure-cli">Clojure CLI</h2><p>The <code>XDG_CONFIG_HOME/clojure</code> directory is the location for the Clojure CLI user level configuration files (e.g. <code>deps.edn</code>, <code>tools/tools.edn</code>).</p><p>If <code>XDG_CONFIG_HOME</code> is not set or that location is not found, then <code>HOME/.clojure</code> is used instead.</p><blockquote><p>If <code>CLJ_CONFIG</code> is set to a value, then Clojure CLI commands will use that instead.</p></blockquote><h2 id="clojure-lsp">Clojure LSP</h2><p><code>XDG_CONFIG_HOME/clojure-lsp</code> directory is the location for Clojure LSP configuration.  Otherwise, <code>$HOME/.clojure-lsp</code> (or the deprecated <code>~/.lsp</code>) directory is used.</p><h2 id="intellij-idea-and-cursive">Intellij Idea and Cursive</h2><p>Intellij Idea from version 2020.1 uses the XDG basdir specification locations without the need to set XDG_CONFIG_HOME.</p><p>Configuration is organised under the ~/.config/JetBrains/ directory with product and version sub-directories, for example:</p><pre><code>~/.config/JetBrains/IntelliJIdea2022.1
@@ -123,8 +123,10 @@ ln -s $XDG_CONFIG_HOME/leiningen ~/.lein
 
     <div id="prev-next">
         
+        <a href="/blog/posts/build-emacs-28-on-ubuntu/">&laquo; Building Emacs 28 on Ubuntu Linux</a>
         
-        <a class="right" href="/blog/posts/build-emacs-28-on-ubuntu/">Building Emacs 28 on Ubuntu Linux &raquo;</a>
+        
+        <a class="right" href="/blog/posts/practicalli-plans-for-spring-2022/">Practicalli content plans for Spring 2022 &raquo;</a>
         
     </div>
 
@@ -165,9 +167,9 @@ ln -s $XDG_CONFIG_HOME/leiningen ~/.lein
                     <h3>Recent Posts</h3>
                     <ul>
                         
-                        <li><a href="/blog/posts/adopt-FreeDesktop.org-XDG-standard-for-configuration-files/">Adopting FreeDesktop.org XDG standard for development tools</a></li>
-                        
                         <li><a href="/blog/posts/build-emacs-28-on-ubuntu/">Building Emacs 28 on Ubuntu Linux</a></li>
+                        
+                        <li><a href="/blog/posts/adopt-FreeDesktop.org-XDG-standard-for-configuration-files/">Adopting FreeDesktop.org XDG standard for development tools</a></li>
                         
                         <li><a href="/blog/posts/practicalli-plans-for-spring-2022/">Practicalli content plans for Spring 2022</a></li>
                         
