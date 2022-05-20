@@ -143,6 +143,7 @@ Vim does not support the basedir.  However, when Neovim is installed as a .deb p
 
 > [Practicalli Neovim](https://practical.li/neovim/) is the start of a new book on setting up Neovim with Clojure, LSP, Treesitter and many other packages, using fennel (a lisp dialect) for its configuration.  More details coming soon.
 
+
 ## Emacs and Spacemacs Configuration
 
 Emacs will use `XDG_CONFIG_HOME/emacs` location if it contains an `init.el` file.
@@ -178,7 +179,7 @@ For example, Magit Forge uses authinfo.gpg to define a connection to GitHub or G
 
 ## Doom Emacs
 
-If Emacs configuration is detected in ~/.config/emacs then Doom will install its configuration in `~/.config/doom`, so long as `DOOMDIR` has not already been configured to a different location by the user.
+If Emacs configuration is detected in `$HOME/.config/emacs` then Doom will install its configuration in `$HOME/.config/doom`, so long as `DOOMDIR` has not already been configured to a different location by the user.
 
 
 ## Git
@@ -249,6 +250,16 @@ ln -s $XDG_DATA_HOME/maven $XDG_CONFIG_HOME/maven/repository
 ```
 
 > The `$XDG_DATA_HOME` location for user-specific data files defaults to `$HOME/.local/share`.  Use `source ~/.profile` if adding the XDG_DATA_HOME environment variable after loging into the current desktop session.
+
+
+### Clojure Gitlibs
+
+Clojure CLI can used dependencies from Git repositories.  To do so, the repository is downloaded into a `$HOME/.gitlibs` directory.  As the `gitlibs` directory contains data for the application, then ideally this would be placed in `XDG_DATA_HOME`, under a clojure-gitlibs directory
+
+```
+mv $HOME/.gitlibs/ $XDG_DATA_HOME/clojure-gitlibs
+ln -s $XDG_DATA_HOME/clojure-gitlibs $HOME/.gitlibs
+```
 
 
 ## Clojure LSP
