@@ -43,6 +43,16 @@ Each location organises application specific files within a directory of the sam
 
 A detailed description is covered in [the freedesktop.org basedir specification](https://specifications.freedesktop.org/basedir-spec/latest/ar01s03.html).
 
+### MacOSX XDG Paths
+
+According to Apple documentation, the XDG Base directory specifications should use these locations
+
+* `XDG_CONFIG_HOME` -︎ `~/Library/Preferences/` using reverse domain name notation: `com.apple.AppStore.appname`
+* `XDG_DATA_HOME` -︎ `~/Library/`
+* `XDG_CACHE_HOME` -︎ `~/Library/Caches/`
+
+See the [Mac OS X Reference Library: Where to Put Application Files](http://developer.apple.com/library/mac/#documentation/MacOSX/Conceptual/BPFileSystem/Articles/WhereToPutFiles.html) and [Mac OS X Reference Library: Important Java Directories on Mac OS X](https://developer.apple.com/library/archive/qa/qa1170/)
+
 
 ## Configuring Linux / Unix operating system
 
