@@ -63,15 +63,16 @@ For example, the `XDG_CONFIG_HOME` is defined for all applications and `SPACEMAC
 
 ```
 # Ensure XDG_CONFIG_HOME is set when launching apps from destktop
-export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CONFIG_HOME=$HOME/.config
 
 # Application specific
-export SPACEMACSDIR="$XDG_CONFIG_HOME/spacemacs"
+export SPACEMACSDIR=$XDG_CONFIG_HOME/spacemacs
 
 # Optional extra
-export XDG_DATA_HOME=$HOME/.local/share`
-export XDG_STATE_HOME=$HOME/.local/state`
-export XDG_CACHE_HOME=$HOME/.cache`
+export XDG_CONFIG_HOME=$HOME/.config
+export XDG_DATA_HOME=$HOME/.local/share
+export XDG_STATE_HOME=$HOME/.local/state
+export XDG_CACHE_HOME=$HOME/.cache
 ```
 
 To apply these environment variables, logout of the desktop environment, then login again.  Now the environment variables are set.
@@ -184,7 +185,7 @@ mkdir  $XDG_CONFIG_HOME/git && touch  $XDG_CONFIG_HOME/git/config
 
 ```bash
 git config --global user.name "John Practicalli"
-git config --global user.email "123456+practicalli-john@users.noreply.github.com"
+git config --global user.email "******+account-name@users.noreply.github.com"
 git config --global merge.conflictstyle diff3
 ```
 
@@ -213,7 +214,31 @@ The `XDG_CONFIG_HOME/clojure` directory is the location for the Clojure CLI user
 
 If `XDG_CONFIG_HOME` is not set or that location is not found, then `HOME/.clojure` is used instead.
 
-> If `CLJ_CONFIG` is set to a value, then Clojure CLI commands will use that instead.
+If `CLJ_CONFIG` is set to a value, then Clojure CLI commands will use that instead.
+
+> Also see Maven and dependencies to manage the `$HOME/.m2` directory
+
+
+## Maven and dependencies
+
+Clojure CLI and Leiningen use the Maven configuration directory, to store Jar files from project (and tooling) dependencies, located in `$HOME/.m2/repository`
+
+The Maven `$HOME/.m2` directory also [contains several configuration files](https://maven.apache.org/configure.html), `maven.config`, `jvm.config` and `extensions.xml`, so unfortunately conflates configuration files with data files.
+
+Move the `$HOME/.m2` directory to `$XDG_CONFIG_HOME/maven` and create a symbolic link called `$HOME/.m2`
+
+```
+ln -s $XDG_CONFIG_HOME/maven $HOME/.m2
+```
+
+To separate the data files, move the `$XDG_CONFIG_HOME/maven/repository` directory to `$XDG_DATA_HOME/maven`.  Then create a symbolic link to allow Maven to find the repository.
+
+```
+mv $XDG_CONFIG_HOME/maven/repository $XDG_DATA_HOME/maven
+ln -s $XDG_DATA_HOME/maven $XDG_CONFIG_HOME/maven/repository
+```
+
+> The `$XDG_DATA_HOME` location for user-specific data files defaults to `$HOME/.local/share`.  Use `source ~/.profile` if adding the XDG_DATA_HOME environment variable after loging into the current desktop session.
 
 
 ## Clojure LSP
