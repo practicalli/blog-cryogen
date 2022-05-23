@@ -301,7 +301,14 @@ Unfortunately XDG basedir specification is not currently supported by VS Code an
 
 There is an outstanding issue on the VS Code, also from 2016, to [revisit the configuration structure and support XDG_CONFIG_HOME](https://github.com/microsoft/vscode/issues/3884).
 
-Using a symbolic link as with Leiningen should work for VS Code too.
+Using the symbolic link workaround, as with Leiningen, should work for VS Code too.
+
+```
+mv $HOME/.vscode $XDG_CONFIG_HOME/vscode
+ln -s $XDG_CONFIG_HOME/vscode $HOME/.vscode
+```
+
+> It is advisable to close VS Code before moving the configuration, to ensure the configuration has been saved.
 
 
 ## Summary
