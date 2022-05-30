@@ -78,11 +78,11 @@ export XDG_CONFIG_HOME=$HOME/.config
 # Application specific
 export SPACEMACSDIR=$XDG_CONFIG_HOME/spacemacs
 
-# Optional extra
-export XDG_CONFIG_HOME=$HOME/.config
+
+# Recommended locations
 export XDG_DATA_HOME=$HOME/.local/share
-export XDG_STATE_HOME=$HOME/.local/state
 export XDG_CACHE_HOME=$HOME/.cache
+export XDG_STATE_HOME=$HOME/.local/state
 ```
 
 To apply these environment variables, logout of the desktop environment, then login again.  Now the environment variables are set.
@@ -177,6 +177,7 @@ For example, Magit Forge uses authinfo.gpg to define a connection to GitHub or G
                       "~/.authinfo.gpg"))
 ```
 
+
 ## Doom Emacs
 
 If Emacs configuration is detected in `$HOME/.config/emacs` then Doom will install its configuration in `$HOME/.config/doom`, so long as `DOOMDIR` has not already been configured to a different location by the user.
@@ -227,44 +228,48 @@ If `XDG_CONFIG_HOME` is not set or that location is not found, then `HOME/.cloju
 
 If `CLJ_CONFIG` is set to a value, then Clojure CLI commands will use that instead.
 
-> Also see Maven and dependencies to manage the `$HOME/.m2` directory
+> Also see Maven and dependencies to manage the `$HOME/.m2/repository` directory
 
 
 ## Maven and dependencies
 
-Clojure CLI and Leiningen use the Maven configuration directory, to store Jar files from project (and tooling) dependencies, located in `$HOME/.m2/repository`
+Clojure CLI and Leiningen use the Maven configuration directory to store Jar files from project (and tooling) dependencies, by default this is located in `$HOME/.m2/repository`.
 
-The Maven `$HOME/.m2` directory also [contains several configuration files](https://maven.apache.org/configure.html), `maven.config`, `jvm.config` and `extensions.xml`, so unfortunately conflates configuration files with data files.
+Jar files from dependencies are considered non-essential (to the Clojure CLI tool) so should be written to the $XDG_CACHE_HOME location, typically `$HOME/.cache`
 
-Move the `$HOME/.m2` directory to `$XDG_CONFIG_HOME/maven` and create a symbolic link called `$HOME/.m2`
+Add the `:mvn/local-repo` top-level key in the user level deps.edn file to set a location for the Maven repository.
 
-```
-ln -s $XDG_CONFIG_HOME/maven $HOME/.m2
-```
-
-To separate the data files, move the `$XDG_CONFIG_HOME/maven/repository` directory to `$XDG_DATA_HOME/maven`.  Then create a symbolic link to allow Maven to find the repository.
-
-```
-mv $XDG_CONFIG_HOME/maven/repository $XDG_DATA_HOME/maven
-ln -s $XDG_DATA_HOME/maven $XDG_CONFIG_HOME/maven/repository
+```clojure
+:mvn/local-repo ".cache/maven/repository"
 ```
 
-> The `$XDG_DATA_HOME` location for user-specific data files defaults to `$HOME/.local/share`.  Use `source ~/.profile` if adding the XDG_DATA_HOME environment variable after loging into the current desktop session.
+The `:mvn/local-repo` can also be used in a project deps.edn file or on the command line, i.e. `clojure -Sdeps '{:mvn/local-repo ".cache/temp-deps"}'` if the Maven dependencies should be kept separate from all other projects (this scenario is not common).
+
+The Maven `$HOME/.m2` directory also [contains several configuration files](https://maven.apache.org/configure.html), `maven.config`, `jvm.config` and `extensions.xml`, so unfortunately conflates configuration files with data files.  Although Clojure CLI does not use these configuration files, it is useful to separate the jar files into a cache.
 
 
 ### Clojure Gitlibs
 
-Clojure CLI can used dependencies from Git repositories.  To do so, the repository is downloaded into a `$HOME/.gitlibs` directory.  As the `gitlibs` directory contains data for the application, then ideally this would be placed in `XDG_DATA_HOME`, under a clojure-gitlibs directory
+Clojure CLI can used dependencies from Git repositories.  To do so, the repository is downloaded into a `$HOME/.gitlibs` directory, unless the `GITLIBS` environment variable is set.  As the `gitlibs` directory contains data for the application, then ideally this would be placed in `XDG_CACHE_HOME`, under a `clojure-gitlibs` directory
+
+Set the `GITLIBS` environment variable to determine the location of the local cache directory used to clone dependencies that are Git repositories.
 
 ```
-mv $HOME/.gitlibs/ $XDG_DATA_HOME/clojure-gitlibs
-ln -s $XDG_DATA_HOME/clojure-gitlibs $HOME/.gitlibs
+export $GITLIBS=$XDG_CACHE_HOME/clojure-libs
+```
+
+Optionally move the existing `$HOME/.gitlibs` to the Cache home.
+
+```
+mv $HOME/.gitlibs $XDG_CACHE_HOME/clojure-gitlibs
 ```
 
 
 ## Clojure LSP
 
-`XDG_CONFIG_HOME/clojure-lsp` directory is the location for Clojure LSP configuration.  Otherwise, `$HOME/.clojure-lsp` (or the deprecated `~/.lsp`) directory is used.
+`XDG_CONFIG_HOME/clojure-lsp` directory is used as the location for Clojure LSP configuration if `XDG_CONFIG_HOME` is set.  Otherwise, `$HOME/.clojure-lsp` is used as the configuration.
+
+> If Clojure LSP was used for for a while, configuration may be in the deprecated `~/.lsp` directory.
 
 
 ## Intellij Idea and Cursive
