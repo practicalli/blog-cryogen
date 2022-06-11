@@ -237,10 +237,10 @@ Clojure CLI and Leiningen use the Maven configuration directory to store Jar fil
 
 Jar files from dependencies are considered non-essential (to the Clojure CLI tool) so should be written to the $XDG_CACHE_HOME location, typically `$HOME/.cache`
 
-Add the `:mvn/local-repo` top-level key in the user level deps.edn file to set a location for the Maven repository.
+Add the `:mvn/local-repo` top-level key in the user level deps.edn file to set a location for the Maven repository.  The value should be the full directory path.
 
 ```clojure
-:mvn/local-repo ".cache/maven/repository"
+:mvn/local-repo "/home/practicalli/.cache/maven/repository"
 ```
 
 The `:mvn/local-repo` can also be used in a project deps.edn file or on the command line, i.e. `clojure -Sdeps '{:mvn/local-repo ".cache/temp-deps"}'` if the Maven dependencies should be kept separate from all other projects (this scenario is not common).
