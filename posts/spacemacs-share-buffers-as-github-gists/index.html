@@ -2,8 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
     <meta charset="utf-8"/>
-    <title>Practicalli</title>
-    <link rel="canonical" href="http://practical.li">
+    <title>Practicalli: Spacemacs - Share Buffers via Github Gists</title>
+    <link rel="canonical" href="http://practical.li/blog/posts/spacemacs-share-buffers-as-github-gists/">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu|Ubuntu+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
@@ -55,44 +55,67 @@
             <div id="content">
                 
 <div id="post">
-    
     <div class="post-header">
-        <h2>
-            <a href="/blog/posts/2014-11-04-second-post/">Yet Another Post</a>
-        </h2>
-        <div id="post-meta">
-            
-            <div class="date">November 4, 2014</div>
-        </div>
-        <!-- conditional topic logo displayed if :topic has value in a post -->
+    <div id="post-meta" class="row">
+        <div class="col-lg-6">March 13, 2016</div>
         
     </div>
-    <h3 id="this-post-so-fetch">This Post So Fetch</h3><p>some more stuff happened</p>
-    <a href="/blog/posts/2014-11-04-second-post/">Continue reading &#8594;</a>
-    <hr>
+    <h2>Spacemacs - Share Buffers via Github Gists</h2>
+
+    <!-- conditional topic logo displayed if :topic has value in a post -->
     
-    <div class="post-header">
-        <h2>
-            <a href="/blog/posts/2014-03-10-first-post/">A Post</a>
-        </h2>
-        <div id="post-meta">
-            
-            <div class="date">March 10, 2014</div>
-        </div>
-        <!-- conditional topic logo displayed if :topic has value in a post -->
-        
-    </div>
-    <h3 id="this-post-not-fetch-enough">This Post Not Fetch Enough</h3><p>some stuff happened</p><blockquote><p>Stop trying to make fetch happen.</p><ul><li>Regina</li></ul></blockquote>
-    <a href="/blog/posts/2014-03-10-first-post/">Continue reading &#8594;</a>
-    <hr>
+    <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/spacemacs-logo-name.png" alt="spacemacs logo - post topic" />
     
+</div>
+<div>
+    
+    <blockquote><p>The Spacemacs <strong>github</strong> layer has been deprecated and gist.el is longer a reliable tool to work with GitHub gists unfortunately</p></blockquote><p><a href="https://gist.github.com/">Github Gists</a> proved a simple way to share a piece of code, configuration or documentation without setting up a full version control project.  Rather than use copy &amp; paste, a Gist can be created from any <a href="https://github.com/syl20bnr/spacemacs">Spacemacs</a> buffer or region with a single command.</p><p>Add the <code>github</code> layer to the <code>~/.spacemacs</code> configuration file and reload your configuration, <code>SPC f e R</code>, or restart Spacemacs <code>SPC q r</code>.  Lets see just how easy it is to use Gists with Spacemacs.</p><blockquote><p>You can also use <a href="https://github.com/defunkt/gist.el">gist.el</a> with your own Emacs configuration</p></blockquote><!-- more --><h2 id="configure-github-access">Configure GitHub Access</h2><p>Spacemacs will use the <a href="https://practical.li/spacemacs/source-control/github-configuration.html">GitHub account name and an access token added to your Git configuration</a> to avoid the need to provide username, password and 2Factor code each time Spacemacs interacts with GitHub.</p><p>Add your GitHub account name by editing <code>~/.gitconfig</code> or using the following command</p><pre><code>git config --global github.user practicalli
+
+</code></pre><p>Visit your Github profile page and view the <strong>personal acccess tokens</strong> section.  Create a token with the <strong>gist</strong> and <strong>repo</strong> access permissions and copy the long token string. Add the token to your <code>~/.gitconfig</code> file using the command:</p><pre><code> git config --global github.oauth-token therealtokenvalueshouldbepastedhere
+</code></pre><p>The <code>~/.gitconfig</code> configuration file should contain a <code>[github]</code> section with <code>user</code> and <code>oauth-token</code> key/value pairs</p><pre><code>[github]
+    user = practicalli
+    oauth-token = thisishweretherealtokenshouldbepasted
+</code></pre><blockquote><p>Practicalli Spacemacs contains Git and GitHub configurations and</p></blockquote><h2 id="github-gist-menu-keybindings">GitHub Gist Menu keybindings</h2><p><img src="https://raw.githubusercontent.com/practicalli/graphic-design/live/spacemacs/screenshots/practicalli-spacemacs-github-gist-menu.png" alt="Spacemacs GitHub Gist menu" /></p><ul><li><code>SPC g g b</code> : create a public gist from the current Spacemacs buffer</li><li><code>SPC g g B</code> : create a private gist from the current Spacemacs buffer</li><li><code>SPC g g r</code> : create a public gist from the highlighted region</li><li><code>SPC g g R</code> : create a private gist from the highlighted region</li><li><code>SPC g g l</code> : list all gists on your github account</li></ul><blockquote><p>Replace <code>SPC</code> with <code>M-m</code> if using Spacemacs Holy (Emacs) mode</p></blockquote><h2 id="create-a-gist-from-spacemacs">Create a Gist from Spacemacs</h2><p><code>SPC g g b</code> (<code>gist-buffer</code>) creates a GitHub Gist from the current buffer and copies the URL of that Gist into the kill ring.</p><p><img src="/blog/images/spacemacs-gist-create-from-buffer.png" alt="Gist - create a Gist from the current buffer" /></p><p><code>SPC g g r</code> (<code>gist-region</code>) creates a gist from the selected region of the buffer.  Select a region using <code>v</code> or <code>C-SPC</code> and vim navigation keys or arrow keys.</p><h2 id="updating-a-gist">Updating a Gist</h2><p>A Gist created from a buffer has no direct link between your buffer and the Gist.  So if you make changes to your buffer you want to share, you can generate a new gist using <code>M-x gist-buffer</code> &amp; delete the original one (see listing &amp; managing gists below).</p><p>Alternatively, once you have created a Gist, you can open that Gist in a buffer and make changes.  When you save your changes in the Gist buffer, <code>C-x C-s</code>, the gist on gist.github.com is updated.</p><h2 id="listing--managing-gists">Listing &amp; managing Gists</h2><p>Use the command <code>M-x gist-list</code> or keybinding <code>M-m g g l</code> to show a list of your current Gists.</p><p><img src="/blog/images/spacemacs-gist-list.png" alt="Spacemacs - Gist list" /></p><p>In the buffer containing the list of your gists, you can use the following commands</p><ul><li><code>RETURN</code> : opens the gist in a new buffer</li><li><code>g</code> : reload the gist list from server</li><li><code>e</code> : edit the gist description, so you know what this gist is about</li><li><code>k</code> : delete current gist</li><li><code>b</code> : opens the gist in the current web browser</li><li><code>y</code> : show current gist url &amp; copies it into the clipboard</li><li><code>*</code> : star gist (stars do not show in gist list, only when browsing them on github)</li><li><code>^</code> : unstar gist</li><li><code>f</code> : fork gist - create a copy of your gist on gist.github.com</li><li><code>+</code> : add a file to the current gist, creating an additional snippet on the gist</li><li><code>-</code> : remove a file from the current gist</li></ul><h1 id="creating-gists-from-files">Creating Gists from files</h1><p>If you open a dired buffer you can make gists from marked files, <code>m</code>, by pressing <code>@</code>.  This will make a public gist out of marked files (or if you use with a prefix, it will make private gists)</p><p><img src="/blog/images/spacemacs-gist-dired-gist-from-file.png" alt="Gist - create a gist from the marked files in dired" /></p><h1 id="summary">Summary</h1><p>Its really easy to share code and configuration with <a href="https://gist.github.com/">Github Gists</a>.  Its even easier when you use <a href="[Spacemacs](https://github.com/syl20bnr/spacemacs)">Spacemacs</a> to create and manages gists for you.  Have fun sharing your code &amp; configurations with others via gists.</p><p>Thank you.
+<a href="https://twitter.com/jr0cket">@jr0cket</a></p>
+</div>
+
+<div id="post-tags">
+    <b>Tags: </b>
+    
+    <a href="/blog/tags/github/">github</a>
+    
+    <a href="/blog/tags/emacs/">emacs</a>
+    
+    <a href="/blog/tags/spacemacs/">spacemacs</a>
+    
+</div>
+
 
     <div id="prev-next">
         
-        <a class="left" href="/blog/p/8/">&laquo; Prev</a>
+        <a href="/blog/posts/transducers-in-clojure-getting-started/">&laquo; Clojure Transducers - Getting Started</a>
         
+        
+        <a class="right" href="/blog/posts/2016-01-07-docs/">Quick Start Guide &raquo;</a>
         
     </div>
+
+    
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_config = function () {
+            this.page.url = "http://practical.li/blog/posts/spacemacs-share-buffers-as-github-gists/";
+            this.page.identifier = "Spacemacs - Share Buffers via Github Gists";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//practicalli-blog.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    
+
+
 </div>
 
             </div>
