@@ -1,7 +1,7 @@
 {:title "Consuming APIs from Clojure"
  :layout :post
  :date "2019-11-30"
- :topic "clojure-cli"
+ :topic "clojure"
  :tags  ["clojure" "apis" "clj-http" "httpkit"]}
 
 
@@ -13,19 +13,21 @@ We can process this with the clojure.data.json library and community projects in
 
 Clojure has several ways to get any web resource, from a simple function call to `slurp`, via clj-http and httpkit clients. There are useful tools to help you test APIs, such as [Postman](https://www.getpostman.com/) and Swagger.
 
+> Article updated on 25th July 2022
+
 <!-- more -->
 
 ## Creating a project
 
-By creating a project you can keep all your code and results of executing code too. You can also just run all this code in the REPL if you wish.
+Create a project to keep code and evaluation results from executing code, or run this code in a REPL session.
 
-If you have `clj-new` installed, then run the following in a terminal
+Using `:project/new` from [practicalli/cloure-deps-edn](https://github.com/practicalli/clojure-deps-edn)
 
 ```shell
-clojure -A:new app practicalli/simple-api-client
+clojure -T:project/new :template app :name practicalli/simple-api-client
 ```
 
-Otherwise, simply clone the [practicalli/simple-api-client](https://github.com/practicalli/simple-api-client) repository.
+Or clone the [practicalli/simple-api-client](https://github.com/practicalli/simple-api-client) repository.
 
 
 ## Getting content
@@ -68,11 +70,9 @@ The current scoreboard can be viewed at:
 
 > The scores are saved into an Clojure atom, so each time the application restarts the scoreboard reset to empty.  If the application is not used for 30 minutes, then Heroku will shut down the application (the application is not on an Heroku paid plan, just on free monthly credits).
 
-
 Using `slurp` the data returned from the API is placed into a string, which is not a Clojure collection (although some Clojure functions will treat a string as a collection of characters).
 
 As its a string, any special characters contained within are escaped using the `\` to ensure the string can be processed correctly.  For example, where the data returned contains a double quote, `"player-name"`, then each double quote is escaped.  This is adding a transformation to the data that isn't very useful.
-
 
 
 ## Converting to Clojure
@@ -87,8 +87,8 @@ Edit `deps.edn` and add `org.clojure/data.json {:mvn/version "0.2.7"}` to the `:
 
 ```clojure
 :deps
- {org.clojure/clojure   {:mvn/version "1.10.1"}
-  org.clojure/data.json {:mvn/version "0.2.7"}}
+ {org.clojure/clojure   {:mvn/version "1.11.1"}
+  org.clojure/data.json {:mvn/version "2.4.0"}}
 ```
 
 Then add `clojure.data.json` to the project namespace.
@@ -132,9 +132,9 @@ Edit the `deps.edn` file and add the httpkit dependency
 
 ```clojure
 :deps
- {org.clojure/clojure   {:mvn/version "1.10.1"}
-  org.clojure/data.json {:mvn/version "0.2.7"}
-  http-kit              {:mvn/version "2.4.0-alpha4"}}
+ {org.clojure/clojure   {:mvn/version "1.11.1"}
+  org.clojure/data.json {:mvn/version "2.4.0"}
+  http-kit              {:mvn/version "2.6.0"}}
 ```
 
 Edit `src/practicalli/simple-api-client.clj` and add the httpkit client namespace to the project
@@ -149,7 +149,7 @@ Edit `src/practicalli/simple-api-client.clj` and add the httpkit client namespac
 Lets start with using httpkit client to get a web page, in this case the front page of the Practicalli blog.
 
 
-Write the following function call in `src/practicalli/simple-api-client.clj` or start a REPL using `clj` or `clojure -A:rebel` if rebel readline is installed.
+Write the following function call in `src/practicalli/simple-api-client.clj` or start a REPL using `clojure -M:repl/rebel` (alias from [practicalli/cloure-deps-edn](https://github.com/practicalli/clojure-deps-edn))
 
 ```clojure
 (client/get "https://practicalli.github.io/blog/")
@@ -183,6 +183,8 @@ As we can use a keyword as a function we can simplify the code
 (:body
  @(client/get "https://practicalli.github.io/blog/"))
 ```
+
+Now try httpkit client with the Game Scoreboard API:
 
 ```clojure
 @(client/get "https://game-scoreboard-api.herokuapp.com/game/scoreboard")
@@ -223,15 +225,15 @@ Create a `-main` function to check the status and return a message
 ```clojure
 (defn -main [& args]
   (println "Checking Game Scoreboard API")
-  (let [status (:status @(client/get
-                          "https://game-scoreboard-api.herokuapp.com/game/scoreboard"
-                          {:accept :json}))]
-    (if (= 200 status)
+  (let [response @(client/get "https://game-scoreboard-api.herokuapp.com/game/scoreboard"
+                              {:accept :json})]
+
+    (if (= 200 (:status response))
       (println "Game Scoreboard status is OK")
       (println "Warning: status: " status))))
 ```
 
-The project can then be run by `clj -m practicalli/simple-api-client`.
+The project can then be run by `clojure -M -m practicalli/simple-api-client`.
 
 To use the project as a simple API monitor, you can run this command as a cron job or other type of batch process that runs regularly.
 
