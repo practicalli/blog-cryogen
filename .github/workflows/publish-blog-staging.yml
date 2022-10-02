@@ -14,6 +14,15 @@ jobs:
           distribution: 'temurin'
           java-version: '11'
 
+      - name: 'Cache Clojure Dependencies'
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.m2/repository
+            ~/.gitlibs
+          key: cache-clojure-deps-${{ hashFiles('**/deps.edn') }}
+          restore-keys: cache-clojure-deps-
+
       - name: Install clojure tools
         uses: DeLaGuardo/setup-clojure@3.5
         with:
