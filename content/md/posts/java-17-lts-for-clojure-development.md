@@ -2,7 +2,7 @@
 :layout :post
 :date "2022-01-31"
 :topic "java"
-:tags  ["java" "jvm"]}
+:tags  ["java" "jvm" "clojure"]}
 
 
 Java JDK 17 is the latest Long Term Support version and ideally should be the default JVM for developing and deploying new Clojure projects (and existing projects after testing). There should be little risk upgrading, especially from Java 11 onward.  The 17.0.2 version has just been release, so has been tested by many development teams already.
