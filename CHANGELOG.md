@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 ### Removed
 
+## [2.0.3] - 2022-10-02
+### Changed
+* Update setup-clojure, setup-java, github-pages-deploy GitHub actions to latest versions for staging blog publish
+
+
 ## [2.0.3] - 2022-01-28
 
 ### Added
