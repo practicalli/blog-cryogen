@@ -34,7 +34,7 @@ jobs:
       - name: Publish to GitHub Pages
         # Publish to a separate repository as GitHub pages can only be served from one branch
         # Requires developer token as deploying across repositories
-        uses: JamesIves/github-pages-deploy-action@4.4.0
+        uses: JamesIves/github-pages-deploy-action@v4.4.0
         with:
           repository-name: practicalli/blog-staging
           token: ${{ secrets.CRYOGEN_PUBLISH_TOKEN }}
