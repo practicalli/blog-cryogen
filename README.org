@@ -17,7 +17,7 @@ clojure -X:serve
 This generates all the files for the website in the ~public~ directory
 
 ** GitHub Actions Deployment
-Pull requests are automatically built and deployed to https://practical.li/blog-staging/ to assist with reviewing articles.
+Pull requests are automatically built and deployed to https://practical.li/blog-staging/ to assist with reviewing articles.  The Publish Blog Staging GitHub workflow uses the [[https://github.com/JamesIves/github-pages-deploy-action][GitHub Pages Deploy Action]] with the Practicalli Organisation secret `CRYOGEN_PUBLISH_TOKEN` to push commits to the `gh-pages` branch of the practicalli/blog-staging repository.
 
 Merged pull request and commits to the default branch will deploy to https://practical.li/blog/
 
