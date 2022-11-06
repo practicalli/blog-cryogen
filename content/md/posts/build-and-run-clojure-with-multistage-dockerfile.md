@@ -35,6 +35,7 @@ The official Eclipse OpenJDK image is used by the official Clojure docker image,
 
 > Alternative Docker images
 > [CircleCI Convenience Images => Clojure](https://hub.docker.com/r/cimg/clojure) - an optimised Clojure image for use with the [CircleCI service](https://circleci.com/)
+>
 > [Amazon Corretto](https://hub.docker.com/_/amazoncorretto) is an alternative version of OpenJDK
 
 
@@ -105,40 +106,26 @@ RUN RUN make all
 
 ### Docker Ignore patterns
 
-`.dockerfile` ignore in the root of the project defines file and directory patterns that Docker will ignore with the COPY command.  Use `.dockerignore` to avoid copying files that are not required for the build
+`.dockerignore` file in the root of the project defines file and directory patterns that Docker will ignore with the COPY command.  Use `.dockerignore` to avoid copying files that are not required for the build
+
+Keep the `.dockerignore` file simple by excluding all files with `*` pattern and then use the `!` character to explicitly add files and directories that should be copied
 
 ```
-# Clojure file patterns
-# .cpcache/ classpaths are only relevant to use account and environment
-# so local .cpcache different to that for Docker
-.cpcache/
-.nrepl-port
-.clj-kondo/.cache/
-.cljstyle
-.lsp/
-.rebel_readline_history
+# Ignore all files
+*
 
-# Development Tool files
-.dir-locals.el
-.secretlintignore
-megalinter-reports/
-
-# Host OS files
-.java-version
-
-# version control
-.git/
-.github/
-
-# archived files
-*.tar
-*.tgz
-
-# SQL database dumps
-dump*
-*/dump*
-*/*/dump*
+# Include Clojure code and config
+!deps.edn
+!Makefile
+!src/
+!test/
+!test-data/
+!resources/
 ```
+
+`Makefile` and `test-data` directories are commonly used by Practicalli, although in general are not widely needed.
+
+> The classic approach would be to [specify all files and directories to exclude in a Clojure project](https://gist.github.com/practicalli-john/36230953271cb0376a297d8a1d82ff6d), although this typically means more maintenance
 
 
 ## OpenJDK for Run-time stage
@@ -278,6 +265,10 @@ Build the service and create an image to run the Clojure service in a container 
 ```bash
 docker build --tag practicalli/service-name:1.1 .
 ```
+
+After the first time building the docker image, any parts of the build that havent changed will use their respecitve cached layers in the builder stage.  This can lead to very fast, even zero time builds.
+
+![Docker build image optomised to use docker layer cache for build stage](https://raw.githubusercontent.com/practicalli/graphic-design/live/continuous-integration/docker-compose-build-output-cached-layers.png)
 
 Run the built image in a docker container using `docker run`, publishing the port number so it can be used from the host (developer environment or deployed environment).  Use the name of the image created by the tag in the docker build command.
 
