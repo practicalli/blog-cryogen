@@ -22,6 +22,7 @@ The uberjar created by the builder image is copied over to the run-time image to
 
 > [Example  Multi-stage `Dockerfile` for Clojure projects](https://github.com/practicalli/clojure-app-template/blob/main/Dockerfile) derived from the configuration currently used for commercial and open source work.  The example uses make targets, which are Clojure commands defined in the [example Makefile](https://github.com/practicalli/clojure-app-template/blob/main/Makefile)
 
+
 ## Official Docker images
 
 Docker Hub contains a large variety of images, using those tagged with **Docker Official Image** is recommended.
@@ -148,12 +149,13 @@ LABEL description="Gameboard API service"
 
 > Use `docker inspect` to view the metadata
 
-Optionally, add packages to support running the service or helping to debug issue in the container when it is running.  For example, add `curl` and `jq` binaries for manual running of system integration testing scripts
+Optionally, add packages to support running the service or helping to debug issue in the container when it is running.  For example, add `dumb-init` to manage processes, `curl` and `jq` binaries for manual running of system integration testing scripts
 
 `apk` is the package tool for Alpine Linux and `--no-cache` option ensures the install file is not part of the resulting image, saving resources.  Alpine Linux recommends setting versions to use any point release with the `~=` approximately equal version, so any same major.minor version of the package can be used.
 
 ```dockerfile
 RUN apk add --no-cache \
+    dumb-init~=1.2.5 \
     curl~=7.83.1 \
     jq~=1.6
 ```
@@ -247,13 +249,28 @@ Finally define how to run the Clojure service in the container.  The `java` comm
 
 The `java` command will use arguments defined in `JDK_JAVA_OPTIONS` automatically.
 
+ENTRYPOINT directive defines the command to run the service
+
 ```dockerfile
 ENTRYPOINT ["java", "-jar", "/service/practicalli-service.jar"]
 ```
 
-> `ENTRYPOINT` is the recommended way to run a Clojure service in Docker.  `CMD` could be used instead, although CMD should only be used to pass additional arguments to the command defined in the `ENTRYPOINT`.  The `--entrypoint` flag can be used to explicitly over-ride the command that runs in the container.
+> `ENTRYPOINT` is the recommended way to run a service in Docker.  `CMD` can be used to pass additional arguments to the `ENTRYPOINT` command, or used instead of `ENTRYPOINT`.
 >
 > `jshell`is the default `ENTRYPOINT` for the Eclipse Temurin image, so `jshell` will run if an `ENTRYPOINT` of `CMD` directive is not included in the run-time stage of the `Dockerfile`.
+
+The `ENTRYPOINT` command runs as process id 1 (PID 1) inside the docker container.  In a Linux system PID 1 should respond to all TERM and SIGTERM signals.
+
+[dump-init](https://github.com/Yelp/dumb-init) provides a simple process supervisor and init system, designed to run as PID 1 and manage all signals and child processes effectively.
+
+Use `dumb-init` as the `ENTRYPOINT` command and `CMD` to pass the java command to start the Clojure service as an argument.  `dumb-init` ensures `TERM` signals are sent to the Java process and all child processes are cleaned up on shutdown.
+
+```dockerfile
+ENTRYPOINT ["/usr/bin/dumb-init", "--"]
+CMD ["java", "-jar", "/service/practicalli-service.jar"]
+```
+
+> Alternatively, run dumb-jump and java within the `ENTRYPOINT` directive, `ENTRYPOINT ["/usr/bin/dumb-init", "--", "java", "-jar", "/service/practicalli-service.jar"]`
 
 
 ## Build and Run with docker
