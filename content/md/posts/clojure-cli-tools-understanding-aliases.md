@@ -32,13 +32,13 @@ As aliases are optional, they provide a way to add libraries and tools that are 
 
 The configuration keys that can be used to define an alias are:
 
-* `:extra-paths` - a vector of directory names always included in the project class path, `["dev" "test"]`
-* `:extra-deps` - a map of additional library dependencies
+* `:extra-paths` - a vector of directory names to included on the project class path, e.g. `["dev" "test"]`
+* `:extra-deps` - a map of additional library dependencies, as a Maven library or Git repository
 * `:main-opts` - a vector of command line options passed to `clojure.main`
 * `:exec-fn` - the fully qualified name of a function to be run by `clojure.exec`
 * `:exec-args` - default arguments passed to the function, over-ridden by matching argument keys specified on the command line
 
-> Lesser used keys `:replace-paths` and `:replace-deps` use only the specified dependencies and directories, ignoring the project dependencies and class path. Community tools that use these directives should consider adopting the tool `-T` flag approach.
+> `:replace-paths` and `:replace-deps` are used to only include specific directories and dependencies. excluding the project dependencies from the class path. Community tools that use these directives should consider adopting the tool `-T` flag approach.
 
 
 Aliases are either added to the `deps.edn` file for a specific Clojure project, or to `$HOME/.clojure/deps.edn` (or `$XDG_HOME/.clojure.edn`) file for use with any Clojure project, as can be seen in [practicalli/clojure-deps-edn](https://github.com/practicalli/clojure-deps-edn).
