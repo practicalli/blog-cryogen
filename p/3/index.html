@@ -58,7 +58,7 @@
     
     <div class="post-header">
         <h2>
-            <a href="/blog/posts/clojure-cli-tools-understanding-aliases/">Clojure CLI tools - understanding aliases</a>
+            <a href="/blog/posts/clojure-cli-tools-understanding-aliases/">Clojure CLI - understanding aliases</a>
         </h2>
         <div id="post-meta">
             
@@ -69,7 +69,7 @@
         <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/clojure-cli-logo-name.png" alt="clojure-cli logo" />
         
     </div>
-    <p>Clojure CLI tools provide a very flexible way to run Clojure and uses aliases to include community libraries and tools for working with Clojure projects. Understand what an alias is and how to define them ensures an effective use of Clojure CLI tools.</p><p>This first article focuses on what an alias is and how to define them. The Clojure CLI tools - understanding flags article describes the different options for using aliases, with clojure.main, clojure.exec and as tools, from a user perspective.</p><p><a href="https://github.com/practicalli/clojure-deps-edn">practicalli/clojure-deps-edn</a> provides a great many examples of defining aliases, as well as providing a quick way to add <a href="https://practical.li/clojure/clojure-tools/install/community-tools-available.html">many community tools</a> on top of Clojure CLI tools.</p>
+    <p><a href="https://clojure.org/guides/install_clojure">Clojure CLI</a> provide a very flexible way to run Clojure and uses aliases in a <code>deps.edn</code> configuration file to optionally include execution options, code paths and library dependencies (Maven &amp; Git). Aliases can be used with any of the <a href="https://practical.li/blog-staging/posts/clojure-which-execution-option-to-use/">Clojure CLI execution options that run with either clojure.main or clojure.exec</a>.</p><p>Aliases provide a simple way to optionally include community libraries and tools for working with Clojure projects (e.g test runner, built tools, etc.).  Community tools can be added to each Clojure project <code>deps.edn</code> configuration, or preferably to a user level <code>deps.edn</code> file for use with any Clojure project (easier to maintain as there is a central alias)</p><p>Understanding what an alias is and how to define them ensures an effective use of Clojure CLI and a smooth workflow.</p>
     <a href="/blog/posts/clojure-cli-tools-understanding-aliases/">Continue reading &#8594;</a>
     <hr>
     
