@@ -170,7 +170,7 @@ blockquote{
 /* Style lists */
 ul li {
     padding: 0 0 0.4em 0;
-    list-style-image: url("/blog/images/practicalli-logo-bullet.png");
+    list-style-image: url("https://raw.githubusercontent.com/practicalli/graphic-design/live/logos/practicalli-logo-bullet.png");
 }
 
 
