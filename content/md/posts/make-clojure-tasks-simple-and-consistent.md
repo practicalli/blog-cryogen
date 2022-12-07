@@ -50,11 +50,13 @@ Targets used across Practicalli projects follow the [make standard targets for u
 * `lint` run lint tools to check code quality  - e.g [MegaLinter](https://oxsecurity.github.io/megalinter/) which provides a wide range of tools
 * `format-check` report format and style issues for a specific programming language
 * `format-fix` update source code files if there are format and style issues for a specific programming language
-* `pre-commit-check` run unit tests and code quality targets before considering a Git commit
+* `pre-commit` run unit tests and code quality targets before considering a Git commit
 * `repl` run an interactive run-time environment for the programming language
 * `test-unit` run all unit tests
 * `test-ci` test running in CI build (optionally focus on integration testing)
 * `clean` remove files created by any of the commands from other targets (i.e. ensure a clean build each time)
+
+[practicalli/dotfiles/Makefile](https://github.com/practicalli/dotfiles/blob/main/Makefile) also defines docker targets to build and compose images locally, inspect images and prune containers and images.
 
 
 ## Target dependencies
@@ -169,6 +171,8 @@ all: deps test-ci dist clean
 ## References
 
 * [Makefile Tutorial by Example](https://makefiletutorial.com/)
+* [practicalli/dotfiles Makefile](https://github.com/practicalli/dotfiles/blob/main/Makefile)
+
 
 ## Summary
 
