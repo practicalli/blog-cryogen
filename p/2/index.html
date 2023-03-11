@@ -59,6 +59,23 @@
     
     <div class="post-header">
         <h2>
+            <a href="/blog/posts/adopt-FreeDesktop.org-XDG-standard-for-configuration-files/">Adopting FreeDesktop.org XDG standard for development tools</a>
+        </h2>
+        <div id="post-meta">
+            
+            <div class="date">May 16, 2022</div>
+        </div>
+        <!-- conditional topic logo displayed if :topic has value in a post -->
+        
+        <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/ubuntu-logo-name.png" alt="ubuntu logo" />
+        
+    </div>
+    <p>Managing your personal configuration for development tools and applications is much more effective when adopting the <a href="https://www.freedesktop.org/wiki/Specifications/basedir-spec/">XDG basedir standard</a>, which defines separate locations to store user configurations, data files and caches.</p><p>Without the XDG standard, these files and directories are often mixed together and stored in the <code>$HOME</code>  of the users account, making it more challenging to backup or version control.</p><p>Development tools such as NeoVim, Emacs, Clojure CLI  and Clojure LSP support the XDG specification, although some tools like Leiningen required a little help.  There are simple approaches to work-around the limitations of tools that don't conform.</p>
+    <a href="/blog/posts/adopt-FreeDesktop.org-XDG-standard-for-configuration-files/">Continue reading &#8594;</a>
+    <hr>
+    
+    <div class="post-header">
+        <h2>
             <a href="/blog/posts/practicalli-plans-for-spring-2022/">Practicalli content plans for Spring 2022</a>
         </h2>
         <div id="post-meta">
@@ -125,23 +142,6 @@
     <a href="/blog/posts/emacs-cider-removing-old-cider-compat/">Continue reading &#8594;</a>
     <hr>
     
-    <div class="post-header">
-        <h2>
-            <a href="/blog/posts/clojure-which-execution-option-to-use/">Clojure CLI - which execution option to use</a>
-        </h2>
-        <div id="post-meta">
-            
-            <div class="date">December 24, 2021</div>
-        </div>
-        <!-- conditional topic logo displayed if :topic has value in a post -->
-        
-        <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/clojure-cli-logo-name.png" alt="clojure-cli logo" />
-        
-    </div>
-    <p>Execution options (-A -M -T -X) define how aliases are used with the Clojure CLI. Aliases are included via one of these execution options and each option can affect how the alias is used.</p><p>Since the <a href="https://clojure.org/releases/tools#v1.10.1.510">first documented released</a> which exclusively used the <code>-A</code> execution option to include aliases, the design has evolved to provide specific execution options to run code via clojure.main (<code>-M</code>) and clojure.exec (<code>-X</code>). In July 2021, the ability to run tools (<code>-T</code>) independent from the Clojure project classpath was also introduced.</p><p>The exec-opts command line flags have evolved to enable these features, so lets explore those flags and show how each flag is typically used.</p>
-    <a href="/blog/posts/clojure-which-execution-option-to-use/">Continue reading &#8594;</a>
-    <hr>
-    
 
     <div id="prev-next">
         
@@ -172,23 +172,23 @@
                     <h3>Recent Posts</h3>
                     <ul>
                         
+                        <li><a href="/blog/posts/london-clojurians-community-a-brief-history/">London Clojurians Community - a relatively brief history</a></li>
+                        
                         <li><a href="/blog/posts/build-and-run-clojure-with-multistage-dockerfile/">Build and run Clojure with Multi-stage Dockerfile</a></li>
                         
                         <li><a href="/blog/posts/make-clojure-tasks-simple-and-consistent/">Make Clojure development tasks simple and consistent</a></li>
                         
                         <li><a href="/blog/posts/clojurescript-workflow-with-clojure-cli-tools-and-figwheel-main/">ClojureScript workflow with Clojure CLI tools and Figwheel-main</a></li>
                         
-                        <li><a href="/blog/posts/adopt-FreeDesktop.org-XDG-standard-for-configuration-files/">Adopting FreeDesktop.org XDG standard for development tools</a></li>
-                        
                         <li><a href="/blog/posts/build-emacs-28-on-ubuntu/">Building Emacs 28 on Ubuntu Linux</a></li>
+                        
+                        <li><a href="/blog/posts/adopt-FreeDesktop.org-XDG-standard-for-configuration-files/">Adopting FreeDesktop.org XDG standard for development tools</a></li>
                         
                         <li><a href="/blog/posts/practicalli-plans-for-spring-2022/">Practicalli content plans for Spring 2022</a></li>
                         
                         <li><a href="/blog/posts/java-17-lts-for-clojure-development/">Java 17 JDK for Clojure development</a></li>
                         
                         <li><a href="/blog/posts/code-snippets-for-clojure-lsp/">Code Snippets for Clojure LSP</a></li>
-                        
-                        <li><a href="/blog/posts/emacs-cider-removing-old-cider-compat/">Emacs CIDER removing old cider-compat namespace</a></li>
                         
                     </ul>
                 </div>
@@ -309,7 +309,7 @@
         </div>
     </div>
     <footer>
-      Copyright &copy; 2022 Practicalli
+      Copyright &copy; 2023 Practicalli
       <p style="text-align: center;">Powered by <a href="http://cryogenweb.org">Cryogen</a></p>
 
       <license id="license">
