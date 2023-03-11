@@ -2,8 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
     <meta charset="utf-8"/>
-    <title>Practicalli: Building Emacs 28 on Ubuntu Linux</title>
-    <link rel="canonical" href="http://practical.li/blog/posts/build-emacs-28-on-ubuntu/">
+    <title>Practicalli: Build Emacs from source on Ubuntu Linux</title>
+    <link rel="canonical" href="http://practical.li/blog/posts/build-emacs-from-source-on-ubuntu-linux/">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu|Ubuntu+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
@@ -58,29 +58,31 @@
 <div id="post">
     <div class="post-header">
     <div id="post-meta" class="row">
-        <div class="col-lg-6">May 16, 2022</div>
+        <div class="col-lg-6">March 11, 2023</div>
         
     </div>
-    <h2>Building Emacs 28 on Ubuntu Linux</h2>
+    <h2>Build Emacs from source on Ubuntu Linux</h2>
 
     <!-- conditional topic logo displayed if :topic has value in a post -->
     
-    <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/ubuntu-logo-name.png" alt="ubuntu logo - post topic" />
+    <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/emacs-logo-name.png" alt="emacs logo - post topic" />
     
 </div>
 <div>
     
-    <p>Emacs 28.1 is <a href="https://www.masteringemacs.org/article/whats-new-in-emacs-28-1" title="What is new in Emacs 28.1">a feature packed release</a> and includes native compilation to significantly increase the speed of all Emacs software packages installed.  This is a very noticable difference, especially when Emacs is at the center of your developer workflow.</p><p>Ubuntu hasn't packaged Emacs 28.1 yet, although its <em>usually</em> straight forward to build Emacs yourself.</p><!-- more --><h2 id="a-very-brief-summary">A very brief summary:</h2><pre><code>sudo apt build-dep emacs &amp;&amp; /
+    <p>Emacs 29 will be the next stable release later in 2023 adding major features: Eglot LSP client, Tree-Sitter language parser and <code>package.el</code> package install from Git repositories. more features to enhance and improved every day use of Emacs.</p><p>Building Emacs from source is a relatively straight forward way to try out some or all of these features in advance, especially useful for those maintaining or developing new tools on top of Emacs.</p><blockquote><p><a href="https://blog.phundrak.com/emacs-29-what-can-we-expect/">Emacs 29 - what to expect</a> - a brief summary of the major features</p></blockquote><!-- more --><h2 id="building-steps-for-the-impatient">Building steps for the impatient</h2><p>Add Ubuntu packages for building Emacs</p><pre><code class="shell">sudo apt build-dep emacs &amp;&amp; /
 sudo apt install libgccjit0 libgccjit-10-dev libjansson4 libjansson-dev gnutls-bin
-</code></pre><p><a href="https://www.gnu.org/software/emacs/download.html">Download Emacs 28 source code</a> and open a terminal in the root of the extracted <em>emacs28-1</em> directory</p><pre><code>export CC=/usr/bin/gcc-10  &amp;&amp; export CXX=/usr/bin/gcc-10 &amp;&amp; ./autogen.sh &amp;&amp; ./configure --with-native-compilation &amp;&amp; /
+</code></pre><p><a href="https://git.savannah.gnu.org/cgit/emacs.git">Clone Emacs 29 source code</a>, configure and build emacs and then install (in /usr/local/bin/)</p><pre><code class="shell">git clone --branch emacs-29 git://git.savannah.gnu.org/emacs.git emacs-29 &amp;&amp; cd emacs-29 &amp;&amp; /
+export CC=/usr/bin/gcc-10  &amp;&amp; export CXX=/usr/bin/gcc-10 &amp;&amp; ./autogen.sh &amp;&amp; ./configure --with-native-compilation=aot &amp;&amp; /
 make -j$(proc)  &amp;&amp; /
 sudo make install
-</code></pre><p>Read the rest of the article for a more detailed description</p><h2 id="prepare-ubuntu">Prepare Ubuntu</h2><p>Open <code>Software &amp; Updates</code> and ensure the Source Code source is enabled and reload the package list (or run <code>sudo apt update</code> in a terminal after adding Source Code)</p><p><img src="https://raw.githubusercontent.com/practicalli/graphic-design/live/ubuntu/screenshots/ubuntu-sofware-updates-download-from-source-code.png" alt="Ubuntu Sofware &amp; Updates - Download from Source Code" /></p><p>Ask Ubuntu to install the packages required to build Emacs (there will be quite a few packages if this is the first software built with GCC on the operating system)</p><pre><code class="shell">sudo apt build-dep -y emacs
+</code></pre><blockquote><p>skip the branch for the very latest commits to Emacs which will effectively become Emacs 30 some time in the next year or so</p></blockquote><p>Read the rest of the article for a detailed description of this workflow</p><h2 id="prepare-ubuntu">Prepare Ubuntu</h2><p>Open <code>Software &amp; Updates</code> and ensure the Source Code source is enabled and reload the package list (or run <code>sudo apt update</code> in a terminal after adding Source Code)</p><p><img src="https://raw.githubusercontent.com/practicalli/graphic-design/live/ubuntu/screenshots/ubuntu-sofware-updates-download-from-source-code.png" alt="Ubuntu Sofware &amp; Updates - Download from Source Code" /></p><p>Ask Ubuntu to install the packages required to build Emacs (there will be quite a few packages if this is the first software built with GCC on the operating system)</p><pre><code class="shell">sudo apt build-dep -y emacs
 </code></pre><blockquote><p>The previous approach was to use <code>sudo apt-get install build-essential gcc git-core</code>. Using build-deps manages the set of packages required as Emacs evolves.</p></blockquote><p>Install some additional libraries to support the newest features of Emacs, native compilation of Emacs packages (<code>libgccjit</code>) and fast JSON processing (<code>libjansson</code>).  These really boost performance, so are important to add.</p><pre><code class="shell">sudo apt install libgccjit0 libgccjit-10-dev libjansson4 libjansson-dev
-</code></pre><blockquote><p>On Ubuntu 20.04 <code>sudo apt-get install gnutls-bin</code>  removes a potential issue from an older certificates library</p></blockquote><h2 id="preparing-emacs-source-code">Preparing Emacs source code</h2><p><strong><a href="https://www.gnu.org/software/emacs/download.html">Download Emacs 28.1 source from a nearby GNU mirror</a></strong>, either tar.gz or tar.xz</p><p>Extract the source code using nautilus, file-roller or in a terminal with the command <code>tar zvxf emacs-28.1.tar.xz</code></p><p>In a terminal window, change into the <strong>emacs28.1</strong> directory</p><pre><code>cd emacs28-1
-</code></pre><p>Set <code>CC</code> and <code>CXX</code> environment variables to inform the Emacs configuration script as to the location of gcc-10, otherwise it fails to find libgccjit</p><pre><code>export CC=/usr/bin/gcc-10 &amp;&amp; export CXX=/usr/bin/gcc-10
-</code></pre><blockquote><p>If CC and CXX environment variables are not set, the configure script will not find important libraries and report errors such as: <code>configure: error: ELisp native compiler was requested, but libgccjit was not found.</code></p></blockquote><p>Run the autogen script to create a configure script specific to your operating system.</p><pre><code>./autogen.sh
-</code></pre><p>Run the configuration script with the native compilation flag.  This script will check the operating system for tools and libraries needed to build Emacs on your operating system.</p><pre><code>./configure --with-native-compilation
+</code></pre><blockquote><p>On Ubuntu 20.04 <code>sudo apt-get install gnutls-bin</code>  removes a potential issue from an older certificates library</p></blockquote><h2 id="preparing-emacs-source-code">Preparing Emacs source code</h2><p>Use a Git client to clone the latest code from <a href="https://git.savannah.gnu.org/cgit/emacs.git">the Emacs repository</a>, or open a terminal and use the Git command line client</p><pre><code class="shell">git clone git://git.savannah.gnu.org/emacs.git
+</code></pre><blockquote><p>To build version of Emacs that is already release, <strong><a href="https://www.gnu.org/software/emacs/download.html">Download source from a nearby GNU mirror</a></strong>, either tar.gz or tar.xz</p></blockquote><p>Change into the cloned directory</p><pre><code class="shell">cd emacs
+</code></pre><p>Set <code>CC</code> and <code>CXX</code> environment variables to inform the Emacs configuration script as to the location of gcc-10, otherwise it fails to find libgccjit</p><pre><code class="shell">export CC=/usr/bin/gcc-10 &amp;&amp; export CXX=/usr/bin/gcc-10
+</code></pre><blockquote><p>If CC and CXX environment variables are not set, the configure script will not find important libraries and report errors such as: <code>configure: error: ELisp native compiler was requested, but libgccjit was not found.</code></p></blockquote><p>Run the autogen script to create a configure script specific to your operating system.</p><pre><code class="shell">./autogen.sh
+</code></pre><p>Run the configuration script with the native compilation flag, to compile Emacs native Elisp files during the Emacs compilation rather than when first running Emacs.  This script will check the operating system for tools and libraries needed to build Emacs on your operating system.</p><pre><code class="shell">./configure --with-native-compilation=aot
 </code></pre><p>Check the output of <code>./configure</code> was successful, see the end of this article for an example.  Ignore warnings about movemail if not using Emacs for local email management.</p><blockquote><p><code>./configure --help</code> lists available flags. Generally features are enabled if the required libraries are installed on the operating system.
 A noticeable exception is native compilation, as its a relatively new feature and not enabled by default.</p></blockquote><h2 id="building-emacs-locally">Building Emacs locally</h2><p>Build Emacs using all the CPU's of your computer.  <code>-j</code> flag specifies the number of CPU's to use, <code>nproc</code> command returns the total number of CPU's for the computer (real and virtual cores combined).</p><pre><code>make -j$(nproc)
 </code></pre><p>Run Emacs using the <code>-Q</code> option to check Emacs runs without using a users configuration file (e.g. without loading an `~/.emacs.d/ configuration)</p><pre><code>./src/emacs -Q
@@ -137,6 +139,118 @@ A noticeable exception is native compilation, as its a relatively new feature an
   Does Emacs support legacy unexec dumping?               no
   Which dumping strategy does Emacs use?                  pdumper
   Does Emacs have native lisp compiler?                   yes
+</code></pre><h2 id="emacs-29-configuration-options">Emacs 29 configuration options</h2><p>Run configure with <code>--help</code> option to list the available compilation options.  Apart from <code>--with-native-compilation=aot</code> defaults are used when Practicalli compiles Emacs.</p><pre><code class="shell">Optional Packages:
+  --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
+  --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
+  --without-all           omit almost all features and build small executable
+                          with minimal dependencies
+  --with-mailutils        rely on GNU Mailutils, so that the --without-pop
+                          through --with-mailhost options are irrelevant; this
+                          is the default if GNU Mailutils is installed
+  --with-pop              Support POP mail retrieval if Emacs movemail is used
+                          (not recommended, as Emacs movemail POP is
+                          insecure). This is the default only on native
+                          MS-Windows.
+  --with-kerberos         support Kerberos-authenticated POP
+  --with-kerberos5        support Kerberos version 5 authenticated POP
+  --with-hesiod           support Hesiod to get the POP server host
+  --with-mail-unlink      unlink, rather than empty, mail spool after reading
+  --with-mailhost=HOSTNAME
+                          string giving default POP mail host
+  --with-sound=VALUE      compile with sound support (VALUE one of: yes, alsa,
+                          oss, bsd-ossaudio, no; default yes). Only for
+                          GNU/Linux, FreeBSD, NetBSD, MinGW, Cygwin.
+  --with-pdumper=VALUE    enable pdumper support unconditionally ('yes', 'no',
+                          or 'auto': default 'auto')
+  --with-unexec=VALUE     enable unexec support unconditionally ('yes', 'no',
+                          or 'auto': default 'auto')
+  --with-dumping=VALUE    kind of dumping to use for initial Emacs build
+                          (VALUE one of: pdumper, unexec, none; default
+                          pdumper)
+  --with-x-toolkit=KIT    use an X toolkit (KIT one of: yes or gtk, gtk2,
+                          gtk3, lucid or athena, motif, no)
+  --with-wide-int         prefer wide Emacs integers (typically 62-bit); on
+                          32-bit hosts, this allows buffer and string size up
+                          to 2GB, at the cost of 10% to 30% slowdown of Lisp
+                          interpreter and larger memory footprint
+  --without-xpm           don't compile with XPM image support
+  --without-jpeg          don't compile with JPEG image support
+  --without-tiff          don't compile with TIFF image support
+  --without-gif           don't compile with GIF image support
+  --without-png           don't compile with PNG image support
+  --without-rsvg          don't compile with SVG image support
+  --without-webp          don't compile with WebP image support
+  --without-sqlite3       don't compile with sqlite3 support
+  --without-lcms2         don't compile with Little CMS support
+  --without-libsystemd    don't compile with libsystemd support
+  --without-cairo         don't compile with Cairo drawing
+  --without-xml2          don't compile with XML parsing support
+  --with-imagemagick      compile with ImageMagick image support
+  --without-native-image-api
+                          don't use native image APIs (GDI+ on Windows)
+  --with-json             compile with native JSON support
+  --with-tree-sitter      compile with tree-sitter
+  --without-xft           don't use XFT for anti aliased fonts
+  --without-harfbuzz      don't use HarfBuzz for text shaping
+  --without-libotf        don't use libotf for OpenType font support
+  --without-m17n-flt      don't use m17n-flt for text shaping
+  --without-toolkit-scroll-bars
+                          don't use Motif/Xaw3d/GTK toolkit scroll bars
+  --without-xaw3d         don't use Xaw3d
+  --without-xim           at runtime, default X11 XIM to off
+  --without-xdbe          don't use X11 double buffering support
+  --with-ns               use Nextstep (macOS Cocoa or GNUstep) windowing
+                          system. On by default on macOS.
+  --with-w32              use native MS Windows GUI in a Cygwin build
+  --with-pgtk             use GTK to support window systems other than X
+  --without-gpm           don't use -lgpm for mouse support on a GNU/Linux
+                          console
+  --without-dbus          don't compile with D-Bus support
+  --with-gconf            compile with Gconf support (Gsettings replaces this)
+  --without-gsettings     don't compile with GSettings support
+  --without-selinux       don't compile with SELinux support
+  --without-gnutls        don't use -lgnutls for SSL/TLS support
+  --without-zlib          don't compile with zlib decompression support
+  --without-modules       don't compile with dynamic modules support
+  --without-threads       don't compile with elisp threading support
+  --with-cygwin32-native-compilation
+                          use native compilation on 32-bit Cygwin
+  --without-xinput2       don't use version 2 of the X Input Extension for
+                          input
+  --with-small-ja-dic     generate a smaller-size Japanese dictionary
+  --with-file-notification=LIB
+                          use a file notification library (LIB one of: yes,
+                          inotify, kqueue, gfile, w32, no)
+  --with-xwidgets         enable use of xwidgets in Emacs buffers (requires
+                          gtk3 or macOS Cocoa)
+  --with-be-app           enable use of Haiku's Application Kit as a window
+                          system
+  --with-be-cairo         enable use of cairo under Haiku's Application Kit
+  --without-compress-install
+                          don't compress some files (.el, .info, etc.) when
+                          installing. Equivalent to: make GZIP_PROG= install
+  --with-gameuser=USER_OR_GROUP
+                          user for shared game score files. An argument
+                          prefixed by ':' specifies a group instead.
+  --with-gnustep-conf=FILENAME
+                          name of GNUstep configuration file to use on systems
+                          where the command 'gnustep-config' does not work;
+                          default $GNUSTEP_CONFIG_FILE, or
+                          /etc/GNUstep/GNUstep.conf
+  --with-native-compilation[=TYPE]
+                          compile with Emacs Lisp native compiler support. The
+                          TYPE 'yes' (or empty) means to enable it and compile
+                          natively preloaded Lisp files; 'no' means to disable
+                          it; 'aot' will make the build process compile all
+                          the Lisp files in the tree natively ahead of time.
+                          (This will usually be quite slow.)
+  --with-x                use the X Window System
+  --without-libgmp        do not use the GNU Multiple Precision (GMP) library;
+                          this is the default on systems lacking libgmp.
+  --without-included-regex
+                          don't compile regex; this is the default on systems
+                          with recent-enough versions of the GNU C Library
+                          (use with caution on other systems).
 </code></pre><h2 id="references">References</h2><ul><li><a href="https://www.masteringemacs.org/article/whats-new-in-emacs-28-1">Emacs 28.1 whats new</a> - a very detailed description of new features in Emacs 28.1</li><li><a href="https://www.emacswiki.org/emacs/BuildingEmacs">Emacs Wiki - Building Emacs</a> - base instructions for building Emacs</li><li><a href="https://launchpad.net/~ubuntu-elisp/+archive/ubuntu/ppa">Ubuntu Emacs LISP team PPA</a> - nightly builds from the latest Emacs commits</li></ul>
 </div>
 
@@ -154,10 +268,8 @@ A noticeable exception is native compilation, as its a relatively new feature an
 
     <div id="prev-next">
         
-        <a href="/blog/posts/clojurescript-workflow-with-clojure-cli-tools-and-figwheel-main/">&laquo; ClojureScript workflow with Clojure CLI tools and Figwheel-main</a>
         
-        
-        <a class="right" href="/blog/posts/adopt-FreeDesktop.org-XDG-standard-for-configuration-files/">Adopting FreeDesktop.org XDG standard for development tools &raquo;</a>
+        <a class="right" href="/blog/posts/london-clojurians-community-a-brief-history/">London Clojurians Community - a relatively brief history &raquo;</a>
         
     </div>
 
@@ -165,8 +277,8 @@ A noticeable exception is native compilation, as its a relatively new feature an
     <div id="disqus_thread"></div>
     <script type="text/javascript">
         var disqus_config = function () {
-            this.page.url = "http://practical.li/blog/posts/build-emacs-28-on-ubuntu/";
-            this.page.identifier = "Building Emacs 28 on Ubuntu Linux";
+            this.page.url = "http://practical.li/blog/posts/build-emacs-from-source-on-ubuntu-linux/";
+            this.page.identifier = "Build Emacs from source on Ubuntu Linux";
         };
         (function() {
             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

@@ -59,6 +59,23 @@
     
     <div class="post-header">
         <h2>
+            <a href="/blog/posts/build-emacs-28-on-ubuntu/">Building Emacs 28 on Ubuntu Linux</a>
+        </h2>
+        <div id="post-meta">
+            
+            <div class="date">May 16, 2022</div>
+        </div>
+        <!-- conditional topic logo displayed if :topic has value in a post -->
+        
+        <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/ubuntu-logo-name.png" alt="ubuntu logo" />
+        
+    </div>
+    <p>Emacs 28.1 is <a href="https://www.masteringemacs.org/article/whats-new-in-emacs-28-1" title="What is new in Emacs 28.1">a feature packed release</a> and includes native compilation to significantly increase the speed of all Emacs software packages installed.  This is a very noticable difference, especially when Emacs is at the center of your developer workflow.</p><p>Ubuntu hasn't packaged Emacs 28.1 yet, although its <em>usually</em> straight forward to build Emacs yourself.</p><!-- more -->
+    <a href="/blog/posts/build-emacs-28-on-ubuntu/">Continue reading &#8594;</a>
+    <hr>
+    
+    <div class="post-header">
+        <h2>
             <a href="/blog/posts/adopt-FreeDesktop.org-XDG-standard-for-configuration-files/">Adopting FreeDesktop.org XDG standard for development tools</a>
         </h2>
         <div id="post-meta">
@@ -125,23 +142,6 @@
     <a href="/blog/posts/code-snippets-for-clojure-lsp/">Continue reading &#8594;</a>
     <hr>
     
-    <div class="post-header">
-        <h2>
-            <a href="/blog/posts/emacs-cider-removing-old-cider-compat/">Emacs CIDER removing old cider-compat namespace</a>
-        </h2>
-        <div id="post-meta">
-            
-            <div class="date">January 2, 2022</div>
-        </div>
-        <!-- conditional topic logo displayed if :topic has value in a post -->
-        
-        <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/spacemacs-logo-name.png" alt="spacemacs logo" />
-        
-    </div>
-    <p>The latest snapshot of CIDER includes some welcome tidy up of the code.  One <a href="https://github.com/clojure-emacs/cider/commit/c60598fa4df6cdd3331c29b8e319cc23de1b7cc6">notable removal is <code>cider-compat</code></a> which was added to support Emacs versions previous to 25.  As most of the Emacs world is on version 27 (or 28 / 29) then there is no need to include <code>cider-compat</code> any more.</p><p>However, some Emacs packages that haven't change in a while may still used <code>cider-compat</code>, although the only one to date that has been found is <code>helm-cider</code>.  Unfortunately is causing Clojure file to fail to load when used with the latest CIDER snapshot.</p><p>When helm-cider is enabled, Emacs is unable to load Clojure files.  The error reported is:</p>
-    <a href="/blog/posts/emacs-cider-removing-old-cider-compat/">Continue reading &#8594;</a>
-    <hr>
-    
 
     <div id="prev-next">
         
@@ -172,6 +172,8 @@
                     <h3>Recent Posts</h3>
                     <ul>
                         
+                        <li><a href="/blog/posts/build-emacs-from-source-on-ubuntu-linux/">Build Emacs from source on Ubuntu Linux</a></li>
+                        
                         <li><a href="/blog/posts/london-clojurians-community-a-brief-history/">London Clojurians Community - a relatively brief history</a></li>
                         
                         <li><a href="/blog/posts/build-and-run-clojure-with-multistage-dockerfile/">Build and run Clojure with Multi-stage Dockerfile</a></li>
@@ -187,8 +189,6 @@
                         <li><a href="/blog/posts/practicalli-plans-for-spring-2022/">Practicalli content plans for Spring 2022</a></li>
                         
                         <li><a href="/blog/posts/java-17-lts-for-clojure-development/">Java 17 JDK for Clojure development</a></li>
-                        
-                        <li><a href="/blog/posts/code-snippets-for-clojure-lsp/">Code Snippets for Clojure LSP</a></li>
                         
                     </ul>
                 </div>
