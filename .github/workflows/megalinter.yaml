@@ -6,10 +6,10 @@ name: MegaLinter
 on:
   push:
     branches:
-      - main
+      - live
   pull_request:
     branches:
-      - main
+      - live
 concurrency:
   group: "${{ github.ref }}-${{ github.workflow }}"
   cancel-in-progress: true
@@ -48,6 +48,6 @@ jobs:
           MARKDOWN_REMARK_LINT_DISABLE_ERRORS: true
           # MARKDOWN_MARKDOWN_TABLE_FORMATTER_DISABLE_ERRORS: false
           CLOJURE_CLJ_KONDO_ARGUMENTS: "--lint deps.edn content/*.edn"
- 
+
           # ADD CUSTOM ENV VARIABLES OR DEFINE IN A FILE .mega-linter.yml AT ROOT OF REPOSITORY
           # DISABLE: COPYPASTE,SPELL # Uncomment to disable copy-paste and spell checks
