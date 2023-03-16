@@ -89,7 +89,7 @@ Now the dependencies are downloaded (and cached), copy the project files to the 
 
 ```dockerfile
 COPY ./ /build
-RUN clojure -X:package/uberjar
+RUN clojure -T:build
 ```
 
 > See the section on Docker Ignore Patters to make the COPY command more efficient
