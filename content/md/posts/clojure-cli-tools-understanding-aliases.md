@@ -4,7 +4,7 @@
  :topic "clojure-cli"
  :tags  ["clojure-cli" "tools-deps"]}
 
-[Clojure CLI](https://clojure.org/guides/install_clojure) provide a very flexible way to run Clojure and uses aliases in a `deps.edn` configuration file to optionally include execution options, code paths and library dependencies (Maven & Git). Aliases can be used with any of the [Clojure CLI execution options that run with either clojure.main or clojure.exec](https://practical.li/blog-staging/posts/clojure-which-execution-option-to-use/).
+[Clojure CLI](https://clojure.org/guides/install_clojure) provide a very flexible way to run Clojure and uses aliases in a `deps.edn` configuration file to optionally include execution options, code paths and library dependencies (Maven & Git). Aliases can be used with any of the [Clojure CLI execution options that run with either clojure.main or clojure.exec](https://practical.li/blog/posts/clojure-which-execution-option-to-use/).
 
 Aliases provide a simple way to optionally include community libraries and tools for working with Clojure projects (e.g test runner, built tools, etc.).  Community tools can be added to each Clojure project `deps.edn` configuration, or preferably to a user level `deps.edn` file for use with any Clojure project (easier to maintain as there is a central alias)
 
@@ -12,7 +12,7 @@ Understanding what an alias is and how to define them ensures an effective use o
 
 > Article updated 26th November 2022
 
-[practicalli/clojure-deps-edn](https://github.com/practicalli/clojure-deps-edn) a quick way to add [many community tools](https://practical.li/clojure/clojure-tools/install/community-tools-available.html) on top of Clojure CLI tools.  Practicalli also has [tips for creating well designed aliases](https://practical.li/blog-staging/posts/clojure-cli-aliases-deserve-designing-too/)
+[practicalli/clojure-deps-edn](https://github.com/practicalli/clojure-deps-edn) a quick way to add [many community tools](https://practical.li/clojure/clojure-tools/install/community-tools-available.html) on top of Clojure CLI tools.  Practicalli also has [tips for creating well designed aliases](https://practical.li/blog/posts/clojure-cli-aliases-deserve-designing-too/)
 
 <!-- more -->
 
@@ -235,7 +235,7 @@ Further examples of aliases can be found in [practicalli/clojure-deps-edn config
 
 You should have a better understanding of how to create aliases and what the individual keys in an alias configuration mean.
 
-Practicalli also has [tips for creating well designed aliases](https://practical.li/blog-staging/posts/clojure-cli-aliases-deserve-designing-too/)
+Practicalli also has [tips for creating well designed aliases](https://practical.li/blog/posts/clojure-cli-aliases-deserve-designing-too/)
 
 See the next article in the series on [using the most appropriate flags for Clojure CLI aliases](/posts/clojure-which-execution-option-to-use/)
 
