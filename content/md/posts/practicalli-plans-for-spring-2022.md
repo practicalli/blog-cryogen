@@ -4,7 +4,6 @@
 :topic "practicalli"
 :tags  ["practicalli"]}
 
-
 Much more content is coming in the Spring of 2022, thanks to [Clojurists Together funding](https://www.clojuriststogether.org/news/q1-2022-funding-announcement/).  To ensure the most useful content is provides, Practicalli would value feedback on the planned topics.
 
 The [submitted plan to Clojurists Together](https://www.clojuriststogether.org/news/q1-2022-funding-announcement/) is to extend existing guides and code examples, as well as adding new content to the existing Practicalli books.  Additional video content will be added across the Practicall Books, updating existing video content where it has become dated.
@@ -36,11 +35,9 @@ A book for those starting their journey into Clojure, taking the [REPL driven de
 
 The plan is to migrate to the [tools.build approach](https://clojure.org/guides/tools_build) and adopt more tools using the `-T` execution option, both as installed tools and via user level aliases.
 
-* using tools with the `-T` execution option in [practicalli/clojure-deps-edn](https://github.com/practicalli/clojure-deps-edn)
-* adding `tools` directory to [practicalli/clojure-deps-edn](https://github.com/practicalli/clojure-deps-edn) with selected community tools that automatically install on first use
-* adopting tools.build `build.clj` configuration, with support from[seancorfield/build-clj](https://github.com/seancorfield/build-clj)
 * [production grade templates for deps-new](https://github.com/practicalli/clojure/issues/404), including dev tools, component services and deployment options - e.g. [practicalli/clojure-app-template](https://github.com/practicalli/clojure-app-template)
-* depricate the use of clj-new (although keep examples in place for using classic templates)
+* migrate to deps-new for project templates over clj-new (although keep examples in place for using classic templates)
+* adopting tools.build `build.clj` configuration
 * add tools.build examples and retro-fitting tools.build to existing project guides across all books (deprecating depstar)
 
 
@@ -58,8 +55,7 @@ One of the commercial projects by Practically in 2021 was a GraphQL API with a w
 * Structured logging with mulog and configuring common log publishers
 * Building REST API's with Reitit and clojure.spec
 * Authentication & Authorization (with Auth0 service) - especially for API's
-* Deployment enhancements including CLI specific heroku build pack, additional GitHub Action examples and adding Docker configuration including local build from source
-* Building GraphQL API's with lacinia or juxt/grab
+* Deployment for web services with GitHub Action examples and adding Docker configuration including local build from source
 
 [Continuous Integration with CircleCI content](https://practical.li/clojure/continuous-integration/circle-ci/) has already been updated to use the latest Clojure image
 
@@ -85,6 +81,7 @@ To address this need, create a curated guide to the most common tools and librar
 Open Source projects are preferred over commercial products, although there may be some honourable mentions to commercial products if they provide significant value and have a freely available development option.
 
 Practicalli plans to reach out to others in the community also working on this issue, such as the [Freshcode team](https://freshcodeit.com/portfolio#!/tab/338930672-5) and their [Clojure Garden project](https://github.com/clojure-garden/clojure-garden).
+
 
 ## Summary
 
