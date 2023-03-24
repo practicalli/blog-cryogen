@@ -32,7 +32,7 @@ Each book GitHub repository lists additional ideas as issues for the community t
 
 A book for those starting their journey into Clojure, taking the [REPL driven development approach](https://practical.li/clojure/repl-driven-development.html).  The book covers install and configuration of Clojure CLI, Clojure aware editors and data inspectors.  Using those tools to learn Clojure through a series of challenges and small projects.  Complementing REPL Driven Development with Test Driven Development
 
-![Practicalli Clojure book banner](https://raw.githubusercontent.com/practicalli/graphic-design/live/book-covers/practicalli-clojure-book-banner.png)
+![Practicalli Clojure book banner](https://raw.githubusercontent.com/practicalli/graphic-design/live/clojure/clojure-repl-workflow-concept.png)
 
 The plan is to migrate to the [tools.build approach](https://clojure.org/guides/tools_build) and adopt more tools using the `-T` execution option, both as installed tools and via user level aliases.
 
@@ -48,7 +48,7 @@ The plan is to migrate to the [tools.build approach](https://clojure.org/guides/
 
 Covering how to build Server-side web services and APIs from the ground up, aiming for a simple design and clean code.  Using tools such as Integrant REPL to support a REPL Driven Development approach.
 
-![Practicalli Clojure Web Services book banner](https://raw.githubusercontent.com/practicalli/graphic-design/live/book-covers/practicalli-clojure-web-services-book-banner.png)
+![Practicalli Clojure Web Services book banner](https://raw.githubusercontent.com/practicalli/graphic-design/live/book-covers/practicalli-clojure-web-service-book-banner-dark.png#only-dark)
 
 The plan is to update existing guides to show how to build production grade Clojure services.  Additional guides will focus on building APIs with Reitit, Integrant and mulog.
 
