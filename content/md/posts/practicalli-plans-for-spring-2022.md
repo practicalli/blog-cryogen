@@ -9,7 +9,7 @@ Much more content is coming in the Spring of 2022, thanks to [Clojurists Togethe
 
 The [submitted plan to Clojurists Together](https://www.clojuriststogether.org/news/q1-2022-funding-announcement/) is to extend existing guides and code examples, as well as adding new content to the existing Practicalli books.  Additional video content will be added across the Practicall Books, updating existing video content where it has become dated.
 
-> Due to continued Covid symptoms, work is being done over 2022 and 2023 as health conditions allow
+> Due to continued Covid symptoms, [work is being done over 2022 and 2023](https://github.com/practicalli/clojurists-together-journal/blob/summer-2022/2022-2023-updates.md) as health conditions allow
 
 Videos will be created off-line rather than live broadcasts, to increase the quality of the videos.  Practicalli may do some live broadcasts again, however, these will be very experimental and unscripted (possibly subject to Covid brain fog too).
 
