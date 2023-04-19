@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Practicalli: Create deps-new templates for Clojure CLI projects</title>
+    <link rel="canonical" href="http://practical.li/blog/posts/create-deps-new-template-for-clojure-cli-projects/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu|Ubuntu+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/default.min.css">
+    <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/practicalli/graphic-design/live/logos/practicalli-logo-bullet.png">
+    <link href="/blog/css/screen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/blog/">
+              <img src="https://raw.githubusercontent.com/practicalli/graphic-design/live/logos/practicalli-logo-name-white.svg" alt="Practicalli logo" />
+            </a>
+        </div>
+
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li ><a href="/blog/">Home</a></li>
+                <li
+                ><a href="/blog/archives/">Archives</a></li>
+                
+                <li
+                >
+                <a href="/blog/pages/about/">About</a>
+                </li>
+                
+                <li><a href="/blog/feed.xml">RSS</a></li>
+                <li><a href="https://github.com/practicalli/blog-content/projects/1">Feedback</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div><!--/.container-fluid -->
+</nav>
+
+
+<div class="container">
+
+
+    <div class="row">
+        <div class="col-lg-9">
+            <div id="content">
+                
+<div id="post">
+    <div class="post-header">
+    <div id="post-meta" class="row">
+        <div class="col-lg-6">March 30, 2023</div>
+        
+    </div>
+    <h2>Create deps-new templates for Clojure CLI projects</h2>
+
+    <!-- conditional topic logo displayed if :topic has value in a post -->
+    
+    <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/clojure-cli-logo-name.png" alt="clojure-cli logo - post topic" />
+    
+</div>
+<div>
+    
+    <p>Templates are great way to learn how to assemble Clojure libraries into a working project and can save considerable time when creating new projects by providing common configuration, development tools, dependencies and code used by the engineering team.</p><p><a href="https://github.com/seancorfield/deps-new">seancorfield/deps-new</a> provides a simple to understand approach to defining templates. Declarative rules express how file templates are copied to create a new project.  Substitution values are passed to <code>{{unique-key}}</code> placeholders in template files creating a specific project each time.  Programmatic transformation is also supported for significant customisation, e.g. adding options to templates.</p><p><a href="https://github.com/practicalli/project-templates">practicalli/project-templates</a> is a new project to provide comprehensive templates to support production level workflows, including Dockerfile configuration, GitHub continuous integration workflows, etc . Read on to see how the first template was built and learn tips to building your own templates.</p><blockquote><p>deps-new provides a <a href="https://github.com/seancorfield/deps-new/blob/develop/doc/templates.md#programmatic-transformation">guide to writing templates</a></p></blockquote><!-- more --><h2 id="existing-templates">Existing templates</h2><p><code>app</code>, <code>lib</code> and <code>scratch</code> templates are built into deps-new tool.  Additional template can be used from a local file space or Git repository, e.g. <a href="https://github.com/seancorfield/deps-new#templates">community templates</a>.</p><p>deps-new also provides the <code>template</code> template to create a project for defining one or more custom project templates, highly recommended if sharing a template via Git repository.</p><p><a href="https://github.com/practicalli/project-templates">Practicalli project templates</a> provides the <code>practicalli/service</code> template to create a production grade HTTP service with Integrant component management system, mulog event logging, reitit routing for APIs, docker, tools.build and make tasks.  More <a href="https://github.com/practicalli/project-templates#templates-roadmap">templates will be added to this project over time</a>.</p><blockquote><p>deps-new support templates published via a Git service or on the local file space. Templates published via Maven / Clojars are not supported</p><p><a href="https://github.com/seancorfield/clj-new">seancorfield/clj-new</a> uses the Leiningen template format, providing wide range of project templates, although many of those templates do not include a Clojure CLI configuration.  The clj-new project is not actively maintained.</p></blockquote><h2 id="create-template-project">Create template project</h2><p>The deps-new built-in template called <code>template</code> will create a new project for creating a custom template (or multiple templates).</p><p><code>:project/create</code> alias from <a href="https://practical.li/clojure/clojure-cli/practicalli-config/">Practicalli Clojure CLI Config</a> provides the deps-new tool</p><p>Create a new project and specify the template, name of project (the template name) and optionally the directory to create the new project within.</p><pre><code class="clojure">clojure -T:project/create :template template :name practicalli/service :target-dir project-templates
+</code></pre><blockquote><p><code>clojure -Tnew template :name practicalli/service</code> if deps-new was <a href="https://github.com/seancorfield/deps-new">installed as a Clojure CLI tool</a></p></blockquote><p>Version control the newly created template project and start customising.</p><h2 id="use-new-template">Use new template</h2><p>For an effective local development workflow, add the new template project as a dependency via <code>:local/root</code>, then template changes are available as they are saved.</p><pre><code class="clojure">:project/templates
+{practicalli/templates {:local/root "home/practicalli/projects/practicalli/project-templates/"}}
+</code></pre><p>Create a new project with this template to test what a new project looks like.</p><p>Use the <code>:project/templates</code> alias when calling deps-new, e.g. with the <code>:project/create</code> alias from <a href="https://practical.li/clojure/clojure-cli/practicalli-config/">Practicalli Clojure CLI Config</a>.</p><p>Values for <code>:template</code> and <code>:name</code> keys are required for deps-new when calling deps-new</p><pre><code class="shell">clojure -A:project/templates -T:project/create :template practicalli/service :name practicalli/gameboard
+</code></pre><blockquote><p>The <code>:name</code> form is the organisation or developer name / service name</p></blockquote><h2 id="new-template-overview">New Template Overview</h2><p>The files that make up the template reside under the <code>resources</code> directory, e.g. <code>resources/practicalli/service/</code> for the Practicalli Service template</p><ul><li><code>build</code> - source of the dependencies, a deps.edn template (<code>deps.tmpl</code>) and build script build.clj template (<code>build.tmpl</code>)</li><li><code>root</code> - files and directories to be added to the root of the new project</li><li><code>src</code> - files &amp; directories providing default code examples</li><li><code>test</code> - files &amp; directories providing default test code examples</li><li><code>template.edn</code> - values for substitution,  declarative <code>:transform</code> rules for copying files and directories to a new project (values optionally used for programmatic transformation)</li></ul><p>This is the default structure and can be modified as required.  The <code>template.edn</code> should be modified to match any changes in directory structure and file names.</p><blockquote><p>In the deps-new <code>template</code> design, Clojure files with <code>{{}}</code> substitution blocks have the <code>tmpl</code> extension to avoid errors from tooling that compiles or analyses code, should those files be added to the classpath.</p><p>Practicalli uses <code>.clj.template</code> and  <code>.edn.template</code> file name extensions with Clojure files that contain substitutions to retain the original file name extension and clarity as to the files purpose</p></blockquote><h2 id="copy-files">Copy files</h2><p>deps-new creates a new project by copying all the files from the template using the <code>:transform</code> declarative rules.</p><p>Files in the <code>root</code> directory of the template are copied to the root of the new project by default.</p><p>If file names should be transformed or files moved to a different location than root, create a new directory in the template to contain those files and add an explicit rule to the <code>:transform</code> section.  Remember to remove the files from the <code>root</code> directory, otherwise they will still be copied.</p><p><code>:transform</code> key contains declarative rules that define where the contents of each directory in the template is copied to in a new project created from the template, e.g.:</p><ul><li><code>"build" ""</code> copies files in the 'build' directory of the template to the root of a new project</li><li><code>"src" "src/{{top/file}}"</code> copies files to the <code>src</code> directory in a sub-directory provided by the template substitution, e.g <code>src/practicalli/gameboard</code></li></ul><p>In the Practicalli project templates the <code>build</code> files from the original deps-new template were renamed to <code>deps.edn.template</code> and <code>build.clj.template</code> to include their original filename extension and be very explicitly named.</p><pre><code class="edn">[["api" "src/{{top/file}}/{{main/file}}/api"
+   {"system_admin.clj.template" "system_admin.clj"
+    "scoreboard.clj.template" "scoreboard.clj"}]
+  ["build" ""
+   {"build.clj.template" "build.clj"
+    "deps.edn.template"  "deps.edn"}]
+  ["resources" "resources"
+   {"config.edn.template" "config.edn"}]
+  ["src" "src/{{top/file}}/{{main/file}}"
+   {"middleware.clj.template" "middleware.clj"
+    "parse_system.clj.template" "parse_system.clj"
+    "router.clj.template" "router.clj"
+    "service.clj.template" "service.clj"}]
+  ["test" "test/{{top/file}}/{{main/file}}"
+   {"service_test.clj.template" "service_test.clj"}]]
+</code></pre><p>The <code>:only</code> keyword added to the end of a transform mapping will only copy a specified file from the directory, ignoring all other files.  <code>:raw</code> keyword will not use any substitution on that file, useful for binary files any files that use the <code>{{}}</code> substitution for purposes other than creating projects with deps-new.</p><blockquote><p>HINT: practicalli/service template includes a <code>resources/config.edn.template</code> that will be copied to <code>resources/config.edn</code> in a new project.  The existing <code>resources</code> directory in <code>root</code> was removed to ensure <code>resources/.keep</code> is not copied to the new project.</p></blockquote><h2 id="substitution">Substitution</h2><p><code>{{key}}</code> in any of the copied files will substitute the value associated with <code>:keyword</code>, if that key is found in:</p><ul><li><a href="https://github.com/seancorfield/deps-new/blob/develop/doc/options.md">available options</a> lists optional keys to override template defaults</li><li><a href="https://github.com/seancorfield/deps-new/blob/develop/doc/names-variables.md">project names and variables</a> lists derived, environmental and scm variables that can be used as substitutions</li><li><code>template.edn</code> file of the template in use</li></ul><p><code>"{{description}}"</code> substitutes the value associated with the <code>:description</code> key from the <code>template.edn</code> file or command-line argument.  Typically used in the project readme.md file and/or the comment header of the main namespace</p><p><code>(ns {{top/ns}}.{{main/ns}})</code> substitutes the fully qualified namespace within an ns expression, creating the project specific namespace for source and test files.</p><p><code>{{raw-name}}</code> uses value from <code>:name</code> passed as an argument</p><p>The following sub-sections show examples from the <a href="https://github.com/practicalli/project-templates/tree/main/resources/practicalli">Practicalli Project templates</a> for ideas on how to use these substitutions</p><h3 id="namespace-and-file-names">Namespace and File names</h3><p>Clojure projects need to use the correct case in file names (snake_case) and namespace ns definitions (kebab-case).</p><p>Appending any unqualified substitution keyword with <code>/ns</code> or <code>/file</code> will use the correct case</p><ul><li><code>{{unqualified-key/ns}}</code> - hyphenated words use kebab-case, e.g. for <code>ns</code> and <code>require</code> expressions</li><li><code>{{unqualified-key/file}}</code> - hyphenated words use snake_case, e.g. for use as a filename or directory path</li></ul><p>Use <code>{{top/ns}}</code> and <code>{{main/ns}}</code> substitutions to create a namespace form using the values derived from the <code>:name</code> value provided on the command line when creating a new project</p><pre><code class="clojure">(ns {{top/ns}}.{{main/ns}}.service
+  "Gameboard service component lifecycle management"
+  (:gen-class)
+  (:require
+   ;; Application dependencies
+   [{{top/ns}}.{{main/ns}}.router :as router]
+   ;; Component system
+   [{{top/ns}}.{{main/ns}}.parse-system :as parse-system]
+   ;; System dependencies
+   [org.httpkit.server     :as http-server]
+   [com.brunobonacci.mulog :as mulog]))
+</code></pre><p><code>{{top/file}}</code> and <code>{{main/file}}</code> are used in the template.edn to use the correct case for file names, derived from the :name value given when creating the project.</p><pre><code class="edn">[["api" "src/{{top/file}}/{{main/file}}/api"
+   {"system_admin.clj.template" "system_admin.clj"
+    "scoreboard.clj.template" "scoreboard.clj"}]
+  ["build" ""
+   {"build.clj.template" "build.clj"
+    "deps.edn.template"  "deps.edn"}]
+  ["resources" "resources"
+   {"config.edn.template" "config.edn"}]
+  ["src" "src/{{top/file}}/{{main/file}}"
+   {"middleware.clj.template" "middleware.clj"
+    "parse_system.clj.template" "parse_system.clj"
+    "router.clj.template" "router.clj"
+    "service.clj.template" "service.clj"}]
+  ["test" "test/{{top/file}}/{{main/file}}"
+   {"service_test.clj.template" "service_test.clj"}]]
+</code></pre><h3 id="build-files-directory">Build files directory</h3><p>In the Practicalli Project templates, <code>deps.edn.template</code> is a Clojure CLI <code>deps.edn</code> configuration file which provides several aliases to support development.</p><ul><li><code>:run/service</code> starts the service by running the <code>-main</code> function from the main namespace</li><li><code>:run/greet</code> calls the <code>greet</code> function, an example of using <code>clojure.exec</code></li><li><code>:test/env</code> is a placeholder for adding libraries which would support the testing of the service.</li><li><code>:test/run</code> starts the kaocha test runner and runs all the unit tests within the <code>test</code> path (stops on first failing test) and can also be used with CI service</li><li><code>:build</code> runs the given build task (defined in <code>build.clj</code>), e.g. <code>clojure -T:build uberjar</code></li></ul><p>The <code>:run/service</code> uses a substitution to specify the fully qualified main namespace</p><pre><code class="clojure">  :run/service
+  {:main-opts ["-m" "{{top/ns}}.{{main/ns}}"]}
+</code></pre><h3 id="root-files">Root files</h3><p><code>README.md</code>, <code>CHANGELOG.md</code>, <code>.gitignore</code> and <code>pom.xml</code> are provided by the deps-new template.</p><ul><li><code>README.md</code> uses the <code>{{raw-name}}</code> as the title and <code>{{description}}</code> as the project description</li></ul><p>The Practicall service template updates the <code>root</code> files and adds many others that support the Practicalli workflow</p><p>The following files were added to the <code>resources/practicalli/service/root</code> directory</p><ul><li><code>.cljstyle</code> configuration for Cljstyle linter</li><li><code>.dockerignore</code> configuration to manage files copied to docker images</li><li><code>.dir-local.el</code> Clojure CLI aliases to use with the Emacs Cider jack-in command</li><li><code>dev/user.clj</code> for development tools
+<ul><li>launches Portal data inspector, listening on nREPL and displays all evaluation results</li><li>Mulog event log with publisher to send event logs to portal</li><li>find-deps to search for Clojure libraries</li></ul></li></ul><h3 id="src-and-test">src and test</h3><p>The locations to copy the src and test files in a new project are defined in the <code>:transform</code> section of the <code>template.edn</code> file.</p><p>In each file within <code>src</code> and <code>test</code>, the namespace definition uses substitution to define the correct namespace</p><p>In the <code>src/</code>service.clj.template:</p><pre><code class="clojure">(ns {{top/ns}}.{{main/ns}}
+  (:gen-class)
+  (:require
+    [com.brunobonacci.mulog :as mulog]))
+</code></pre><p>In the <code>test/service.clj.template</code> the ns expression uses substitution before the <code>-test</code> postfix on the namespace.</p><p>The service namespace from source is also added via substitution</p><pre><code class="clojure">(ns {{top/ns}}.{{main/ns}}-test
+  (:require [clojure.test :refer [deftest is testing]]
+            [{{top/ns}}.{{main/ns}} :as {{main/ns}}]))
+</code></pre><h2 id="custom-substitution">Custom substitution</h2><p>Add key value pairs in <code>template.edn</code> for custom substitutions, e.g. defining the version of Clojure</p><pre><code class="clojure">{;; Values to pass into the template
+ :description "TODO: Provide a meaningful description of the project"
+
+ ;; Custom substitutions
+ :clojure-version "1.11.1"
+
+ ;; Programatic Transformation functions
+ :data-fn practicalli.service/data-fn
+ :template-fn practicalli.service/template-fn
+
+ ;; Declarative Transformation rules
+ :transform
+ [[,,,]]}
+</code></pre><p>The <code>deps.edn.template</code> can then use substitution to include the desired version of Clojure</p><pre><code class="clojure"> :deps
+ {org.clojure/clojure {{clojure-version}}}
+</code></pre><p>When using the template to create a project, the custom key can be given a different value as a command line option</p><pre><code class="shell">clojure -T:project/create :template practicalli/application :name practicalli/playground :clojure-version "1.12.0-alpha"
+</code></pre><h2 id="test-templates">Test templates</h2><p>Each template should have a unit test that checks the <code>template.edn</code> file against the <a href="https://github.com/seancorfield/deps-new/blob/develop/src/org/corfield/new.clj">deps-new specification</a></p><p>Tests can be run with a Clojure test runner, e.g. kaocha test runner using <code>:test/run</code> alias from Practicalli Clojure CLI Config.</p><pre><code class="shell">clojure -X:test/run
+</code></pre><p>In Practicalli Project Templates, <code>src/practicalli/service_test.clj</code> defines a unit test with <code>clojure.test</code> and <code>clojure.spec</code>, which test the <code>practicalli/template/service/template.edn</code> configuration.</p><blockquote><p>A unit test is provides when creating a new project via the deps-new template</p></blockquote><h2 id="publish-and-use-template">Publish and Use template</h2><p>Push the new project with custom template to a shared Git service (GitHub, GitLab, etc.)</p><p>Create a release with a Git tag version and a meaningful description, e.g. using the GitHub releases page <a href="https://github.com/practicalli/project-templates/releases">https://github.com/practicalli/project-templates/releases</a></p><p>A alias could be used to add the new template project in the user <code>deps.edn</code> configuration</p><pre><code class="clojure">  :project/templates
+  {extra-deps:
+   {io.github.practicalli/project-templates {:git/tag "2023.04.19" :git/sha "975e771"}}}
+</code></pre><p>However, it is simpler to include the new template project as a dependency within the alias to run deps-new, e.g. <code>:project/create</code> alias definition.</p><pre><code class="clojure">  :project/create
+  {:replace-deps {io.github.seancorfield/deps-new
+                  {:git/tag "v0.5.1" :git/sha "48bf01e"}
+                  io.github.practicalli/project-templates
+                  {:git/tag "2023.04.19" :git/sha "975e771"}}
+   :exec-fn org.corfield.new/create
+   :exec-args {:template practicalli.template/application
+                  :name practicalli/playground}}
+</code></pre><blockquote><p>Default values for template.edn keys can be defined in the <code>:exec-args {}</code> of an alias for the project template.  These values will be overridden by matching key values passed via the command line</p></blockquote><p>The command to create a new project is greatly simplified</p><pre><code class="shell">clojure -T:project/create
+</code></pre><p>Providing a specific project name will override the default <code>:name</code> value</p><pre><code class="shell">clojure -T:project/create :name practicalli.template/gameboard
+</code></pre><p>And specifying a template will override the default <code>:template</code> value</p><pre><code class="shell">clojure -T:project/create :template practicalli/application :name practicalli.template/gameboard
+</code></pre><blockquote><p><a href="https://practical.li/clojure/clojure-cli/practicalli-config/">Practicalli Clojure CLI Config</a> has been updated to include the <a href="https://github.com/practicalli/project-templates">practicalli/project-templates</a> dependency, making available all the Practicalli templates.</p></blockquote><h2 id="multiple-template-project">Multiple template project</h2><p>Multiple templates can be added to the same project, especially if they are logically connected (e.g. part of the same team or organisation).</p><p>A single dependency can be used if all templates are available in the same project.</p><p>Each template is referred to via its namespace, e.g. <code>practicalli/service</code>, <code>practicalli/application</code>, etc.</p><ul><li><code>resources/practicalli/new-template-name</code>: add all the code and configuration for the new project, typically following the <code>build</code>, <code>root</code>, <code>src</code> and <code>test</code> directory name convention</li><li><code>src/practicalli/</code>: add <code>template_name.clj</code></li><li><code>test/practicalli/</code>: add <code>template_name_test.clj</code></li></ul><h2 id="summary">Summary</h2><p><a href="https://github.com/seancorfield/deps-new">seancorfield/deps-new</a> template provides a fast way to start creating your own templates, which can quickly be assembled from code and configuration in existing project.</p><p><a href="https://github.com/practicalli/project-templates">Practicalli project templates</a> provides an example of how comprehensive a template can be with very simple declarative rules.</p><p>deps-new also provides <a href="https://github.com/seancorfield/deps-new/blob/develop/doc/templates.md#programmatic-transformation">Programmatic transformation</a> for more advanced transformation.</p><p>A <code>data-fn</code> function is provided to modify the available substitution data and the <code>transform-fn</code> to modify the <code>template.edn</code> structure.</p><p><code>transform-fn</code> could be used to update the declarative rules that control the file copying, using alternative source code and configuration files based on optional values passed into the template, e.g. <code>:persistence :postgres</code> command line option would use source code files that included <code>next.jdbc</code>, postgres library as a dependency and code to manage and query the database.</p><p><a href="https://practical.li">Website</a> I <a href="https://github.com/practicalli">GitHub</a> I <a href="https://youtube.com/practicalli">YouTube</a> I <a href="https://twitter.com/practcial_li">@practical_li</a></p>
+</div>
+
+<div id="post-tags">
+    <b>Tags: </b>
+    
+    <a href="/blog/tags/clojure/">clojure</a>
+    
+    <a href="/blog/tags/clojure-cli/">clojure-cli</a>
+    
+</div>
+
+
+    <div id="prev-next">
+        
+        
+        <a class="right" href="/blog/posts/build-emacs-from-source-on-ubuntu-linux/">Build Emacs from source on Ubuntu Linux &raquo;</a>
+        
+    </div>
+
+    
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_config = function () {
+            this.page.url = "http://practical.li/blog/posts/create-deps-new-template-for-clojure-cli-projects/";
+            this.page.identifier = "Create deps-new templates for Clojure CLI projects";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//practicalli-blog.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    
+
+
+</div>
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div id="sidebar">
+                <h3>Links</h3>
+                <ul id="links">
+                    <li><a href="http://practical.li/">Practicalli Home</a></li>
+                    <li><a href="http://youtube.com/practicalli">YouTube channel</a></li>
+                    <li><a href="https://github.com/practicalli/blog-content/projects/1">Feeback / Issues</a></li>
+                    
+                    <li><a href="/blog/pages/contributing/">Contributing</a></li>
+                    
+                </ul>
+                
+                <div id="recent">
+                    <h3>Recent Posts</h3>
+                    <ul>
+                        
+                        <li><a href="/blog/posts/create-deps-new-template-for-clojure-cli-projects/">Create deps-new templates for Clojure CLI projects</a></li>
+                        
+                        <li><a href="/blog/posts/build-emacs-from-source-on-ubuntu-linux/">Build Emacs from source on Ubuntu Linux</a></li>
+                        
+                        <li><a href="/blog/posts/london-clojurians-community-a-brief-history/">London Clojurians Community - a relatively brief history</a></li>
+                        
+                        <li><a href="/blog/posts/build-and-run-clojure-with-multistage-dockerfile/">Build and run Clojure with Multi-stage Dockerfile</a></li>
+                        
+                        <li><a href="/blog/posts/make-clojure-tasks-simple-and-consistent/">Make Clojure development tasks simple and consistent</a></li>
+                        
+                        <li><a href="/blog/posts/clojurescript-workflow-with-clojure-cli-tools-and-figwheel-main/">ClojureScript workflow with Clojure CLI tools and Figwheel-main</a></li>
+                        
+                        <li><a href="/blog/posts/build-emacs-28-on-ubuntu/">Building Emacs 28 on Ubuntu Linux</a></li>
+                        
+                        <li><a href="/blog/posts/adopt-FreeDesktop.org-XDG-standard-for-configuration-files/">Adopting FreeDesktop.org XDG standard for development tools</a></li>
+                        
+                        <li><a href="/blog/posts/practicalli-plans-for-spring-2022/">Practicalli content plans for Spring 2022</a></li>
+                        
+                    </ul>
+                </div>
+                
+                
+                <div id="tags">
+                    <h3>Tags</h3>
+                    <ul>
+                        
+                        <li><a href="/blog/tags/json/">json</a></li>
+                        
+                        <li><a href="/blog/tags/ring/">ring</a></li>
+                        
+                        <li><a href="/blog/tags/very%20fetch/">very fetch</a></li>
+                        
+                        <li><a href="/blog/tags/ubuntu/">ubuntu</a></li>
+                        
+                        <li><a href="/blog/tags/lsp/">lsp</a></li>
+                        
+                        <li><a href="/blog/tags/cryogen/">cryogen</a></li>
+                        
+                        <li><a href="/blog/tags/practicalli/">practicalli</a></li>
+                        
+                        <li><a href="/blog/tags/makefile/">makefile</a></li>
+                        
+                        <li><a href="/blog/tags/neovim/">neovim</a></li>
+                        
+                        <li><a href="/blog/tags/aliases/">aliases</a></li>
+                        
+                        <li><a href="/blog/tags/challenges/">challenges</a></li>
+                        
+                        <li><a href="/blog/tags/github/">github</a></li>
+                        
+                        <li><a href="/blog/tags/clojure/">clojure</a></li>
+                        
+                        <li><a href="/blog/tags/httpkit/">httpkit</a></li>
+                        
+                        <li><a href="/blog/tags/webapps/">webapps</a></li>
+                        
+                        <li><a href="/blog/tags/clojure-cli/">clojure-cli</a></li>
+                        
+                        <li><a href="/blog/tags/pull-requests/">pull-requests</a></li>
+                        
+                        <li><a href="/blog/tags/editors/">editors</a></li>
+                        
+                        <li><a href="/blog/tags/java/">java</a></li>
+                        
+                        <li><a href="/blog/tags/tools-deps/">tools-deps</a></li>
+                        
+                        <li><a href="/blog/tags/hardware/">hardware</a></li>
+                        
+                        <li><a href="/blog/tags/make/">make</a></li>
+                        
+                        <li><a href="/blog/tags/cider/">cider</a></li>
+                        
+                        <li><a href="/blog/tags/emacs/">emacs</a></li>
+                        
+                        <li><a href="/blog/tags/clj-http/">clj-http</a></li>
+                        
+                        <li><a href="/blog/tags/calva/">calva</a></li>
+                        
+                        <li><a href="/blog/tags/snippets/">snippets</a></li>
+                        
+                        <li><a href="/blog/tags/clojure-lsp/">clojure-lsp</a></li>
+                        
+                        <li><a href="/blog/tags/thinkpad/">thinkpad</a></li>
+                        
+                        <li><a href="/blog/tags/events/">events</a></li>
+                        
+                        <li><a href="/blog/tags/community/">community</a></li>
+                        
+                        <li><a href="/blog/tags/advent-of-parens/">advent-of-parens</a></li>
+                        
+                        <li><a href="/blog/tags/spacemacs/">spacemacs</a></li>
+                        
+                        <li><a href="/blog/tags/docker/">docker</a></li>
+                        
+                        <li><a href="/blog/tags/help/">help</a></li>
+                        
+                        <li><a href="/blog/tags/transducers/">transducers</a></li>
+                        
+                        <li><a href="/blog/tags/lenovo/">lenovo</a></li>
+                        
+                        <li><a href="/blog/tags/reduce/">reduce</a></li>
+                        
+                        <li><a href="/blog/tags/compojure/">compojure</a></li>
+                        
+                        <li><a href="/blog/tags/klipse/">klipse</a></li>
+                        
+                        <li><a href="/blog/tags/figwheel-main/">figwheel-main</a></li>
+                        
+                        <li><a href="/blog/tags/not%20fetch/">not fetch</a></li>
+                        
+                        <li><a href="/blog/tags/clojure-core/">clojure-core</a></li>
+                        
+                        <li><a href="/blog/tags/web-scraper/">web-scraper</a></li>
+                        
+                        <li><a href="/blog/tags/blogging/">blogging</a></li>
+                        
+                        <li><a href="/blog/tags/conjure/">conjure</a></li>
+                        
+                        <li><a href="/blog/tags/github-actions/">github-actions</a></li>
+                        
+                        <li><a href="/blog/tags/apis/">apis</a></li>
+                        
+                        <li><a href="/blog/tags/jvm/">jvm</a></li>
+                        
+                        <li><a href="/blog/tags/static-sites/">static-sites</a></li>
+                        
+                        <li><a href="/blog/tags/re-clojure/">re-clojure</a></li>
+                        
+                        <li><a href="/blog/tags/packages/">packages</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <footer>
+      Copyright &copy; 2023 Practicalli
+      <p style="text-align: center;">Powered by <a href="http://cryogenweb.org">Cryogen</a></p>
+
+      <license id="license">
+        <div>
+          <p>This work is licensed under a <a href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution 4.0 ShareAlike License</a>, including custom images & stylesheets.</p>
+          <p>Permissions beyond the scope of this license may be available by contacting <a xmlns:cc="http://creativecommons.org/ns#" href="https://twitter.com/practical_li" rel="cc:morePermissions">@practical_li</a></p>
+          <br>
+          <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a>
+        </div>
+      </license>
+
+    </footer>
+</div>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="/blog/js/highlight.pack.js" type="application/javascript"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+</body>
+</html>
