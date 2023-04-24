@@ -15,4 +15,5 @@ Please link to any images showing proposed changes to the design if relevant.
 Please discuss changes in the [#practicalli channel of the Clojurians slack community](https://clojurians.slack.com/messages/practicalli)
 
 ## Include mention to project maintainer for faster response
-@jr0cket
+
+@practicalli-john

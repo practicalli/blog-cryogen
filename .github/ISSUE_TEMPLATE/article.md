@@ -12,6 +12,7 @@ A meaningful title for the article, summing up the focus of the article
 
 **Article description or content**
 A good article would include
+
 * an introduction to the subject to be covered and why its valuable
 * detailed description of the subject, including lots of examples (code, screenshots, videos, etc).
 * a summary of the lessons learned in the article
