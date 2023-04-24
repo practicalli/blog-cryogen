@@ -6,6 +6,10 @@
 #
 # ------------------------------------------
 
+# .PHONY: ensures target used rather than matching file name
+# https://makefiletutorial.com/#phony
+.PHONY: all clean docs lint pre-commit-check test
+
 
 # ------- Makefile Variables --------- #
 
@@ -46,7 +50,7 @@ blog:  ## Generate blog and run local server
 
 lint:  ## Run MegaLinter with custom configuration
 	$(info --------- MegaLinter Runner ---------)
-	mega-linter-runner --flavor documentation --env 'MEGALINTER_CONFIG=.github/linters/mega-linter.yml'
+	npx mega-linter-runner --flavor documentation --release beta --env "'MEGALINTER_CONFIG=.github/config/megalinter.yaml'" --remove-container
 
 lint-clean:  ## Clean MegaLinter report information
 	$(info --------- MegaLinter Clean Reports ---------)
