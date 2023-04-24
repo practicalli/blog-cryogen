@@ -100,7 +100,7 @@
   (assoc grape :clean? true))
 </code></pre><p>Lets give our clean grape function a quick test in the REPL.</p><pre><code class="clojure">(clean-grape {:rotten? false :clean? false})
 ;; =&gt; {:rotten? false, :clean? true}
-</code></pre><h1 id="functional-composition-using-the-thread-last-macro">Functional composition using the thread last macro.</h1><p>Each line passes its evaluate value to the next line as its last argument.  Here is the algorithm we want to create with our code:</p><ul><li>evaluate the name grape-clusters and return the data structure it points to.</li><li>use mapcat to map the split-clusters function over each element in grape-clusters, returning 4 grapes concatenated into one collection</li><li>filter the 4 grapes, dropping the grapes where :rotten? equals true, returning 2 grapes</li><li>update each grape to have a :clean? value of true</li></ul><pre><code class="clojure">(-&gt;&gt; grape-clusters
+</code></pre><h1 id="functional-composition-using-the-thread-last-macro">Functional composition using the thread last macro</h1><p>Each line passes its evaluate value to the next line as its last argument.  Here is the algorithm we want to create with our code:</p><ul><li>evaluate the name grape-clusters and return the data structure it points to.</li><li>use mapcat to map the split-clusters function over each element in grape-clusters, returning 4 grapes concatenated into one collection</li><li>filter the 4 grapes, dropping the grapes where :rotten? equals true, returning 2 grapes</li><li>update each grape to have a :clean? value of true</li></ul><pre><code class="clojure">(-&gt;&gt; grape-clusters
      (mapcat split-cluster)
      (filter not-rotten)
      (map clean-grape))
@@ -305,8 +305,6 @@
                         <li><a href="/blog/tags/klipse/">klipse</a></li>
                         
                         <li><a href="/blog/tags/figwheel-main/">figwheel-main</a></li>
-                        
-                        <li><a href="/blog/tags/not%20fetch/">not fetch</a></li>
                         
                         <li><a href="/blog/tags/clojure-core/">clojure-core</a></li>
                         

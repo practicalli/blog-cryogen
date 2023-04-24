@@ -94,7 +94,7 @@
 </code></pre><blockquote><p>Note: the install <code>deps.edn</code> is now depreciated and will not be included in a future version of the Clojure CLI tools.</p></blockquote><p>The deps.edn files in each of these locations (if they exist) are merged to form one combined dependency configuration. The merge is done in the order above install/config/local, last one wins. The operation is essentially merge-with merge, except for the :paths key, where only the last one found is used (they are not combined).</p><p>You can use the <code>-Sverbose</code> option to see all of the actual directory locations.</p><p>Much more detail is covered in the Clojure.org article - <a href="https://clojure.org/reference/deps_and_cli">deps and cli</a></p><h2 id="using-libraries---depsedn">Using Libraries - deps.edn</h2><p><code>deps.edn</code> file in the top level of your project can be used to include libraries in your project.  These may be libraries you are writing locally, projects in git (e.g. on GitHub) or libraries published to Maven Central or <a href="https://clojars.org/">Clojars</a>.</p><p>Include a library by providing its name and other aspects like version.  This information can be found on <a href="https://clojars.org/">Clojars</a> if the library is published there.</p><p>Libraries as JAR files will be cached in the <code>$HOME/.m2/repository</code> directory.</p><h3 id="example-clj-time">Example clj-time</h3><p>Declare <a href="https://github.com/dm3/clojure.java-time"><code>clojure.java-time</code></a> as a dependency in the <code>deps.edn</code> file, so Clojure CLI tools can downloaded the library and add it to the classpath.</p><pre><code class="clojure">{:deps
  {org.clojure/clojure {:mvn/version "1.10.1"}
   clojure.java-time {:mvn/version "0.3.2"}}}
-</code></pre><h2 id="writing-code">Writing code</h2><p>For larger projects you should definately find an editor you find productive and has great CLojure support.  You can write code in the REPL and you can just run a specific file of code, if you dont want to set up a full project.</p><p>Create a directory <code>what-time-is-it</code>.</p><p>Create a <code>deps.edn</code> file in this directory with the following code:</p><pre><code class="clojure">{:paths ["src"]
+</code></pre><h2 id="writing-code">Writing code</h2><p>For larger projects you should definitely find an editor you find productive and has great CLojure support.  You can write code in the REPL and you can just run a specific file of code, if you dont want to set up a full project.</p><p>Create a directory <code>what-time-is-it</code>.</p><p>Create a <code>deps.edn</code> file in this directory with the following code:</p><pre><code class="clojure">{:paths ["src"]
  :deps {org.clojure/clojure {:mvn/version "1.10.1"}
         clojure.java-time {:mvn/version "0.3.2"}}}
 </code></pre><p>Create a <code>src</code> directory and the source code file <code>src/practicalli/what_time_is_it.clj</code> which contains the following code:</p><pre><code class="clojure">(ns practicalli.what-time-is-it
@@ -286,8 +286,6 @@ clj -m myname.myapp
                         <li><a href="/blog/tags/klipse/">klipse</a></li>
                         
                         <li><a href="/blog/tags/figwheel-main/">figwheel-main</a></li>
-                        
-                        <li><a href="/blog/tags/not%20fetch/">not fetch</a></li>
                         
                         <li><a href="/blog/tags/clojure-core/">clojure-core</a></li>
                         
