@@ -14,7 +14,7 @@ Update: [Practicalli Clojure WebApps](https://practicalli.github.io/clojure-weba
 
 # Create a project
 
-A new project could be made by manually creating a few files and directories.  The [clj-new project](https://github.com/seancorfield/clj-new) provides a convienient was to create a project from a template. The [practicalli/clojure-deps-edn configuration](https://github.com/practicalli/clojure-deps-edn) contains the `:project/new` alias.
+A new project could be made by manually creating a few files and directories.  The [clj-new project](https://github.com/seancorfield/clj-new) provides a convenient was to create a project from a template. The [practicalli/clojure-deps-edn configuration](https://github.com/practicalli/clojure-deps-edn) contains the `:project/new` alias.
 
 In a terminal, create the project called `practicalli/simple-api-server`
 
@@ -146,7 +146,6 @@ The `handler` should return a response hash-map, containing values for `:status`
 > The `handler` function returns a [ring response keys](https://github.com/ring-clojure/ring/wiki/Concepts#responses).
 
 
-
 ## Running the application
 
 Start a REPL using the Clojure CLI tools, preferably using [rebel-readline](https://github.com/bhauman/rebel-readline#clojure-tools) for the complete REPL experience.
@@ -188,7 +187,6 @@ Finally we can call the `create-server` function to start our webserver on a par
 > 6) Enter `(create-server 8000)` and press `RET` to evaluate the function call and start the server.
 
 
-
 ## Testing our application
 
 `clojure.test` library is built into Clojure that provides a simple unit test framework and test runner.  As its part of Clojure, all we need to do is require the library in the namespaces where we write our tests.  There are [several other test libraries and test runners](https://gist.github.com/plexus/a816a942c01b0e7af1e9836205100337) too.
@@ -208,7 +206,7 @@ The clj-new app template already created a `test/simple-api-server-test.clj` fil
 
 Practicalli recommends changing the way the namespaces required.
 
-* use a meaningful and consistant alias for the namespace to be tested, i.e `SUT`.
+* use a meaningful and consistent alias for the namespace to be tested, i.e `SUT`.
 
 * refer specific functions from `clojure.test` that are used to define your tests, rather than the indiscriminate `:refer :all`
 
@@ -223,7 +221,6 @@ Edit `test/practicalli/simple-api-server-test.clj`  and update the `ns` definiti
 > **`SUT`** is a commonly used alias meaning [System Under Test](https://en.wikipedia.org/wiki/System_under_test).  The alias was added rather than including all functions using `:refer :all`.
 >
 > The alias makes it easy to see which functions are being called from the system under test and therefore provide an understanding of where they are being tested.
-
 
 
 ### Write a basic test
@@ -269,14 +266,13 @@ clj -A:test:runner
 > `((clojure-mode . ((cider-clojure-cli-global-options . "-A:test"))))`
 
 
-
 ## Adding a function to stop the server
 
 We can start the server, but unless we have a reference to the server we cannot send it instructions to shut down.
 
 A brutal way to stop the server is to simply quit the Clojure REPL, however, we can do better than that.
 
-### Defining a reference for the server.
+### Defining a reference for the server
 
 Using the `def` function we can bind a name to the calling of the `create-server` function.  Then we can use that name to send a timeout instruction and gracefully shut down the server.
 
@@ -421,6 +417,7 @@ A single pair of `{}` is used to pattern match on key values pairs at the top le
 ### Starting the server
 
 Specify a specific port when starting the server
+
 ```clojure
 (-main :port 8888)
 ;; => "Port: 8888, timeout 100"

@@ -37,7 +37,6 @@ In the following video I walk through the first challenge of Advent of Code from
 <iframe width="560" height="315" src="https://www.youtube.com/embed/opM7fU7IAV8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
-
 ## Creating a project for the challenge
 
 I created [practcialli/advent-of-clojure-code-2019](https://github.com/practicalli/advent-of-clojure-code-2019), a deps.edn project created with [clj-new](https://github.com/seancorfield/clj-new).  I will be sharing any challenges I complete.

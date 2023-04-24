@@ -4,13 +4,13 @@
 :topic "ubuntu"
 :tags  ["ubuntu" "spacemacs" "emacs"]}
 
-Emacs 28.1 is [a feature packed release](https://www.masteringemacs.org/article/whats-new-in-emacs-28-1 "What is new in Emacs 28.1") and includes native compilation to significantly increase the speed of all Emacs software packages installed.  This is a very noticable difference, especially when Emacs is at the center of your developer workflow.
+Emacs 28.1 is [a feature packed release](https://www.masteringemacs.org/article/whats-new-in-emacs-28-1 "What is new in Emacs 28.1") and includes native compilation to significantly increase the speed of all Emacs software packages installed.  This is a very noticeable difference, especially when Emacs is at the center of your developer workflow.
 
 Ubuntu hasn't packaged Emacs 28.1 yet, although its *usually* straight forward to build Emacs yourself.
 
 <!-- more -->
 
-## A very brief summary:
+## A very brief summary
 
 ```
 sudo apt build-dep emacs && /
@@ -32,7 +32,7 @@ Read the rest of the article for a more detailed description
 
 Open `Software & Updates` and ensure the Source Code source is enabled and reload the package list (or run `sudo apt update` in a terminal after adding Source Code)
 
-![Ubuntu Sofware & Updates - Download from Source Code](https://raw.githubusercontent.com/practicalli/graphic-design/live/ubuntu/screenshots/ubuntu-sofware-updates-download-from-source-code.png)
+![Ubuntu Software & Updates - Download from Source Code](https://raw.githubusercontent.com/practicalli/graphic-design/live/ubuntu/screenshots/ubuntu-sofware-updates-download-from-source-code.png)
 
 Ask Ubuntu to install the packages required to build Emacs (there will be quite a few packages if this is the first software built with GCC on the operating system)
 
@@ -89,7 +89,6 @@ Check the output of `./configure` was successful, see the end of this article fo
 
 > `./configure --help` lists available flags. Generally features are enabled if the required libraries are installed on the operating system.
 > A noticeable exception is native compilation, as its a relatively new feature and not enabled by default.
-
 
 
 ## Building Emacs locally

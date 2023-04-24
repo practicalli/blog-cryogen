@@ -48,7 +48,8 @@ The configuration keys that can be used to define an alias are:
 * `:exec-args` - default arguments passed to the function, over-ridden by matching argument keys specified on the command line
 
 > `:replace-paths` and `:replace-deps` are used to only include specific directories and dependencies. excluding the project dependencies from the class path. Community tools that use these directives should consider adopting the tool `-T` flag approach.
->  Using `:paths` and `:deps` keys in an alias are short-hand for their `replace-*` keywords (Practicalli finds this very confusing, so prefers the explicit names for greater clarity)
+>
+> Using `:paths` and `:deps` keys in an alias are short-hand for their `replace-*` keywords (Practicalli finds this very confusing, so prefers the explicit names for greater clarity)
 
 
 ## A simple project deps.edn configuration
@@ -150,7 +151,7 @@ This alias is called using the command `clojure -M:repl/cider`
 
 `:exec-fn` specifies the fully qualified name of the function, using the `clojure -X` execution option flag .
 
-`:exec-args` specifies a hash-map of default key/value pairs passed to the `:exec-fn` function.  The defaults can be overriden on the command line with respective key/value pairs.
+`:exec-args` specifies a hash-map of default key/value pairs passed to the `:exec-fn` function.  The defaults can be overridden on the command line with respective key/value pairs.
 
 Arguments can be nested within the `:exec-args` map, especially useful on projects with several component configurations (server, database, logging) and managed by a component system (i.e Integrant)
 
@@ -197,8 +198,8 @@ The double quotes in an EDN string must be wrapped by single quotes, along with 
 Number values and keywords should not need to be wrapped.
 
 * `'"strings in double quotes surround by single quotes"'`
-* `:key `[:service :port]` 9999`
-* `:config '{:log :console}'`
+* `'[:kewords-are-okay :vectors-have-single-quotes]'`
+* `:config '{:so-do :hash-maps}'`
 
 
 ## User wide alias examples
@@ -226,6 +227,7 @@ Using `clojure -X:test/watch` uses `clojure.exec` to run the `exec-fn` function,
 ```
 
 > NOTE: Configuration for both -M and -X approaches is not required, but both are often provided for convenience.
+>
 > Community tools such as Kaocha have the opportunity to migrate to the `-T` tools approach.  Read more about [which execution option flag to use for Clojure CLI aliases](/posts/clojure-which-execution-option-to-use/)
 
 Further examples of aliases can be found in [practicalli/clojure-deps-edn configuration](https://github.com/practicalli/clojure-deps-edn) which contains configurations for over 30 community tools.

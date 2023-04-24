@@ -26,11 +26,13 @@
 ## Cryogen
 
 Pros
+
 * simple to use
 * nice themes, easily customisable
 * edn for post metadata and configuration
 
 Cons
+
 * doesnt support markdown defined tables in posts
 
 
@@ -52,38 +54,44 @@ A new project to generate blog websites from asciidoc
 ## [Static](https://nakkaya.com/static.html) - nakkaya
 
 Pros
+
 * Supported markup languages - markdown org-mode (via emacs) clojure (hiccup) cssgen html
 
 Cons
+
 * very basic styles for theme
 
 ## [incise](https://github.com/RyanMcG/incise)
 
 Pros
+
 * a deployer (does this support Github pages ??)
 * extensible
 
 Cons
+
 * Eclipse public license
 * no new development in 5 years
 
 Summary
-Possible source of inspriation
+Possible source of inspiration
 
 ### [Misaki](https://github.com/liquidz/misaki)
+
 A jekyll inspired static site generator
 
 Pros
+
 * expandable built in functions
 
 Cons
+
 * project archived by owner - no new development in 5 years
 * no klipse integration (although probably not hard as you can add your own cljs compiler)
 * leiningen
 
 Summary
 Could be a useful source of inspiration
-
 
 
 Thank you.

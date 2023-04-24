@@ -21,6 +21,7 @@ Before starting Emacs with the `develop` branch, move your `.spacemacs` file to 
 > [Updating Spacemacs develop from within Spacemacs](https://www.youtube.com/watch?v=XC7LGI0Q2u8&list=PLpr9V-R8ZxiCHMl2_dn1Fovcd34Oz45su&index=3) demonstrates how to update the `develop` branch using Magit.
 
 ## Raising Issues
+
 Take a look at the [current issue list on the Spacemacs repository](https://github.com/syl20bnr/spacemacs/issues) before creating a new issue, it might have already been raised.  The Spacemacs community is very active, so issues do get raised quickly.
 
 > Ask on the [Spacemacs Gitter chat](https://gitter.im/syl20bnr/spacemacs) if you are not sure if its an issue, or just need help. For Clojure specific help, there is also [#spacemacs channel](clojurians.slack.com/messages/spacemacs) in the [Clojurians Slack community](http://clojurians.net/).
@@ -30,6 +31,7 @@ Take a look at the [current issue list on the Spacemacs repository](https://gith
 Please be as descriptive as possible on how the issue happens and what you would expect to happen instead.
 
 ## Making changes
+
 If you have a fix, a new feature or keybindings to add/change, then pull requests are most welcome.  Again you can create almost everything from Spacemacs, only visiting GitHub to press the **Create pull request** button at the end.
 
 > Please read the [Spacemacs Conventions](https://github.com/syl20bnr/spacemacs/blob/develop/doc/CONVENTIONS.org) before making changes, especially the naming and keybinding conventions.
@@ -55,6 +57,7 @@ Changes in pull requests include three parts and should be all part of a **singl
 * The change itself - unless its just a documentation change in the README.org.
 
 ## Creating a pull request
+
 An example of making a change to the Clojure layer from within Spacemacs, creating a single commit using Magit.
 
 You only need to visit GitHub to press the *Create Pull Request* button.

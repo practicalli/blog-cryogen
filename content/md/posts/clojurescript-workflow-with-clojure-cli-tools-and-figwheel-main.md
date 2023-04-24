@@ -47,8 +47,6 @@ The `practicalli/hello-world` defines the main application namespace as `hello-w
 `--reagent` is a template option to add reagent React-style library dependencies to the generated project. `--rum` and `--react` are other React-style libraries that could be used instead of `--reagent`
 
 
-
-
 ## Project configuration
 
 A new project is created in the `hello-world` directory and contains a `deps.edn` configuration
@@ -300,7 +298,7 @@ Using Figwheel provides an simple way to develop, test and deploy ClojureScript 
 
 Add aliases and build configurations customise the workflows for greater flexibility.  The configuration files are EDN, so are Clojure maps that are simple to work with and understand.
 
-There are more examples of options for figwheel-main projects on the https://figwheel.org/ website.
+There are more examples of options for figwheel-main projects on the <https://figwheel.org/> website.
 
 Please see earlier articles in the Clojure CLI series for background:
 

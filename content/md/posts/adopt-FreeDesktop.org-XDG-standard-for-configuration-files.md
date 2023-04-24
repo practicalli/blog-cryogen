@@ -31,7 +31,7 @@ The XDG Base Directory Specification separates configuration, data, runtime and 
 
 Each location organises application specific files within a directory of the same name as that application.
 
-* `XDG_CONFIG_HOME` user-specific configuration files, default ` $HOME/.config`
+* `XDG_CONFIG_HOME` user-specific configuration files, default `$HOME/.config`
 * `XDG_DATA_HOME` user-specific data files. default `$HOME/.local/share`
 * `XDG_STATE_HOME` user-specific state data `$HOME/.local/state`
 * `XDG_CACHE_HOME` user-specific non-essential (cached) data, default `$HOME/.cache`

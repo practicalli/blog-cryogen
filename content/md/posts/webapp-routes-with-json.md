@@ -92,6 +92,7 @@ Specify a specific port when starting the server
 (-main :port 8888)
 ;; => "Port: 8888, timeout 100"
 ```
+
 Or simply start the server on the default port using `(-main)`
 
 Stopping the server is easy, just call the `stop-server` functions without arguments.
@@ -107,7 +108,7 @@ Stopping the server is easy, just call the `stop-server` functions without argum
 
 ## Adding Routes with Compojure
 
-`defroutes` function is a macro to provide a simple way to define all the routes.  There is only one `defroutes` function per web application and all requests recieved by the server go through this function.
+`defroutes` function is a macro to provide a simple way to define all the routes.  There is only one `defroutes` function per web application and all requests received by the server go through this function.
 
 > A series of nested `if` functions or the `cond` function could be used to define routes, although this is not very efficient code.
 
@@ -139,7 +140,7 @@ The resulting response hash-map would look as follows
 
 The `response` function provides a successful response (status 200) that includes the message passed as an argument.
 
-In deps.edn add the `ring.util.response` namespace, to give access to the `response` funciton.
+In deps.edn add the `ring.util.response` namespace, to give access to the `response` function.
 
 ```clojure
  [ring.util.response :refer [response]]
@@ -215,10 +216,9 @@ Calling the `hello-world` function with an empty request hash-map, `{}` we can s
 ```
 
 
-
 ### Viewing the full Request information
 
-Compojure has a request dump function that gives a much nicer output than our initial request-info function. The dump funtion also seperates the default response keys with any additional keys provided by the URL.
+Compojure has a request dump function that gives a much nicer output than our initial request-info function. The dump function also separates the default response keys with any additional keys provided by the URL.
 
 ```clojure
 (:require
@@ -268,7 +268,6 @@ Other approaches include
 * [ring-json-response](https://github.com/weavejester/ring-json-response) for returning JSON responses from a ring handler
 
 
-
 ## Creating a JSON API
 
 Returning JSON from APIs is a common approach as JSON is a very lightweight data format that is supported by many languages.  So JSON is usually very simple when it comes to data integration.
@@ -304,6 +303,7 @@ Assuming we use the data in several handler functions, we should define that dat
     {:name "jenny-jetpack" :high-score 23452345}
     {:name "fred" :high-score 23452345}]})
 ```
+
 ## Specific player score with URL parameters
 
 
@@ -354,7 +354,7 @@ We can use these expressions to build our `player-score` handler.
                         (get scoreboard :players)))}))
 ```
 
-Now we can call our scoreboard api with a specific player name, for example http://localhost:8000/player/:jenny-jetpack and just their scores are returned.
+Now we can call our scoreboard api with a specific player name, for example <http://localhost:8000/player/:jenny-jetpack> and just their scores are returned.
 
 If there are going to be multiple scores, then we could sort them first using `sort-by :high-score dec` on the results of `filter` to give a list of score entries with the highest score first.
 
@@ -365,7 +365,7 @@ Or we could leave it to the client to process the scores in what ever way they w
 
 Taking the simple web server and adding Compojure allows us to quickly build a web application or API.
 
-Generating JSON from Clojure data structures is very easy.  Converting JSON into Clojure data structures is just as easy and provides a more efficient way of working with any data recieved in JSON format.
+Generating JSON from Clojure data structures is very easy.  Converting JSON into Clojure data structures is just as easy and provides a more efficient way of working with any data received in JSON format.
 
 There are several libraries for transforming between JSON and Clojure, including [Cheshire](https://github.com/dakrone/cheshire), [jsonista](https://github.com/metosin/jsonista) and Transit.
 

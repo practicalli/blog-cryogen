@@ -283,7 +283,7 @@ Build the service and create an image to run the Clojure service in a container 
 docker build --tag practicalli/service-name:1.1 .
 ```
 
-After the first time building the docker image, any parts of the build that havent changed will use their respecitve cached layers in the builder stage.  This can lead to very fast, even zero time builds.
+After the first time building the docker image, any parts of the build that havent changed will use their respective cached layers in the builder stage.  This can lead to very fast, even zero time builds.
 
 ![Docker build image optomised to use docker layer cache for build stage](https://raw.githubusercontent.com/practicalli/graphic-design/live/continuous-integration/docker-compose-build-output-cached-layers.png)
 

@@ -86,6 +86,7 @@ This seems to be the same as the default behaviour when running `clojure`
 
 
 ## Running Code - just an expression
+
 We can just evaluate a Clojure expression using the `--eval string` or `-e` option.  This option takes the expression as a string, so dont forget those double quotes.
 
 ```shell
@@ -110,6 +111,7 @@ clojure -e "(if (= 1 2) true nil)"
 
 
 ## Running code - from a project
+
 We saw in the Practicalli study group that you can run a project just by specifying the main namepsace.
 
 Using the project [practicalli/first-cli-app](https://github.com/practicalli/first-cli-app) we can Run the project using the command:
@@ -119,8 +121,6 @@ clojure -m practicalli.first-app
 ```
 
 The command called the `-main` function defined in `practicalli.first-app` namespce (`src/practicalli/first_app.clj`)
-
-
 
 
 ## `-Aalias` - include configuration sections when running `clojure`
@@ -214,9 +214,8 @@ The command should execute without error and if so no output is returned.  So op
 > It does seem easier to simply edit the `deps.edn` file and add project dependencies, especially as the code may need formatting.
 > If you are working with a bigger project then using the CLI to add a dependency to an existing `deps.edn` project configuration could be a convenient way to share new dependencies between teams or others who want to use your project, reducing the risk of copy/paste errors or adding different versions.
 >
-> It could be useful to create a script that populates a project `deps.edn` file with all the same depencencies.  What happens if you try add the same dependency but with different versions?
+> It could be useful to create a script that populates a project `deps.edn` file with all the same dependencies.  What happens if you try add the same dependency but with different versions?
 > Maybe using `clojure - script-to-set-dependencies.sh`
-
 
 
 ### Error: no `deps.edn` file
@@ -236,7 +235,7 @@ Full report at:
 
 ## `-Stree` - adding dependencies to deps.edn
 
-`clojure -Stree` in a project directory will show all the library dependencies you added to the project along with all the depencencies that each of those libraries have.
+`clojure -Stree` in a project directory will show all the library dependencies you added to the project along with all the dependencies that each of those libraries have.
 
 `-Stree` is a very useful diagnostic tool when you have clashes between dependencies, or more likely the version of dependencies that the libraries you added as dependences have as dependencies (I think that needs a diagram).
 
@@ -316,7 +315,6 @@ reagent/reagent 0.8.1
 ## `-Sresolve-tags` - adding dependencies to deps.edn
 
 TODO: investigate
-
 
 
 ## `-Sverbose` - Clojure version and paths before running REPL

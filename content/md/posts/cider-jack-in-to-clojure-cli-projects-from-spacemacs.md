@@ -110,6 +110,7 @@ deps.edn has a top-level key called `:aliases` that can include one or more alia
     com.bhauman/figwheel-main {:mvn/version "0.2.11"}}
    :extra-paths ["target" "test"]}
 ```
+
 ```
 
 The alias keeps these develop time libraries out of our application dependencies, as they are not required for running the application.

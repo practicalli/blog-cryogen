@@ -16,6 +16,7 @@ You can find the articles I am planning to write on the [practicalli blog projec
 While you wait to open these posts each day of December, I am kickstarting your feast of Clojure in this article.
 
 I also encourage you to take some time over the holiday season to practice Clojure
+
 * [Clojure Advent of Code](/posts/clojure-advent-of-code-2019/)
 * [Practicalli Clojure study group](https://www.youtube.com/watch?v=MZcuL4lRw5E&list=PLpr9V-R8ZxiDjyU7cQYWOEFBDR1t7t0wv)
 
@@ -29,7 +30,8 @@ I also encourage you to take some time over the holiday season to practice Cloju
 ## Discover new ideas with Clojure videos
 
 [Clojure TV YouTube channel](https://www.youtube.com/user/ClojureTV) has hundreds of videos from Clojure Conj conferences over the last 6 years.  Some of my favourites include
-*  [Follow the Data: Product Development in Clojure - Derek Troy-West](https://www.youtube.com/watch?v=MnvtPzEH-d8&list=PLZdCLR02grLqSy15ALLAZDU6LGpAJDrAQ)
+
+* [Follow the Data: Product Development in Clojure - Derek Troy-West](https://www.youtube.com/watch?v=MnvtPzEH-d8&list=PLZdCLR02grLqSy15ALLAZDU6LGpAJDrAQ)
 * [From Lazy Lisper to Confident Clojurist - Alexander Oloo](https://www.youtube.com/watch?v=U99UHYUW63k&list=PLZdCLR02grLqSy15ALLAZDU6LGpAJDrAQ&index=5)
 * [Interactive Programming for Artificial Intelligence - Dragan Djuric](https://www.youtube.com/watch?v=m0rSJ9xdsdk&list=PLZdCLR02grLqSy15ALLAZDU6LGpAJDrAQ&index=10)
 * [Sherlock Holmes, Consulting Developer - Stuart Halloway](https://www.youtube.com/watch?v=OUZZKtypink&list=PLZdCLR02grLqSy15ALLAZDU6LGpAJDrAQ&index=11)
@@ -57,6 +59,7 @@ start learning Clojure CLI and tools.deps approach for Clojure
 
 
 There are several excellent professional courses and tutorials available to help you deep dive into specific areas.  Take some time out and learn something new for the new year.
+
 * [Lambda Island](https://lambdaisland.com/blog/2019-11-25-advent-of-parens) - high quality and effective video tutorials on Clojure, with detailed transcripts
 * [Purelyfunctional.tv](https://purelyfunctional.tv/) - comprehensive training courses for Clojure
 * [Learn re-frame](https://www.learnreframe.com/) - a detailed video-based course from an experienced JavaScript & ClojureScript developer, Jacek Schae
@@ -64,16 +67,17 @@ There are several excellent professional courses and tutorials available to help
 ## Cool projects to try out
 
 [Bobby Towers](https://github.com/porkostomus/mecca-pix) has some excellent projects that are very creative and inspiring projects, so great fun for all over the holiday season.
+
 * Games: Conways Game of Life, Sudoku, Minesweeper, Tic-tac on my toe
 * Music: [MECCA Music Platform](https://github.com/porkostomus/mecca-pix), Exploring MIDI files,
 * Graphics: [Convert images into SVG](https://github.com/porkostomus/mecca-pix)
 
 [Michiel Borkent](https://github.com/borkdude) has been a prolific developer in the Clojure community, creating many excellent projects this year.  It is definitely worth investing a little time getting to know these projects
+
 * [re-find](https://github.com/borkdude/re-find) - to find a function based on arguments and expected return value.  Try the [re-find website](https://borkdude.github.io/re-find.web/) too.
 * clj-kondo - my favourite Clojure lint tool that can be used interactively in your editor or as a script in a CI or other batch process.
 * [jet](https://github.com/borkdude/jet) - a command line tool to transform between JSON, EDN and Transit
 * [babashka](https://github.com/borkdude/babashka) - when you want to write Clojure rather than a bash script
-
 
 
 ## Clojure podcasts

@@ -20,6 +20,7 @@ General website such as [redit/clojure](https://www.reddit.com/r/Clojure/) are u
 <!-- more -->
 
 ## ask.clojure.org
+
 An official place to ask questions about Clojure, ClojureScript, ClojureCLR, Clojure contrib libraries and any other Clojure topic.  This forum is used by the Clojure maintainer team and so discussions can shape the direction of Clojure.
 
 ![ask.clojure.org front page](/images/ask-clojure-org-front-page.png)
@@ -38,6 +39,7 @@ The [@AskClojure](https://twitter.com/askclojure) twitter account tweets new que
 
 
 ## Clojurians Slack channels
+
 [clojurians.net](https://clojurians.net) provides a self-service way to sign up to the Clojurians slack community, which contains many channels where you can get help.  The community is very active with a relatively quick response time in the most popular channels, especially #beginners.
 
 Discussions are only visible for a few days as the community uses the free Slack plan, there is no way to scroll back through history in Slack once its archived.  A [community log of the discussions](https://clojurians-log.clojureverse.org/) is provided by the ClojureVerse team and many channels are mirrored by the [Clojurians Zulip community](https://clojurians.zulipchat.com/).
@@ -61,6 +63,7 @@ Post only in one specific channel rather than potentially spamming other channel
 
 
 ## Clojurians Zulip
+
 Discussions history is easier to follow in the [Clojurians Zulip](http://clojurians.zulipchat.com/) than in Slack, especially where discussions take place over time, thanks to the Zulip topic-based threading.  Slack does have discussion threading, but this is often not used as conversation don't last in Slack.
 
 ![Zulip - topic-based threading](/images/zulip-topic-based-threading.png)
@@ -77,6 +80,7 @@ An account is required and authentication is via GitHub, GitLab, Google or usern
 
 
 ## ClojureVerse
+
 A [Clojure community forum](https://clojureverse.org/) that is enjoyable to use with a rich user interface (topics, participant icons, etc.).  Responses may not be as immediate as Slack, however, it is far easier to track discussions as they evolve and review past discussions.
 
 All the usual forum features are available and direct and private messages can be sent between user accounts.

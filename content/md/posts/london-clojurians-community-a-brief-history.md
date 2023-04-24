@@ -101,7 +101,7 @@ On May 24 & 25 of 2012 London hosted the EuroClojure conference, the first Cloju
 
 Many people from the London Clojurians community spoke and there was an excellent range of talks. From the awe inspring musical creations of overtone, engaging talks on CQRS, Cascalog and lossy Data Warehouses, to the inspiring talks from Rich Hickey (who gave two talks in the end).
 
-250 attendees eagerly listening to 35 talks over the two days and there were many exciting hallway conversations inbetween talks.
+250 attendees eagerly listening to 35 talks over the two days and there were many exciting hallway conversations between talks.
 
 [EuroClojure London presentation videos](https://vimeo.com/euroclojure)
 
@@ -161,7 +161,7 @@ Initially the clojurebridge.org content was used, although after the first event
 
 GeekGirls Scotland ran a ClojureBridge event on September 27th 2014 at CodeBase in Edinburgh.
 
-I was involved in organising all 13 events over the last 8 years and learned many lessons on how to help people into Clojure.  I've create a [guide to organising a ClojureBridge London event](https://clojurebridgelondon.github.io/organise-clojurebridge-london/) in the hope that others can benefit and be inspired to run their own ClojureBridge events.  
+I was involved in organising all 13 events over the last 8 years and learned many lessons on how to help people into Clojure.  I've create a [guide to organising a ClojureBridge London event](https://clojurebridgelondon.github.io/organise-clojurebridge-london/) in the hope that others can benefit and be inspired to run their own ClojureBridge events.
 
 [ClojureBridge London website](https://clojurebridgelondon.github.io/)
 
@@ -185,7 +185,7 @@ Although the thought of another in-person conference has been discussed many tim
 
 ## Monthly talks Online
 
-September 2018 I left my role at Citi (a financial company where I ran 5 teams across several continents).  I decided to focus on filling in all the gaps in my Clojure knowlege, so did the [100 days of code challenge](https://github.com/practicalli-john/100-days-of-clojure-code).  Half-way through the challenge I started the Practicalli YouTube channel and ran a weekly Clojure study event online, which proved very popular and a viable way to do live coding and presentations.
+September 2018 I left my role at Citi (a financial company where I ran 5 teams across several continents).  I decided to focus on filling in all the gaps in my Clojure knowledge, so did the [100 days of code challenge](https://github.com/practicalli-john/100-days-of-clojure-code).  Half-way through the challenge I started the Practicalli YouTube channel and ran a weekly Clojure study event online, which proved very popular and a viable way to do live coding and presentations.
 
 Over the next 2 years I created 100+ hours of video content showing my Clojure coding skills (or occasionally lack of them).
 

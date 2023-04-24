@@ -15,6 +15,7 @@ That is the promise of LSP, but is it delivering?  Is LSP improving the Clojure 
 <!-- more -->
 
 ## LSP language features
+
 LSP protocol should enable a standard set of features for editing, however, this is completely dependent on the LSP server and editor client implementations.  Each LSP server is typically programming language specific, as much analysis of the language is required to provide these features.  The information presented by editors using LSP servers is typically language specific too.
 
 An LSP language server typically provides the static analysis of a project to provide an editor the data to create the following features
@@ -38,6 +39,7 @@ LSP tooling for Clojure is collectively provided by the language server implemen
 
 
 ## LSP support for Clojure
+
 [clojure-lsp](https://github.com/clojure-lsp/clojure-lsp) is currently the only implementation of a language server for Clojure.  The clojure-lsp project takes a static analysis approach similar to that of IntelliJ and the Cursive extension.  Unlike cursive, the clojure-lsp project is open source and now also makes use of clj-kondo for static analysis of code.  As clojure-lsp is the only implementation for Clojure it does focus all the community effort in one project.  However, this project is still actively being developed and there is much development of tooling around this project, especially integrating these features with existing tools such as CIDER.
 
 The [Calva](https://calva.io/) project (VS Code extension) recently took the decision to implement its features extensively on Clojure-lsp.  This makes a lot of sense as the Microsoft VS Code tool has extensive support for the language server protocol.  The decision to leverage LSP should significantly reduce the amount of work required to bring Calva to feature parity with Cursive and CIDER.  The adoption of clojure-lsp by Calva has also increased the amount of work going into the cloure-lsp project in the last few months.
@@ -52,6 +54,7 @@ Each of these editors already provide a wide range of features via LSP, although
 
 
 ## LSP and the REPL
+
 LSP features should be seen as complementary to the highly interactive and dynamic nature of the Clojure REPL driven development.
 
 A REPL runs Clojure code during development and typically in production (unless its AOT compiled or native compiled with Graal).  The REPL provides an instant feedback cycle that is so intrinsic to learning Clojure and designing with Clojure effectively.  Without the REPL a developer looses the most important aspect of the Clojure workflow.
@@ -64,12 +67,14 @@ Developers who have worked with statically typed languages will benefit the most
 
 
 ## Extending the reach of Clojure
+
 Becoming accustom to REPL driven development takes an investment in time, mainly because its different to the way other languages are developed.  By providing common editor features, lsp can provide developers with common features to speed up their learning curve a little.  Having some recognisable features can help to break down the resistance naturally felt when learning a lisp style language such as Clojure.
 
 Ultimately, time should still be spent learning REPL driven development to become more effective at developing with Clojure.  However, LSP features should encourage more developers to give Clojure a try.
 
 
 ## Summary
+
 For experienced Clojure developers who are skilled with REPL driven development and have invested time in sophisticated tooling (CIDER, Reveal, Portal), then there is very little extra benefit to LSP in the short term.  If you are productive with your current development environment, its unlikely that LSP tooling will provide a significant enhancement to your development experience.
 
 Given the rich set of features LSP can offer, the biggest challenge is often making sense of them and understanding how they could be used.  As more documentation and guides are created, the value of these features should become more apparent to a wider audience.

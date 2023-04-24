@@ -8,7 +8,7 @@ A successful installation of Ubuntu 19.10 on the Lenovo X1 Extreme (gen2) laptop
 
 This laptop will be used for real-time video encoding for the Practicalli broadcasts via YouTube as well as doing some data science in Clojure.
 
-This was a very smooth installation and all the hardware works correctly.  The nVidia open source drivers and WiFi adaptor did cause a little extra work, so I have included tips and troubleshooting guides to help you reslove these issues quickly.
+This was a very smooth installation and all the hardware works correctly.  The nVidia open source drivers and WiFi adaptor did cause a little extra work, so I have included tips and troubleshooting guides to help you resolve these issues quickly.
 
 <!-- more -->
 
@@ -81,14 +81,14 @@ Follow the rest of the [Ubuntu server install guide](https://tutorials.ubuntu.co
 > All my development work, documments and configurations are saved to the cloud (usually multiple services), so even if one SSD should become corrupt, I would not loose any work.
 
 
-## Installing a destkop environment
+## Installing a desktop environment
 
 The Ubuntu server does not install a desktop environment by default, but has access to all the same packages so its easy to add one.
 
 Once the server is rebooted, login with your new account name and password.  This account has access rights to install software and configure the server using the `sudo` command.
 
 
-## Blacklist Nouveau driver to avoid conflicts.
+## Blacklist Nouveau driver to avoid conflicts
 
 Open up terminal and enter the following linux commands:
 

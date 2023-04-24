@@ -48,7 +48,6 @@ Already there are a few things to remember. As your project gets bigger then the
 `java $JVM_OPTS -cp target/todo-list.jar clojure.main -m todo-list.core $PORT`
 
 
-
 ## Clojure CLI tools
 
 It is very easy to create a project for CLI tools, using the `clojure` command or the `clj` wrapper for that command, which will use a readline to improve the command line experience.
@@ -89,7 +88,6 @@ Finally maven central and clojars are the repositories where dependencies are do
 ```
 
 
-
 ## A simple project configuration
 
 nside.
@@ -112,11 +110,9 @@ There is some duplication of the configurations
 
 
 The cognitect-labs/test-runner is a recent project so we are including this directly from its GitHub repository.  We use the latest commit
-https://github.com/cognitect-labs/test-runner/commit/cb96e80f6f3d3b307c59cbeb49bb0dcb3a2a780b
+<https://github.com/cognitect-labs/test-runner/commit/cb96e80f6f3d3b307c59cbeb49bb0dcb3a2a780b>
 
 Using the Git commit removes the need to create a Jar file from the source code.
-
-
 
 
 ## Time for some Test Driven Development
@@ -172,13 +168,12 @@ Everything is working correctly and the tests are failing because we have not wr
 ```
 
 
-
 ## Extra dependencies
 
 
 ## Over-ride
 
-Use different versions of dependencies in your project that is set globally.  One example is if you are activly building a project, you may want to include the latest commit on a feature branch.  Or you may be using a third party library and want to test out a new beta version.  Or perhaps you are releasing a library and want to test it with earlier versions of Clojure, for example.
+Use different versions of dependencies in your project that is set globally.  One example is if you are actively building a project, you may want to include the latest commit on a feature branch.  Or you may be using a third party library and want to test out a new beta version.  Or perhaps you are releasing a library and want to test it with earlier versions of Clojure, for example.
 
 
 ### Example
@@ -194,8 +189,6 @@ Passing options to the Java Virtual Machine can be very important to shape the p
 ## Configuration options useful for CLJS
 
 :output-dir to define where the resulting JavaScript file is written too when compiling ClojureScript.  This is used for a different build, e.g. `deploy` to
-
-
 
 
 ## Deployment
@@ -226,7 +219,7 @@ java -cp simple.jar clojure.main -m simple.core
 
 > depstar does not do any ahead of time compilation (AOT) so your application may start up more slowly as the code first needs to be compiled into Java byte code.
 
-https://github.com/clojure/clojure/commit/653b8465845a78ef7543e0a250078eea2d56b659
+<https://github.com/clojure/clojure/commit/653b8465845a78ef7543e0a250078eea2d56b659>
 
 Thank you.
 [@jr0cket](https://twitter.com/jr0cket)

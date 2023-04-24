@@ -56,6 +56,7 @@ Install by editing your `deps.edn` file and add an alias for kaocha
 :test {:extra-deps
         {lambdaisland/kaocha {:mvn/version "0.0-529"}}}
 ```
+
 Create a wrapper script called `bin/kaocha`
 
 ```bash
@@ -70,7 +71,6 @@ clojure -A:test -m kaocha.runner "$@"
 ```
 
 [Read the detailed documentation](https://cljdoc.org/d/lambdaisland/kaocha/0.0-529/doc/readme) to get the most out of Kaocha.
-
 
 
 ## [depstar](https://github.com/seancorfield/depstar)
@@ -91,6 +91,7 @@ Create a jar or uberjar file using the respective command:
 clojure -A:depstar -m hf.depstar.jar myJar.jar
 clojure -A:depstar -m hf.depstar.uberjar myUberJar.jar
 ```
+
 The `-v` or `--verbose` after the filename lists all the files that are added to the jar file.
 
 Add web assets into an uberjar by including an alias in your deps.edn:

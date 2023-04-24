@@ -188,7 +188,6 @@ Then extract the relevant data we want using a helper function.
 ```
 
 
-
 ## Add handler functions
 
 TODO: Return specific information about the playlists and apis

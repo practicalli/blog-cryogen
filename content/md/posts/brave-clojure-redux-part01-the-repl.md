@@ -17,12 +17,14 @@ A Clojure aware editor is also recommended, which part 2 will cover.
 <!-- more -->
 
 ## Practicalli Clojure study group
+
 The Practicalli Study guide playlist contains 100+ videos on Clojure and ClojureScript development.  From episode 97 onwards, the the videos are the Brave Clojure Redux series.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/li8dRt6JdfQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
 ## Coding with the REPL
+
 The REPL is a process that reads Clojure code and returns the results.  Specifically, the REPL Reads the code and ensures its of a good form.  Then it Evaluates the code to return a value.  Then it Prints that value out to the terminal or editor.  Finally it Loops around again if there is more Clojure to read.
 
 The REPL evaluates a single expression at a time, so you can see exactly what a piece of code does and see the result instantaneously.
@@ -33,6 +35,7 @@ Clojure development benefits greatly when actively using the REPL to create Cloj
 
 
 ## Which Clojure development tool?
+
 The Brave Clojure book uses the Leiningen build automation tool for its examples.  Leiningen is a commonly used tool to create an manage Clojure projects for the last decade.
 
 Brave Clojure redux uses the newer Clojure CLI tools which takes a data centric approach to the configuration, using a `deps.edn` file.  As the name suggests, this file uses the Extensible Data Notation (EDN) which the Clojure syntax is written with.  A `deps.edn` file is simply a hash-map that defines your project and the tools used with the project.
@@ -45,6 +48,7 @@ Practicalli Clojure has a more in depth [comparison of Clojure CLI tools and Lei
 
 
 ## Creating a New Clojure project
+
 [clj-new](https://github.com/seancorfield/clj-new) will create the directory and file structure for a Clojure project, from one of many available templates.
 
 ```shell
@@ -59,6 +63,7 @@ This creates a simple project structure with matching `src` and `test` directory
 
 
 ## Using the REPL
+
 The Clojure REPL can be used without a Clojure project to quickly try out some ideas with Clojure.  Its far more useful to use a Clojure project with a REPL, where code and experiments can be saved to files for later use.
 
 Clojure CLI tools provides the `clojure` command that runs a REPL process and provides a simple terminal user interface.  `clj` is a wrapper that adds history support to the terminal REPL UI.  The Rebel readline project provides a rich terminal REPL UI experience.
@@ -79,6 +84,7 @@ clojure -M:repl/rebel-nrepl
 
 
 ## Running the Clojure project
+
 Using the `app` tempate, the `practicalli/brave_clojure_redux.clj` file contains a definition for a function called `-main`.  You can edit the `println` in this function to return a different string if you wish, such as `"I'm a little teapot!"` from the Brave Clojure book.
 
 Run this function with Clojure CLI tools:
@@ -91,6 +97,7 @@ The `-M` flag tells the Clojure command to use Clojure.main to look for a functi
 
 
 ## Building a Clojure project
+
 A Clojure project is packaged into a Java archive file (`.jar`).  This is a zip compressed file with a particular structure and configuration files.
 
 The `app` template used to create the project includes aliases to create jar files in the `deps.edn` configuration file.

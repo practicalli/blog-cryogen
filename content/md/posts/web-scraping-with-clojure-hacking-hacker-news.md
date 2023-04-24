@@ -10,7 +10,7 @@ Scraping websites is sometimes required when they do not provide an API.  Althou
 
 <!-- more -->
 
- ## Create a Clojure project
+## Create a Clojure project
 
  We are using Clojure CLI and clj-new to create a new project
 
@@ -35,6 +35,7 @@ Open the `src/practicalli/webscraper-enlive.clj` file and add code for our scrap
 
 
 ## Adding a website to scrape
+
 A `def` function could be used to bind the URL to a name
 
 ```clojure
@@ -76,6 +77,7 @@ Here is just a small part of this output, specifically around the `<td class="ti
 ```
 
 ## Caching scraped websites
+
 When we are developing a scraping app we could end up hitting a website hundreds (thousands) of times and if lots of people did that it would not be good for that website.
 
 Using the caching nature of the `def` function, we can bind the result of calling the website to a name.  Each subsequent time the name bound to the results is evaluated, the existing data is used and the website is not visited.  This can also speed up your development if there is a slow connection to that website.
@@ -92,6 +94,7 @@ Using the caching nature of the `def` function, we can bind the result of callin
 
 
 ## Inspecting what to scrape
+
 There is typically a lot of structure and styling around the content of a web page, so finding the right starting point is sometimes tricky.  Using a browers Inspector tool can help find the right tags quickly.
 
 With the website open in your browser, use the Inspect Element tool to look for unique HTML tags and CSS classes that surround the content you need.
@@ -100,6 +103,7 @@ Inspecting the headings in hacker news webpage, the text of each headline is ins
 
 
 ## Getting Selective with webpage content
+
 Enlive uses selectors to extract specific content from the website content.
 
 Selectors are define as a vector containing keywords that represent the HTML tags and CSS classes in the original web page.
@@ -143,7 +147,6 @@ This will return a list of all the matching headlines, each headline will be a s
 ```
 
 
-
 ## Enlive Selectors
 
 Enlive selectors are data structures that identify one or more HTML nodes. They describe a pattern of data—​if the pattern matches any nodes in the HTML data structure, the selector will select those nodes. A selector may select one, many, or zero nodes from a given HTML document, depending on how many matches the pattern has.
@@ -179,6 +182,7 @@ The example in the solution uses a range selector in the defsnippet form to sele
 
 
 ## Getting the voting points
+
 Each heading can be voted for, which I believe keeps it on the site longer.  The points and when the article was posted can be pulled out using different selectors.
 
 ![Webscraper - Browser Inspector - points subtext](/images/webscraping-web-browser-inspector-hacker-news-points-subtext.png)
@@ -197,6 +201,7 @@ Then the Enlive `text` function pulls out all the values from the `:content` key
 ```
 
 ## Make functions to get headings and points
+
 The headings function
 
 ```clojure
@@ -237,6 +242,7 @@ The points function
 
 
 ## Combining the results
+
 A function to combine the results of heading and points
 
 ```clojure
@@ -261,6 +267,7 @@ The anonymous function gets a value from each of the collections and combines th
 
 
 ## Combining selectors
+
 The selectors passed to Enlive's `select` function can be combined in a Clojure set.
 
 So to get both headings and scoring we can use the following set as an arguments

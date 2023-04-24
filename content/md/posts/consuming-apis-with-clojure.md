@@ -5,7 +5,7 @@
  :tags  ["clojure" "apis" "clj-http" "httpkit"]}
 
 
-When getting results from API calls, its very common to recieve data in JavaScript Object Notation (JSON).
+When getting results from API calls, its very common to receive data in JavaScript Object Notation (JSON).
 
 Once we have the JSON data, it is converted to a Clojure data structure to use the hundreds of functions in clojure.core that can readily transform the shape of that data.
 
@@ -113,6 +113,7 @@ Write the following function call in `src/practicalli/simple-api-client.clj` or 
 ;;     {"player-id" "2e9da877-4911-4658-b964-b5684b858921", "score" 92581379}
 ;;     {"player-id" "2c044a04-772f-41cf-a4f5-19e8e8d76e8c", "score" 4338875}]
 ```
+
 From the value returned you can see that this is a Clojure data structure.  It is a vector of 4 hash-maps.
 
 This data is much nicer to work with.
@@ -155,6 +156,7 @@ Write the following function call in `src/practicalli/simple-api-client.clj` or 
 (client/get "https://practicalli.github.io/blog/")
 ;; => #org.httpkit.client/deadlock-guard/reify--5883[{:status :pending, :val nil} 0x55598167]
 ```
+
 What has happened here?
 
 `client/get` returns a promise, so we have to dereference it to get the value. `deref` resolves the promise and we get a hash-map as the result

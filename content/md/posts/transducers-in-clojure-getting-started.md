@@ -101,7 +101,7 @@ Lets give our clean grape function a quick test in the REPL.
 ;; => {:rotten? false, :clean? true}
 ```
 
-# Functional composition using the thread last macro.
+# Functional composition using the thread last macro
 
 Each line passes its evaluate value to the next line as its last argument.  Here is the algorithm we want to create with our code:
 

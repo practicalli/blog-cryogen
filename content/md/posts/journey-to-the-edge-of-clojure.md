@@ -85,7 +85,6 @@ A new directory has been created using the domain and project namespace names yo
 ![Clojure CLI - JUXT Edge - New app output](/images/clojure-cli-juxt-edge-new-app-tree.png)
 
 
-
 ## Starting the REPL
 
 As we are using a Clojure project, we can start a REPL using by just including the `:dev` alias when we run Clojure on the command line.
@@ -96,7 +95,7 @@ clojure -A:dev
 
 > Take a look at the `deps.edn` file inside `practicalli.study-group-api` directory for more options, especially if you create a ClojureScript or SASS project.
 
-The project will download a noticable number of dependencies at this point, so time for a quick cup of peppermint tea...
+The project will download a noticeable number of dependencies at this point, so time for a quick cup of peppermint tea...
 
 Once the dependencies are downloaded you should see the standard `clojure` REPL.
 
@@ -123,7 +122,7 @@ If you make any changes to the code you can reload them by calling `(reset)` in 
 
 ## Adding a component and route
 
-Samples taken from https://juxt.pro/edge/docs/first-component.html
+Samples taken from <https://juxt.pro/edge/docs/first-component.html>
 
 Add a yada resource - its just a Clojure function
 
@@ -212,7 +211,6 @@ to keep a history of commands entered when running rebel readline based REPL.
 There are 4 years worth of commits added, so if you wanted to see how Edge has evolved then fire up your favourite git client
 
 ![Clojure CLI - JUXT Edge - First Committ](/images/clojure-cli-juxt-edge-first-commit.png)
-
 
 
 Thank you.

@@ -19,7 +19,7 @@ Here are some of my highlights from the re:Clojure conference.
 
 ## A few of my favourite talks (they were all great)
 
-I loved all the talks at re:Clojure and we are all so greatful for all the people who volunteered to share their experiences with us.  Here are just a few of my favourites.
+I loved all the talks at re:Clojure and we are all so grateful for all the people who volunteered to share their experiences with us.  Here are just a few of my favourites.
 
 [Clément Salaün](https://twitter.com/superzamp?lang=en) came over from France to live code 3D objects using Clojure and [OpenSCAD](https://www.openscad.org/).  [OpenSCAD](https://www.openscad.org/) is a free software tool for creating solid 3D CAD objects, for Linux/UNIX, MS Windows and Mac OS X.
 

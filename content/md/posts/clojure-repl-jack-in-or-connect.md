@@ -63,6 +63,7 @@ Configuring jack-in with :extra-paths and :extra-deps is simple.  However, addin
 
 
 #### Cider jack-in
+
 Cider uses the following form when assembling the jack-in command
 
 ```
@@ -91,6 +92,7 @@ It is possible to disable almost all of the configuration that Cider automatical
 
 
 ## Calva jack-in
+
 The Calva jack-in process is similar to Cider although it does not support a `.dir-locals.el` configuration.  Calva does provide a very useful options menu to choose which aliases should be included when it forms the `clojure` command to run the REPL.
 
 
@@ -112,6 +114,7 @@ When including aliases in the jack-in command, Calva will add them before the `-
 
 
 #### User level aliases via a repl connect sequence
+
 Define a `repl.connectSequence` configuration to use one or more aliases from a user level configuration (e.g. `~/.clojure/deps.edn`).
 
 A `repl.connectSequence` is defined in the VS Code editor `settings.json` file.
@@ -135,12 +138,14 @@ The repl.connectSequence adds an extra layer of indirection to the jack-in appro
 
 
 ## Conjure approach
+
 The approach in Conjure is as simple as opening Neovim with a Clojure project.  If a REPL is already running for that project, determined by checking for a port value in the file `.nrepl-port`, then Conjure will connect automatically.
 
 <!-- The Conjure jack-in approach... TODO -->
 
 
 ## Summary
+
 For simple projects and local environments, using jack-in is a quick way to run a REPL.
 
 You should consider using `connect` if you want a more robust REPL, that can work with local and remote environments, can be accessed by any Clojure editor and can provide more services that just the REPL service (e.g. data visualization tools)

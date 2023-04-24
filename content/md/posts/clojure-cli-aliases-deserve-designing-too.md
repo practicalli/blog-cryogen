@@ -17,6 +17,7 @@ Crafting the design of your aliases with some design thinking reduces conflict b
 <!-- more  -->
 
 ## Conflated design of aliases
+
 Aliases are not buckets to throw random configuration together, they should have a very clear and specific purpose.
 
 Aliases that are used for different purposes just add to complexity.
@@ -44,6 +45,7 @@ What if another test runner is going to be used on the command line?  Using this
 
 
 ## Designed aliases
+
 Aliases are just like code and other configuration, they should be designed well for the purpose the serve.
 
 The `:env/test` alias adds the `test` directory to the class path so tests can be found.  It includes specific libraries that the unit tests require to run.
@@ -90,10 +92,12 @@ clojure -M:env/test:test-runner/kaocha
 
 
 ## Summary
+
 A little design thinking about the aliases and borrowing from community examples (practicalli & seancorfield) can make your projects more consistent to work with, easier to maintain and onboard new developers and far simpler overall.
 
 
 ## Looking to the future - Clojure exec
+
 Clojure exec was introduced in September 2020 (Clojure ClI tools version 1.10.1.697) and brings the capacity to run any fully qualified function, rather than just Clojure main.
 
 Rather than using string based adhoc arguments, Clojure exec takes a hash-map of key / value pairs, making the arguments self describing values and providing scope to do far more with functions.

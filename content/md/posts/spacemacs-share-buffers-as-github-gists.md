@@ -78,17 +78,17 @@ Use the command `M-x gist-list` or keybinding `M-m g g l` to show a list of your
 
 In the buffer containing the list of your gists, you can use the following commands
 
-* `RETURN` : opens the gist in a new buffer
-* `g` : reload the gist list from server
-* `e` : edit the gist description, so you know what this gist is about
-* `k` : delete current gist
-* `b` : opens the gist in the current web browser
-* `y` : show current gist url & copies it into the clipboard
-* `*` : star gist (stars do not show in gist list, only when browsing them on github)
-* `^` : unstar gist
-* `f` : fork gist - create a copy of your gist on gist.github.com
-* `+` : add a file to the current gist, creating an additional snippet on the gist
-* `-` : remove a file from the current gist
+- `RETURN` : opens the gist in a new buffer
+- `g` : reload the gist list from server
+- `e` : edit the gist description, so you know what this gist is about
+- `k` : delete current gist
+- `b` : opens the gist in the current web browser
+- `y` : show current gist url & copies it into the clipboard
+- `*` : star gist (stars do not show in gist list, only when browsing them on github)
+- `^` : unstar gist
+- `f` : fork gist - create a copy of your gist on gist.github.com
+- `+` : add a file to the current gist, creating an additional snippet on the gist
+- `-` : remove a file from the current gist
 
 # Creating Gists from files
 
@@ -97,6 +97,7 @@ If you open a dired buffer you can make gists from marked files, `m`, by pressin
 ![Gist - create a gist from the marked files in dired](/images/spacemacs-gist-dired-gist-from-file.png)
 
 # Summary
+
 Its really easy to share code and configuration with [Github Gists](https://gist.github.com/).  Its even easier when you use [Spacemacs]([Spacemacs](https://github.com/syl20bnr/spacemacs)) to create and manages gists for you.  Have fun sharing your code & configurations with others via gists.
 
 Thank you.

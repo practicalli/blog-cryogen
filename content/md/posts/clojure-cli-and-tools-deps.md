@@ -11,6 +11,7 @@ Clojure Command Line Interface (CLI) tools provide a fast way for developers to 
  [Practicalli Clojure 35 - Clojure CLI tools - an introduction](https://www.youtube.com/watch?v=JsdgIKUD_6Q&list=PLpr9V-R8ZxiDjyU7cQYWOEFBDR1t7t0wv&index=37) is a video of a live broadcast of this content (inclucing typos)
 
 Clojure CLI tools provide:
+
 * Running an interactive REPL (Read-Eval-Print Loop)
 * Running Clojure programs
 * Evaluating Clojure expressions
@@ -139,7 +140,7 @@ Declare [`clojure.java-time`](https://github.com/dm3/clojure.java-time) as a dep
 
 ## Writing code
 
-For larger projects you should definately find an editor you find productive and has great CLojure support.  You can write code in the REPL and you can just run a specific file of code, if you dont want to set up a full project.
+For larger projects you should definitely find an editor you find productive and has great CLojure support.  You can write code in the REPL and you can just run a specific file of code, if you dont want to set up a full project.
 
 Create a directory `what-time-is-it`.
 
@@ -161,6 +162,7 @@ Create a `src` directory and the source code file `src/practicalli/what_time_is_
   (println "The time according to Clojure java-time is:"
            (time/local-date-time)))
 ```
+
 The code has a static entry point named `-main` that can be called from Clojure CLI tools. The `-m` option defines the main namespace and by default the `-main` function is called from that namespace.  So the Clojure CLI tools provide program launcher for a specific namespace:
 
 ```shell
@@ -204,6 +206,7 @@ Add `clj-new` as an alias in your `~/.clojure/deps.edn` like this:
 
 }
 ```
+
 Create a Clojure CLI tools project using the `clj-new` app template
 
 ```shell
@@ -225,7 +228,7 @@ clj -A:test:runner
 `template` -- the basis for creating your own templates.
 
 
-##   figwheel-main
+## figwheel-main
 
 Use the [figwheel-main template](https://github.com/bhauman/figwheel-main-template) to create a project for a simple Clojurescript project, optionally with one or reagent, rum or om libraries.
 
@@ -255,6 +258,7 @@ What I really like best about this approach is that I can now introduce new prog
 
 
 ## References
+
 * [Clojure CLI webapp template](https://gitlab.com/lambdatronic/clojure-webapp-template) - @lambdatronic
 * [A sample full stack Clojure CLI project](https://github.com/oakes/full-stack-clj-example) - @oakes
 * [JUXT Edge - a clojure application foundation](https://github.com/juxt/edge) - @juxt

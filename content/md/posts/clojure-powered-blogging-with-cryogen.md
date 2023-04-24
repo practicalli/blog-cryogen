@@ -97,7 +97,7 @@ The filename can be prefixed with the date of the post, however, I find it more 
 
 ### Post header - metadata
 
-The start of each post is a Clojure hash-map, `{}` containing metadata for the specfic blog
+The start of each post is a Clojure hash-map, `{}` containing metadata for the specific blog
 
 `:title` and `:layout` are mandatory keys, the rest are optional.  You can also define your own custom keys which can be used in the selma templates, for example `:topic`
 

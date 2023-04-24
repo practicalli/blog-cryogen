@@ -18,7 +18,7 @@ Clojure LSP includes snippets as part of the completion feature, so when typing 
 
 ![Spacemacs LSP snippets - deps snippets in completion menu](https://raw.githubusercontent.com/practicalli/graphic-design/live/spacemacs/screenshots/spacemcs-snippets-completion-menu-deps-snippets.png)
 
-* [Built-in clojure-lsp snippets ](https://clojure-lsp.io/features/#snippets)
+* [Built-in clojure-lsp snippets](https://clojure-lsp.io/features/#snippets)
 * [practicalli/clojure-lsp-config](https://github.com/practicalli/clojure-lsp-config) with additional snippets
 
 
