@@ -27,18 +27,18 @@ The uberjar created by the builder image is copied over to the run-time image to
 
 Docker Hub contains a large variety of images, using those tagged with **Docker Official Image** is recommended.
 
-* [Official Clojure Image](https://hub.docker.com/_/clojure/) - provides tools to build Clojure projects (Clojure CLI, Leiningen, Boot)
-* [Official Eclipse temurin OpenJDK image](https://hub.docker.com/_/eclipse-temurin) - built by the [community](https://adoptium.net/) - provides the Java run-time
+* [Clojure - official Docker Image](https://hub.docker.com/_/clojure/) - provides tools to build Clojure projects (Clojure CLI, Leiningen, Boot)
+* [Eclipse temurin OpenJDK - official Docker image](https://hub.docker.com/_/eclipse-temurin) - built by the [community](https://adoptium.net/) - provides the Java run-time
 
 Ideally a base image should be used where both builder and run-time images share the same ancestor, this helps maintain consistency between build and run-time environments.
 
-The official Eclipse OpenJDK image is used by the official Clojure docker image, so they implicitly use the same base image without needed to be specified in the project `Dockerfile`.  The Eclipse OpenJDK image could be used as a base image in the `Dockerfile` but it would mean repeating (and maintaining) much the work done by the official Clojure image)
+The Eclipse OpenJDK image is used by the Clojure docker image, so they implicitly use the same base image without needed to be specified in the project `Dockerfile`.  The Eclipse OpenJDK image could be used as a base image in the `Dockerfile` but it would mean repeating (and maintaining) much the work done by the official Clojure image)
 
-> Alternative Docker images
-> [CircleCI Convenience Images => Clojure](https://hub.docker.com/r/cimg/clojure) - an optimised Clojure image for use with the [CircleCI service](https://circleci.com/)
->
-> [Amazon Corretto](https://hub.docker.com/_/amazoncorretto) is an alternative version of OpenJDK
+Alternative Docker images
+* [CircleCI Convenience Images => Clojure](https://hub.docker.com/r/cimg/clojure) - an optimised Clojure image for use with the [CircleCI service](https://circleci.com/)
+* [Amazon Corretto](https://hub.docker.com/_/amazoncorretto) is an alternative version of OpenJDK
 
+> An Official Docker Image means the configuration of that image follows the [Docker recommended practices](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/), is well documented and designed for common use cases.  There is no implication at to the correctness of tools, languages or service that image provides, only in the means in which they are provided.
 
 ## Clojure image as Builder stage
 
