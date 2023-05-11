@@ -62,48 +62,46 @@ RUN mkdir -p /build
 WORKDIR /build
 ```
 
-Use Clojure CLI to download dependencies for the project and any other tooling that will be used during the build stage, e.g. test runners, packaging tools to create an uberjar.
+### Cache Dependencies
 
-`deps.edn` file is first copied to the builder stage and then `clojure` is called with the `-P` prepare execution option, along with aliases that represent any tooling that also needs dependencies downloading
+Clojure CLI is used to download dependencies for the project and any other tooling used during the build stage, e.g. test runners, packaging tools to create an uberjar.  Dependency download should only occur once, unless the `deps.edn` file changes.
 
-`deps.edn` is copied before copying all the other project files to minimise the changes that would trigger the dependencies command to run.
-
-After the first run of the builder stage, if the `deps.edn` file has not changed, then the docker cache of dependencies is used rather than downloading all dependencies again.
+Copy the `deps.edn` file to the build stage and use the `clojure -P` prepare (dry run) command to download the dependencies without running any Clojure code or tools.
 
 ```dockerfile
 COPY deps.edn /build/
-RUN clojure -P -X:env/test:package/uberjar
+RUN clojure -P -X:build
 ```
 
-If [using make for the build](https://practical.li/blog/posts/make-clojure-tasks-simple-and-consistent/), also copy the `Makefile` to the builder stage and call the `deps` target to download the dependencies (ensure `deps` target in the `Makefile` depends on the `deps.edn` file so the target is skipped if that file has not changed)
+The dependencies are cached in the Docker overlay (layer) and this cache will be used on successive docker builds unless the `deps.edn` file is change.
 
-```dockerfile
-COPY deps.edn Makefile /build/
-RUN make deps
-```
+`deps.edn` in this example contains the project dependencies and `:build` alias used build the Uberjar.
 
-> Maximising the docker cache by careful consideration of command order and design in a `Dockerfile` can have a significant positive affect on build speed. Each command is effectively a layer in the Docker image and if its respective files have not changed, then the cached version of the command will be run
+### Build Uberjar
 
+Copy all the project files to the docker builder working directory, creating another overlay.
 
-Now the dependencies are downloaded (and cached), copy the project files to the docker builder working directory and run the command to generate an Uberjar.
+Copying the src and other files in a separate overlay to the `deps.edn` file ensures that changes to the Clojure code or configuration files does not trigger downloading of the dependencies again.
 
-```dockerfile
-COPY ./ /build
-RUN clojure -X:package/uberjar
-```
-
-> See the section on Docker Ignore Patters to make the COPY command more efficient
-
-`:package/uberjar` is an alias in the `deps.edn` project that includes the dependencies and tools to build the Clojure project into an Uberjar.  The latest approach for building an Uberjar is to use [Clojure tools.build](https://clojure.org/guides/tools_build), optionally with [seancorfield/build-clj](https://github.com/seancorfield/build-clj).
-
-
-If [using make for the build](https://practical.li/blog/posts/make-clojure-tasks-simple-and-consistent/)  call the `all` target to run CI tests, download dependencies (if not cached) and run the dist target to build the Uberjar.  Or call `make dist` if the CI pipeline has already run tests.
+Run the `tools.build` command to generate an Uberjar.
 
 ```dockerfile
 COPY ./ /build
-RUN RUN make all
+RUN clojure -T:build uberjar
 ```
 
+`:build` is an alias to include [Clojure tools.build](https://practical.li/clojure/clojure-cli/projects/tools-build/) dependencies which is used to build the Clojure project into an Uberjar.
+
+> [When using make for the build](https://practical.li/blog/posts/make-clojure-tasks-simple-and-consistent/), then also copy the `Makefile` to the builder stage and call the `deps` target to download the dependencies (ensure `deps` target in the `Makefile` depends on the `deps.edn` file so the target is skipped if that file has not changed)
+> ```dockerfile
+> COPY deps.edn Makefile /build/
+> RUN make deps
+> ```
+> call the `dist` target to build the Uberjar
+> ```dockerfile
+> COPY ./ /build
+> RUN RUN make dist
+> ```
 
 ### Docker Ignore patterns
 
@@ -149,16 +147,18 @@ LABEL description="Gameboard API service"
 
 > Use `docker inspect` to view the metadata
 
-Optionally, add packages to support running the service or helping to debug issue in the container when it is running.  For example, add `dumb-init` to manage processes, `curl` and `jq` binaries for manual running of system integration testing scripts
+Optionally, add packages to support running the service or helping to debug issue in the container when it is running.  For example, add `dumb-init` to manage processes, `curl` and `jq` binaries for manual running of system integration testing scripts for API testing.
 
 `apk` is the package tool for Alpine Linux and `--no-cache` option ensures the install file is not part of the resulting image, saving resources.  Alpine Linux recommends setting versions to use any point release with the `~=` approximately equal version, so any same major.minor version of the package can be used.
 
 ```dockerfile
 RUN apk add --no-cache \
     dumb-init~=1.2.5 \
-    curl~=7.83.1 \
+    curl~=8.0.1 \
     jq~=1.6
 ```
+
+> [Check Alpine packages](https://pkgs.alpinelinux.org/packages) if new major versions are no longer available (low frequency)
 
 ### Create Non-root group and user to run service securely
 
@@ -169,7 +169,6 @@ RUN addgroup -S practicalli && adduser -S practicalli -G practicalli
 RUN mkdir -p /service && chown -R practicalli. /service
 USER practicalli
 ```
-
 
 ### Copy Uberjar to run-time stage
 
@@ -190,7 +189,6 @@ RUN mkdir -p /service/test-scripts
 COPY --from=builder /build/test-scripts/curl--* /service/test-scripts/
 ```
 
-
 ### Set Service Environment variables
 
 Define values for environment variables should they be required (usually for debugging), ensuring no sensitive values are used. Environment variables are typically set by the service provisioning the containers (AWS ECS / Kubernettes) or on the local OS host during development (Docker Desktop).
@@ -201,7 +199,6 @@ Define values for environment variables should they be required (usually for deb
 # ENV MYSQL_DATABASE=
 ENV SERVICE_PROFILE=prod
 ```
-
 
 ### Optimising the container for Java Virtual Machine
 
@@ -242,7 +239,6 @@ e.g. expose port of HTTP Server that runs the Clojure service
 EXPOSE 8080
 ```
 
-
 ### Command to run the service
 
 Finally define how to run the Clojure service in the container.  The `java` command is used with the `-jar` option to run the Clojure service from the Uberjar archive.
@@ -272,7 +268,6 @@ CMD ["java", "-jar", "/service/practicalli-service.jar"]
 
 > Alternatively, run dumb-jump and java within the `ENTRYPOINT` directive, `ENTRYPOINT ["/usr/bin/dumb-init", "--", "java", "-jar", "/service/practicalli-service.jar"]`
 
-
 ## Build and Run with docker
 
 Ensure docker services are running, i.e. start docker desktop.
@@ -286,6 +281,8 @@ docker build --tag practicalli/service-name:1.1 .
 After the first time building the docker image, any parts of the build that havent changed will use their respective cached layers in the builder stage.  This can lead to very fast, even zero time builds.
 
 ![Docker build image optomised to use docker layer cache for build stage](https://raw.githubusercontent.com/practicalli/graphic-design/live/continuous-integration/docker-compose-build-output-cached-layers.png)
+
+> Maximising the docker cache by careful consideration of command order and design in a `Dockerfile` can have a significant positive affect on build speed. Each command is effectively a layer in the Docker image and if its respective files have not changed, then the cached version of the command will be run
 
 Run the built image in a docker container using `docker run`, publishing the port number so it can be used from the host (developer environment or deployed environment).  Use the name of the image created by the tag in the docker build command.
 
