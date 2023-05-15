@@ -156,3 +156,7 @@ Docker images are a relatively clean way of trying out different services or eve
 - [Docker Desktop Extensions overview](https://docs.docker.com/desktop/extensions/)
 - [Docker Build overview](https://docs.docker.com/build/)
 - [Docker Compose Overview](https://docs.docker.com/compose/)
+
+Thank you
+
+[practicalli GitHub profile](https://github.com/practicalli) I [@practical_li](https://twitter.com/practcial_li)
