@@ -11,10 +11,12 @@ A detailed description of putting this site together can be found in
 Run a local server that generates the website
 
 #+BEGIN_SRC shell
-clojure -X:serve
+make blog
 #+END_SRC
 
 This generates all the files for the website in the ~public~ directory
+
+> The blog task calls `clojure -X:serve` command, which should be used if make is not available
 
 ** GitHub Actions Deployment
 Pull requests are automatically built and deployed to https://practical.li/blog-staging/ to assist with reviewing articles.  The Publish Blog Staging GitHub workflow uses the [[https://github.com/JamesIves/github-pages-deploy-action][GitHub Pages Deploy Action]] with the Practicalli Organisation secret `CRYOGEN_PUBLISH_TOKEN` to push commits to the `gh-pages` branch of the practicalli/blog-staging repository.
