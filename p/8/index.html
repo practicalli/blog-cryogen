@@ -59,6 +59,57 @@
     
     <div class="post-header">
         <h2>
+            <a href="/blog/posts/improving-communication-with-github-issue-templates/">Improving communication with GitHub issue templates</a>
+        </h2>
+        <div id="post-meta">
+            
+            <div class="date">November 4, 2019</div>
+        </div>
+        <!-- conditional topic logo displayed if :topic has value in a post -->
+        
+        <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/github-logo-name.png" alt="github logo" />
+        
+    </div>
+    <p>Create templates for issues and pull requests can greatly improve feedback and contributions, especially as an open source project maintainer.  We will look specifically at issue templates.</p><p>Templates can ask people to provide specific information, or request use of a tool for generating system information (e.g. Spacemacs).  Automatic assignment and labelling saves time on issue triage by the project maintainers.</p><p>Templates can be created for most shared Git repository services, i.e GitHub, GitLab, BitBucket, etc.</p>
+    <a href="/blog/posts/improving-communication-with-github-issue-templates/">Continue reading &#8594;</a>
+    <hr>
+    
+    <div class="post-header">
+        <h2>
+            <a href="/blog/posts/clojure-powered-blogging-with-cryogen/">Clojure powered blogging with Cryogen</a>
+        </h2>
+        <div id="post-meta">
+            
+            <div class="date">October 20, 2019</div>
+        </div>
+        <!-- conditional topic logo displayed if :topic has value in a post -->
+        
+        <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/cryogen-logo-name.png" alt="cryogen logo" />
+        
+    </div>
+    <p>A website for blogging doesn't need to be a complex content management system, a simple and lightweight static website generator can create engaging websites that are easy to manage with Git.</p><p>Cryogen is a static site generator written in Clojure, allowing content to be written in either markdown or asciidoc.  Posts and pages are configured with Clojure hash-maps to manage the meta-data and layout information for each, including .</p><p>Cryogen seems very quick to generate a site and a local server can be run to automatically generate an updated website when changes to posts and pages are saved.</p>
+    <a href="/blog/posts/clojure-powered-blogging-with-cryogen/">Continue reading &#8594;</a>
+    <hr>
+    
+    <div class="post-header">
+        <h2>
+            <a href="/blog/posts/community-tools-for-clojure-cli/">Community projects for Clojure CLI tools</a>
+        </h2>
+        <div id="post-meta">
+            
+            <div class="date">August 9, 2019</div>
+        </div>
+        <!-- conditional topic logo displayed if :topic has value in a post -->
+        
+        <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/clojure-cli-logo-name.png" alt="clojure-cli logo" />
+        
+    </div>
+    <p>There are a number of tools from the Clojure community which add build tool features to the Clojure CLI tools.  This enables developers to have a very lightweight and customisable set of tools that just do what they need.</p><p>This article just covers the very basics of each tool, see each projects documentation to get the full benefit of each tool.</p><ul><li><a href="https://github.com/Olical/depot">depot</a> finds newer versions of libraries (from Clojars and Git repositories)</li><li><a href="https://github.com/lambdaisland/kaocha">kaocha</a> full featured next gen Clojure test runner</li><li><a href="https://github.com/seancorfield/depstar">depstar</a> to package up your application for the JVM platform</li></ul>
+    <a href="/blog/posts/community-tools-for-clojure-cli/">Continue reading &#8594;</a>
+    <hr>
+    
+    <div class="post-header">
+        <h2>
             <a href="/blog/posts/journey-to-the-edge-of-clojure/">journey to the edge of clojure</a>
         </h2>
         <div id="post-meta">
@@ -91,57 +142,6 @@
     <a href="/blog/posts/gaining-confidence-with-Clojure-CLI-tools/">Continue reading &#8594;</a>
     <hr>
     
-    <div class="post-header">
-        <h2>
-            <a href="/blog/posts/a-deeper-understanding-of-clojure-cli-tools/">A deeper understanding of Clojure CLI tools</a>
-        </h2>
-        <div id="post-meta">
-            
-            <div class="date">July 21, 2019</div>
-        </div>
-        <!-- conditional topic logo displayed if :topic has value in a post -->
-        
-        <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/clojure-cli-logo-name.png" alt="clojure-cli logo" />
-        
-    </div>
-    <p>CLI tools make Clojure very accessible and simple to install as they are a essentially a wrapper for running Clojure code using the <code>java</code> command and use additional libraries to manage dependencies, class paths, create projects and build java archive (jar) files.</p><blockquote><p>Newer content can be found in <a href="http://practicalli.github.io/clojure/clojure-tools/using-clojure-tools.html">Using Clojure tools section of Practicalli Clojure</a></p></blockquote><p>Its quite common to use the <code>java</code> command to run your code in production, usually defined in a shell script.  Leiningen can be used to run your application in production too, however, because Leiningen creates 2 JVM instances (one for itself and one for the application), its more efficient to just use the <code>java</code> command.</p>
-    <a href="/blog/posts/a-deeper-understanding-of-clojure-cli-tools/">Continue reading &#8594;</a>
-    <hr>
-    
-    <div class="post-header">
-        <h2>
-            <a href="/blog/posts/cider-jack-in-to-clojure-cli-projects-from-spacemacs/">CIDER jack-in to Clojure CLI projects from Spacemacs</a>
-        </h2>
-        <div id="post-meta">
-            
-            <div class="date">July 16, 2019</div>
-        </div>
-        <!-- conditional topic logo displayed if :topic has value in a post -->
-        
-        <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/spacemacs-logo-name.png" alt="spacemacs logo" />
-        
-    </div>
-    <p>Running a Clojure project created with CLI tools or <code>clj-new</code> may require you to pass in an alias for the REPL to pick up the right libraries.</p><p>A few days ago I created a new ClojureScript and reagent project, using the Clojure CLI tools and <code>clj-new</code> project creation tool, which converts Leiningen and Boot templates into a deps.edn based project.  Unfortunately when I created a project from the fighwheel-main template the REPL failed to run from CIDER using <code>cider-jack-in-cljs</code>, saying that figwheel-main was not found.  All that was required was to specify the <code>:fig</code> alias when running a REPL.</p><p>This article covers two approaches to running Clojure CLI projects from CIDER jack-in that require setting of an alias or multiple aliases e.g. <code>-A:fig:build:party:hammock</code></p>
-    <a href="/blog/posts/cider-jack-in-to-clojure-cli-projects-from-spacemacs/">Continue reading &#8594;</a>
-    <hr>
-    
-    <div class="post-header">
-        <h2>
-            <a href="/blog/posts/clojure-cli-and-tools-deps/">Clojure CLI and tools.deps</a>
-        </h2>
-        <div id="post-meta">
-            
-            <div class="date">July 13, 2019</div>
-        </div>
-        <!-- conditional topic logo displayed if :topic has value in a post -->
-        
-        <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/clojure-cli-logo-name.png" alt="clojure-cli logo" />
-        
-    </div>
-    <p>Clojure Command Line Interface (CLI) tools provide a fast way for developers to get started with Clojure and simplify an already pretty simple experience.   With tools.deps it also provides a more flexible approach to including libraries, including the use of code from a specific commit in a Git repository.</p><blockquote><p>Newer content can be found in <a href="http://practicalli.github.io/clojure/clojure-tools/using-clojure-tools.html">Using Clojure tools section of Practicalli Clojure</a></p></blockquote><p><a href="https://www.youtube.com/watch?v=JsdgIKUD_6Q&amp;list=PLpr9V-R8ZxiDjyU7cQYWOEFBDR1t7t0wv&amp;index=37">Practicalli Clojure 35 - Clojure CLI tools - an introduction</a> is a video of a live broadcast of this content (inclucing typos)</p>
-    <a href="/blog/posts/clojure-cli-and-tools-deps/">Continue reading &#8594;</a>
-    <hr>
-    
 
     <div id="prev-next">
         
@@ -172,6 +172,12 @@
                     <h3>Recent Posts</h3>
                     <ul>
                         
+                        <li><a href="/blog/posts/docker-a-simple-workflow-for-clojure/">Docker: a simple workflow for Clojure</a></li>
+                        
+                        <li><a href="/blog/posts/docker-desktop-on-ubuntu-linux/">Docker Desktop on Ubuntu Linux</a></li>
+                        
+                        <li><a href="/blog/posts/docker-compose-for-clojure-development/">Docker Compose for Clojure Development</a></li>
+                        
                         <li><a href="/blog/posts/practicalli-plans-2023/">Practicalli plans for 2023</a></li>
                         
                         <li><a href="/blog/posts/create-deps-new-template-for-clojure-cli-projects/">Create deps-new templates for Clojure CLI projects</a></li>
@@ -183,12 +189,6 @@
                         <li><a href="/blog/posts/build-and-run-clojure-with-multistage-dockerfile/">Build and run Clojure with Multi-stage Dockerfile</a></li>
                         
                         <li><a href="/blog/posts/make-clojure-tasks-simple-and-consistent/">Make Clojure development tasks simple and consistent</a></li>
-                        
-                        <li><a href="/blog/posts/clojurescript-workflow-with-clojure-cli-tools-and-figwheel-main/">ClojureScript workflow with Clojure CLI tools and Figwheel-main</a></li>
-                        
-                        <li><a href="/blog/posts/adopt-FreeDesktop.org-XDG-standard-for-configuration-files/">Adopting FreeDesktop.org XDG standard for development tools</a></li>
-                        
-                        <li><a href="/blog/posts/build-emacs-28-on-ubuntu/">Building Emacs 28 on Ubuntu Linux</a></li>
                         
                     </ul>
                 </div>

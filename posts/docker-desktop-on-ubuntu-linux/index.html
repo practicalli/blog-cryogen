@@ -2,8 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
     <meta charset="utf-8"/>
-    <title>Practicalli: Clojure powered blogging with Cryogen</title>
-    <link rel="canonical" href="http://practical.li/blog/posts/clojure-powered-blogging-with-cryogen/">
+    <title>Practicalli: Docker Desktop on Ubuntu Linux</title>
+    <link rel="canonical" href="http://practical.li/blog/posts/docker-desktop-on-ubuntu-linux/">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu|Ubuntu+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
@@ -58,61 +58,111 @@
 <div id="post">
     <div class="post-header">
     <div id="post-meta" class="row">
-        <div class="col-lg-6">October 20, 2019</div>
+        <div class="col-lg-6">May 15, 2023</div>
         
     </div>
-    <h2>Clojure powered blogging with Cryogen</h2>
+    <h2>Docker Desktop on Ubuntu Linux</h2>
 
     <!-- conditional topic logo displayed if :topic has value in a post -->
     
-    <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/cryogen-logo-name.png" alt="cryogen logo - post topic" />
+    <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/docker-logo-name.png" alt="docker logo - post topic" />
     
 </div>
 <div>
     
-    <p>A website for blogging doesn't need to be a complex content management system, a simple and lightweight static website generator can create engaging websites that are easy to manage with Git.</p><p>Cryogen is a static site generator written in Clojure, allowing content to be written in either markdown or asciidoc.  Posts and pages are configured with Clojure hash-maps to manage the meta-data and layout information for each, including .</p><p>Cryogen seems very quick to generate a site and a local server can be run to automatically generate an updated website when changes to posts and pages are saved.</p><p>All that is required is a Java virtual Machine (eg. <a href="https://adoptopenjdk.net/">AdoptOpenJDK</a>) and the <a href="https://leiningen.org/">Leiningen build tool</a>.</p><p><a href="https://github.com/practicalli/blog-content/blob/master/content/config.edn">practicalli/blog-content</a> contains all the content and configuration used to create the Practicalli blog website.</p><blockquote><p><strong>Limitation/bug</strong> so far I have not been able to generate tables in markdown posts.  This may be an issue with <a href="https://github.com/cryogen-project/cryogen-markdown">cryogen-markdown library</a>, no results from searching at present</p></blockquote><h2 id="create-a-new-site">Create a new site</h2><p>Use the <code>cryogen</code> template for Leiningen to create a new project</p><p>Here we create a project called <code>practicalli-blog</code> using the template</p><pre><code>lein new cryogen practicalli-blog
-</code></pre><p>Change into the project directory and use Leiningen to run the project</p><pre><code>lein ring server
-</code></pre><p>A server will now start and generate the sample posts that are part of the Leiningen template.  Your default web browser will automatically open a new page at <code>http://localhost:3000/blog</code></p><blockquote><p>Changing any files in the project will trigger a new compilation of the website.  You will need to manually refresh the browser page if you kept it open.</p></blockquote><h2 id="configure-the-site">Configure the site</h2><p>The configuration defines the site title (banner heading), author (copyright message), description (not sure where this is used).</p><p><code>content/config.edn</code> is the configuration file for the generated site</p><pre><code> :site-title           "Practicalli"
- :author               "Practicalli"
- :description          "Discovering the fun in Functional Programming with Clojure"
- :site-url             "http://practical.li/"
-</code></pre><h3 id="enable-live-evaluation-with-klipse">Enable live evaluation with Klipse</h3><p>Make your sample code executable and interactive to the user by enabling Klipse in Cryogen. Klipse provides live evaluation for a number of programming language.</p><p>Enable Klipse by defining a specific CSS selector and use that name when defining a code block, e.g. <code>klipse-clj</code></p><pre><code> :klipse               {:settings {:selector         ".klipse-clj"
-                                   :selector-reagent ".klipse-reagent"}}
-</code></pre><blockquote><p>Example <a href="https://github.com/practicalli/blog-content/blob/master/content/config.edn">config.edn file</a> from the practicalli/blog-content GitHub repository</p></blockquote><h2 id="version-control">Version control</h2><p>A <code>.gitignore</code> file is created when using the cryogen Leiningen template to create a project.</p><p>This contains the <code>/public/</code> pattern to exclude the generated website, as well as the common patterns for a Leiningen project.</p><p>A separate git repository is used to deploy the website (to GitHub pages).</p><pre><code>pom.xml
-pom.xml.asc
-*jar
-/lib/
-/classes/
-/target/
-/checkouts/
-.lein-deps-sum
-.lein-repl-history
-.lein-plugins/
-.lein-failures
-/public/
-</code></pre><h2 id="writing-posts">Writing posts</h2><p>Posts can be written in either markdown or asciidoc.  Markdown is the default and all posts should be placed inthe <code>content/md/</code> directory.</p><p>The filename can be prefixed with the date of the post, however, I find it more flexible to specify the date in the post metadata header as if you change the date then the URL of the post will remain the same.  This is really handy if you need to update the post and need to reflect that in the date, or if you had planned to publish the post a few weeks in the future and then realise its ready sooner.</p><h3 id="post-header---metadata">Post header - metadata</h3><p>The start of each post is a Clojure hash-map, <code>{}</code> containing metadata for the specific blog</p><p><code>:title</code> and <code>:layout</code> are mandatory keys, the rest are optional.  You can also define your own custom keys which can be used in the selma templates, for example <code>:topic</code></p><ul><li><code>:title</code>   The <code>h1</code> title used for the blog post</li><li><code>:layout</code>  A keyword corresponding to an HTML file under themes/{theme}/html.</li><li><code>:date</code>    The published date of the blog  (future blogs can be hidden)</li><li><code>:author</code>  The name of the post author as a string, displayed at the top of the post in the default theme.</li><li><code>:tags</code>    Tags associated with the blog, as a vector of strings e.g. ["clojure" "cryogen"]</li><li><code>:klipse</code>  Enable live evaluation of code in the post (see live evaluation with Klipse)</li><li><code>:toc</code>     Include a table of contents at the top of the page, with links to all the headings in the post</li><li><code>:draft?</code>  <code>true</code> will skip this post from the static site generation</li><li><code>:topic</code>   A custom key I use to manage a topic image displayed on each post (theme development will be covered in a future post)</li></ul><h2 id="deploying-the-site-to-github-pages">Deploying the site to GitHub pages</h2><p>GitHub pages is a free static site hosting service and we can deploy the cryogen website by a git push.</p><p>Create a repository in either a user account or GitHub organisation (eg. using the GitHub website).</p><p>An unsophisticated script is used to deploy the generated website.  The script creates a Git repository in the <code>public</code> directory, all files are committed with a generic message, a remote repository added and the content pushed.</p><pre><code>cd public/blog &amp;&amp; rm -rf .git &amp;&amp; git init &amp;&amp; git add . &amp;&amp; git commit -m "initial commit" &amp;&amp; git branch -m master gh-pages &amp;&amp; git remote add practicalli git@github.com:practicalli/blog.git &amp;&amp; git push -f practicalli gh-pages
-</code></pre><p>Edit the <code>deploy-to-gh-pages</code> script and update the URL of the GitHub repository created to host the website.</p><p>If the website is not displayed, check the GitHub repository settings and ensure the <code>gh-pages</code> is set.</p><p><a href="/blog/images/github-settings-github-pages-gh-pages-branch.png">GitHub repository settings - GitHub pages gh-branch selected</a></p><blockquote><p>Practicalli recommends using two repositories, one for the cryogen project and another for the generated website.</p><p>If you are creating a website for a software project or library, then it may be useful to generate the cryogen website the <code>docs</code> directory and set that as the GitHub pages source.</p></blockquote><h3 id="prevent-github-pages-jekyll-compilation">Prevent GitHub pages Jekyll compilation</h3><p>A Jekyll process runs every time a change is pushed to a GitHub pages branch.  As Cryogen generates the finished website Jekyll processing is not required and it can be switch it off.</p><p>Add an empty file called <code>.nojekyll</code> to the <code>content</code> directory.</p><p>Edit the <code>config.edn</code> configuration file and add the <code>.nojekyll</code> file to the resources.  This ensures the <code>.nojekyll</code> file is copied over to the generated website in the <code>public</code> directory.</p><pre><code> :resources            ["images" ".nojekyll"]
-</code></pre>
+    <p>Docker can support local development and provide an effective workflow for system integration before changes are pushed to a remote continuous integration service. Docker can be used to spin up local databases and persist data in a volume, helping keep a separation between applications and supporting test of schema changes, migrations and data loading.</p><p>Docker desktop simplifies the install and provides a desktop client to manage docker images, containers, volumes and the new dev environments.  <a href="https://hub.docker.com/search?q=&amp;type=extension">Extensions Marketplace for Docker Desktop</a> provides tooling to unify logging, manage local resources and many more</p><p>The Docker install instructions are more of a reference of information than a simple tutorial. Essential Docker Community Edition is installed via the Docker package archive and Docker Desktop is installed from a <a href="https://docs.docker.com/desktop/install/ubuntu/">manually downloaded DEB file</a>.</p><blockquote><p><a href="https://practical.li/engineering-playbook/continuous-integration/docker/clojure-multi-stage-dockerfile/">Practicalli Engineering Playbook</a> covers Docker and Compose in more detail</p></blockquote><!-- more --><h2 id="install-docker-community-edition">Install Docker Community Edition</h2><p>Docker community edition provides the back-end services to run docker images in containers.  Install via the package archive manage by the Docker team.  Add the Docker team public key and archive, then install the Docker community edition (CE) related packages.</p><p>Ubuntu Prerequisites to use the Docker team keys (may already be installed).</p><pre><code class="shell">sudo apt-get install ca-certificates curl gnupg lsb-release
+</code></pre><p>Add the Docker team public key to Ubuntu package manager, ensuring only official Docker packages are used</p><pre><code class="shell">curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+</code></pre><p>Add the Docker PPA to the Ubuntu package manager, creating a <code>/etc/apt/sources.list.d/docker.list</code> file.</p><pre><code class="shell">echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null
+</code></pre><p>Install Docker community edition packages</p><pre><code class="shell">sudo apt update &amp;&amp; sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin docker-desktop
+</code></pre><h2 id="install-docker-desktop">Install Docker Desktop</h2><p><a href="https://docs.docker.com/desktop/install/ubuntu/">Download the DEB package</a> for Docker Desktop UI and install using Ubuntu package manager</p><pre><code class="shell">sudo apt install ./Downloads/docker-desktop-4.19.0-amd64.deb
+</code></pre><h3 id="post-install">Post Install</h3><p>Add the current operating system user account to the <code>docker</code> operating system group, creating the <code>docker</code> group if it doesn't already exist</p><pre><code>sudo groupadd docker
+sudo usermod -aG docker $USER
+</code></pre><p>A user must completely logout of the current login session before the <code>docker</code> group is applied.</p><p><code>groups</code> lists all the operating system groups the current user is assigned to.</p><h2 id="start-docker--docker-desktop">Start Docker &amp; Docker Desktop</h2><p>Starting Docker Desktop will automatically start the underlying Docker community edition that provides the run-time for docker comtainers.</p><p>Use the Ubuntu application launcher to start Docker Desktop, or use the <code>systemctl</code> command from a terminal.</p><pre><code class="shell">systemctl --user start docker-desktop
+</code></pre><blockquote><p>Docker desktop may automatically restart itself on first run</p></blockquote><h2 id="check-docker-works">Check Docker works</h2><p>Use the <a href="https://www.docker.com/101-tutorial/">Docker tutorial</a> image to check that Docker can run a container from an image (and also learn about Docker if new to the tools).</p><pre><code class="shell">docker run -dp 80:80 docker/getting-started
+</code></pre><p>The tutorial image will be downloaded and the image run in a container</p><pre><code class="shell">❯ docker run -dp 80:80 docker/getting-started
+
+Unable to find image 'docker/getting-started:latest' locally
+latest: Pulling from docker/getting-started
+c158987b0551: Already exists
+1e35f6679fab: Pull complete
+cb9626c74200: Pull complete
+b6334b6ace34: Pull complete
+f1d1c9928c82: Pull complete
+9b6f639ec6ea: Pull complete
+ee68d3549ec8: Pull complete
+33e0cbbb4673: Pull complete
+4f7e34c2de10: Pull complete
+Digest: sha256:d79336f4812b6547a53e735480dde67f8f8f7071b414fbd9297609ffb989abc1
+Status: Downloaded newer image for docker/getting-started:latest
+215c033924260874013394d1f27fa5ec587f183ee9851d3a48884a1422fcc732
+</code></pre><p>Open the tutorial website at <a href="http://localhost/">http://localhost/</a> and follow the tutorial steps to learn more about Docker.</p><h2 id="check-installed-versions">Check installed versions</h2><p>Print the version of Docker CE installed.  If Docker Desktop is running, then version its information is also printed.</p><pre><code class="shell">docker version
+</code></pre><p>Example output (once Docker Desktop is running)</p><pre><code class="shell">❯ docker version
+Client: Docker Engine - Community
+ Cloud integration: v1.0.31
+ Version:           23.0.6
+ API version:       1.42
+ Go version:        go1.19.9
+ Git commit:        ef23cbc
+ Built:             Fri May  5 21:18:13 2023
+ OS/Arch:           linux/amd64
+ Context:           desktop-linux
+
+Server: Docker Desktop 4.19.0 (106363)
+ Engine:
+  Version:          23.0.5
+  API version:      1.42 (minimum version 1.12)
+  Go version:       go1.19.8
+  Git commit:       94d3ad6
+  Built:            Wed Apr 26 16:17:45 2023
+  OS/Arch:          linux/amd64
+  Experimental:     false
+ containerd:
+  Version:          1.6.20
+  GitCommit:        2806fc1057397dbaeefbea0e4e17bddfbd388f38
+ runc:
+  Version:          1.1.5
+  GitCommit:        v1.1.5-0-gf19387a
+ docker-init:
+  Version:          0.19.0
+  GitCommit:        de40ad0
+</code></pre><p>Check compose version</p><pre><code class="shell">docker compose version
+</code></pre><p>Example output</p><pre><code class="shell">❯ docker compose version
+Docker Compose version v2.17.3
+</code></pre><h2 id="optimise-log-rotation">Optimise Log rotation</h2><p>Docker uses the <code>json-file</code> driver which creates JSON objects of log events from all containers.  To avoid disk space issues, configure log rotation in a <code>/etc/docker/daemon.json</code> file</p><pre><code class="json">{
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "10m",
+    "max-file": "3"
+  }
+}
+</code></pre><p>Use the <a href="https://docs.docker.com/config/containers/logging/local/">local file logging driver</a> if a longer logging history is desirable.  The local file logging driver preserves 100Mb of logs per container (5 x 20Mb files) and uses automatic compression to greatly reduce disk consumption.</p><pre><code class="json">{
+  "log-driver": "local",
+  "log-opts": {
+    "max-size": "10m"
+  }
+}
+</code></pre><!-- TODO: does local logging driver work with Docker Desktop log explorer? --><blockquote><p>--log-driver flag with <code>docker container create</code> or <code>docker run</code> commands sets the log driver for the specific container, over-riding the global setting</p></blockquote><ul><li><a href="https://docs.docker.com/config/containers/logging/json-file/">JSON File logging driver</a></li></ul><h2 id="access-private-images-on-docker-hub">Access Private images on Docker Hub</h2><p><a href="https://hub.docker.com/repositories">Create an account on Docker Hub</a> to push and pull custom Docker images.  <a href="https://docs.docker.com/desktop/get-started/#two-factor-authentication">Enable 2-Factor authentication for the account</a> is highly recommended.</p><p>Docker Desktop uses a GNU gpg public-private key with the <code>pass</code> command to encrypt Docker hub credentials locally.</p><p>use an existing key for the operating system user account or create a new key with <code>gpg</code>.</p><pre><code class="shell">gpg --generate-key
+</code></pre><p>Enter an account name and email to generate the PGP key.</p><p>Use the <code>pass</code> command to initialise the GPG key for Docker Hub</p><pre><code>pass init 700000033XXXXXXXXXXXXXXXXXXXXX6888888881
+</code></pre><h2 id="login-in-via-docker-cli">Login in via Docker CLI</h2><p>To use the access token from your Docker CLI client:</p><pre><code class="shell">docker login -u practicalli
+</code></pre><p>At the password prompt, enter the personal access token which has the form <code>dckr_pat_qLZq_XXXXXXXXXXXXXXXXXXXXXX</code></p><ul><li><a href="https://docs.docker.com/desktop/get-started/#credentials-management-for-linux-users">GNU pgp credentials management</a></li></ul><h2 id="docker-desktop-extensions">Docker Desktop Extensions</h2><p>Practicalli uses the following extensions to manage the local Docker environment more effectively and provide additional tools to manage the services running in containers.</p><ul><li><a href="https://hub.docker.com/extensions/docker/logs-explorer-extension">Log Explorer</a></li><li><a href="https://hub.docker.com/extensions/docker/disk-usage-extension">Disk usage</a></li><li><a href="https://hub.docker.com/extensions/docker/resource-usage-extension">Resource usage</a></li><li><a href="https://hub.docker.com/extensions/docker/volumes-backup-extension">Volumes backup &amp; Share</a></li><li><a href="https://hub.docker.com/extensions/snyk/snyk-docker-desktop-extension">Snyk security vulnerability scanner</a></li><li><a href="https://hub.docker.com/extensions/mochoa/pgadmin4-docker-extension">PostgreSQL database monitoring</a> - embedded PGAdmin4 tool</li></ul><p><a href="https://practical.li/engineering-playbook/continuous-integration/docker/desktop-extensions/">Practicalli Engineering Playbook</a> details the use of these Docker Extensions</p><h2 id="references">References</h2><ul><li><a href="https://docs.docker.com/get-started/">Docker Getting Started</a></li><li><a href="https://pkgs.alpinelinux.org/packages">Alpine Linux package search</a></li><li><a href="https://hub.docker.com/repositories">Repositories on Docker Hub</a></li></ul><p>Thank you</p><p><a href="https://github.com/practicalli">practicalli GitHub profile</a> I <a href="https://twitter.com/practcial_li">@practical_li</a></p><!-- Follow-on articles --><!-- * working with containers --><!-- * running a docker image --><!-- * connecting to an existing image --><!--   * Alpine Linux based image --><!--     * docker exec -it container-name ash --><!--     * docker exec -it container-name /bin/sh --><!--   * Ubuntu Linux based image --><!--     * docker exec -it container-name /bin/bash --><!-- * inspect --><!-- * docker ps -->
 </div>
 
 <div id="post-tags">
     <b>Tags: </b>
     
-    <a href="/blog/tags/cryogen/">cryogen</a>
-    
-    <a href="/blog/tags/blogging/">blogging</a>
-    
-    <a href="/blog/tags/static-sites/">static-sites</a>
+    <a href="/blog/tags/docker/">docker</a>
     
 </div>
 
 
     <div id="prev-next">
         
-        <a href="/blog/posts/improving-communication-with-github-issue-templates/">&laquo; Improving communication with GitHub issue templates</a>
+        <a href="/blog/posts/docker-a-simple-workflow-for-clojure/">&laquo; Docker: a simple workflow for Clojure</a>
         
         
-        <a class="right" href="/blog/posts/community-tools-for-clojure-cli/">Community projects for Clojure CLI tools &raquo;</a>
+        <a class="right" href="/blog/posts/docker-compose-for-clojure-development/">Docker Compose for Clojure Development &raquo;</a>
         
     </div>
 
@@ -120,8 +170,8 @@ pom.xml.asc
     <div id="disqus_thread"></div>
     <script type="text/javascript">
         var disqus_config = function () {
-            this.page.url = "http://practical.li/blog/posts/clojure-powered-blogging-with-cryogen/";
-            this.page.identifier = "Clojure powered blogging with Cryogen";
+            this.page.url = "http://practical.li/blog/posts/docker-desktop-on-ubuntu-linux/";
+            this.page.identifier = "Docker Desktop on Ubuntu Linux";
         };
         (function() {
             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

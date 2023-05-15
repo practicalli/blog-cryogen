@@ -2,8 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
     <meta charset="utf-8"/>
-    <title>Practicalli: Posts Tagged &quot;thinkpad&quot;</title>
-    <link rel="canonical" href="http://practical.li/blog/tags/thinkpad/">
+    <title>Practicalli: Docker Compose for Clojure Development</title>
+    <link rel="canonical" href="http://practical.li/blog/posts/docker-compose-for-clojure-development/">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu|Ubuntu+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
@@ -55,17 +55,116 @@
         <div class="col-lg-9">
             <div id="content">
                 
-<div id="posts-by-tag">
-    <div id="page-header">
-        <h2>Posts Tagged &quot;thinkpad&quot;</h2>
+<div id="post">
+    <div class="post-header">
+    <div id="post-meta" class="row">
+        <div class="col-lg-6">May 7, 2023</div>
+        
     </div>
-    <ul>
+    <h2>Docker Compose for Clojure Development</h2>
+
+    <!-- conditional topic logo displayed if :topic has value in a post -->
     
-        <li>
-            <a href="/blog/posts/lenovo-x1-extreme-gen2-ubuntu-install/">Ubuntu install on Lenovo X1 Extreme 2nd Gen with RAID</a>
-        </li>
+    <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/docker-logo-name.png" alt="docker logo - post topic" />
     
-    </ul>
+</div>
+<div>
+    
+    <p>Docker Compose provides a declarative configuration for orchestrating services locally, providing a simple way to spin up services to try them out or orchestrate a whole system from numerous dependent services.</p><p>Compose can build images for Clojure projects and conditionally run based on the health check of other supporting services, e.g. Postgres Database.</p><p>Now that Compose is part of docker, more features such as build on change are being added.</p><blockquote><p><a href="https://practical.li/engineering-playbook/continuous-integration/docker/compose/">Practicalli Engineering Playbook</a> covers Docker Compose in more detail</p></blockquote><!-- more --><h2 id="compose-is-part-of-docker">Compose is part of Docker</h2><p>Compose is now integrated into Docker which simplifies the configuration a little, although existing configuration and commands should still work for a time.</p><p><code>compose.yaml</code> is the new configuration file for Docker Compose, replacing <code>docker-compose.yaml</code>.</p><p>The docker-compose version number is no longer required at the top of the configuration file, as docker is using the built-in version of Compose.  Otherwise the syntax is the same, although new features like <code>watch</code> under <code>x-develp</code> will be added to the new Compose specification.</p><p><code>docker compose</code> is the new command to use compose, replacing the <code>docker-compose</code> command (which should still work for a time).</p><p>To start a service using the <code>compose.yaml</code> configuration</p><pre><code class="shell">docker compose up
+</code></pre><p>Shutdown the services with</p><pre><code class="shell">docker compose down
+</code></pre><h2 id="build-clojure-service">Build Clojure Service</h2><p>The simplest approach to building a service is to include a <code>build:</code> configuration specifying the location of <a href="https://practical.li/engineering-playbook/continuous-integration/docker/clojure-multi-stage-dockerfile/">a multi-stage <code>Dockerfile</code></a>, which has a <code>builder</code> stage to create an uberjar that is run in the run-time image.</p><p>The <code>build:</code> option for the Clojure service with the path to the multi-stage Dockerfile for the project (typically in the same root directory of the project, although a remote Git repository can also be used)</p><pre><code class="yaml"># --- Docker Compose Configuration --- #
+# - Docker Compose V2
+# - https://docs.docker.com/compose/compose-file/
+#
+# Build the Clojure Service from source code
+# and run on port 8080
+
+name: "practicalli"
+services:
+  # --- Clojure Service --- #
+  gameboard-service:
+    platform: linux/amd64
+    # Build using Dockerfile - relative path or Git repository
+    build:
+      context: ./ # Use Dockerfile in project root
+    environment:
+      - COMPOSE_PROJECT_NAME
+    ports: # host:container
+      - 8080:8080
+</code></pre><ul><li><code>name:</code> (optional) is used to set the container prefix of the service name, via the <code>environment:</code> variable <code>COMPOSE_PROJECT_NAME</code>, helping to identify the container by name when running.  The above container would be <code>practicalli-gameboard-service</code>.  This option is more valuable as the number of services grows</li><li><code>services:</code> contains one or more service definitions with a unique name, e.g. <code>gameboard-service</code></li><li><code>gameboard-service:</code> is a unique name for a service configuration</li><li><code>platform:</code> defines the operating system and hardware architecture that should be used for the service</li><li><code>build: context:</code> defines the location of the <code>Dockerfile</code> to use, either a local file or a Git repository URL</li><li><code>ports:</code> defines the host:container mapping for the service port.  <code>8080:8000</code> value would map the service running within the container on <code>8000</code> to the host (e.g. engineers' computer) on port 8080.</li></ul><p><img src="https://github.com/practicalli/graphic-design/blob/live/continuous-integration/docker-compose-build-in-progress-light.png?raw=true" alt="Docker Compose build process - Clojure project with tools.build" /></p><blockquote><p>Use <a href="https://practical.li/engineering-playbook/continuous-integration/docker/clojure-multi-stage-dockerfile/">a multi-stage <code>Dockerfile</code></a> to provide greater opportunity to create image overlays for the build stage which can be cached, e.g. downloading project dependencies, speeding up the build process on consecutive runs.</p></blockquote><h2 id="compose-services">Compose services</h2><p>Add more unique service configurations under <code>services:</code>, e.g. <code>postgres-database</code>.  All the services that support the local testing and integration of the Clojure project can be added to the <code>compose.yaml</code> file (database, cache, mock APIs, coupled services, etc.).</p><p>The Clojure service defines a dependency on a Postgres Database.  The dependency has a condition so the Clojure service is only started once the Postgres service is healthy</p><pre><code class="yaml">services:
+  clojure-service:
+    platform: linux/amd64
+    build: ./
+    ports: # host:container
+      - 8080:8080
+    depends_on:
+      postgres-database:
+        condition: service_healthy
+
+  postgres-database:
+    image: postgres:15.2-alpine
+    environment:
+      POSTGRES_PASSWORD: "$DOCKER_POSTGRES_ROOT_PASSWORD"
+    healthcheck:
+      test: [ "CMD", "pg_isready" ]
+      timeout: 45s
+      interval: 10s
+      retries: 10
+    ports:
+      - 5432:5432
+</code></pre><ul><li><code>depends_on:</code> include one or more services that the service depends on, optionally adding a start <code>condition:</code></li><li><code>depends_on: &lt;service-name&gt; condition:</code> a condition that should be true in order for the service image to start, typically checking <code>service_healthy</code> of another service in the configuration</li><li><code>heathcheck:</code> define a command and options to determine if the specific service running is healthy, with the <code>test:</code> command specific to the type of service.</li></ul><p>Build and run the services using the <code>--build</code> flag with <code>docker compose</code></p><pre><code class="shell">docker compose up --build
+</code></pre><p>The Clojure project is built in parallel with running the Postgres database.</p><p>On the initial run the Clojure project may take longer to run that starting the Postgres database, in which case the Clojure uberjar will run straight away.</p><p>On consecutive runs, at least part of the Clojure build process should be cached and images for all the services will have been downloaded and cached.  The Clojure uberjar may wait for the Postgres database to start up.</p><p>Each service can define a health check that can be used as a conditional startup trigger and ensure all services start in a meaningful order.</p><p><img src="https://github.com/practicalli/graphic-design/blob/live/continuous-integration/docker-compose-build-buld-clojure-run-postgres-healthy-attaching-light.png?raw=true" alt="Docker Compose startup - Clojure build and Postgres database - attache to database" /></p><h3 id="build-on-change">Build on Change</h3><p>Docker provides <a href="https://docs.docker.com/compose/file-watch/"><code>watch</code></a> as an experimental feature which can rebuild the Clojure service when a file change is detected.</p><p>The watch approach seems most useful for Clojure projects when troubleshooting issues that occur during system integration testing.</p><p>When additional tools need to run outside of Clojure code, e.g. SaSS build, data loading / ETL, then <code>watch</code> can compliment the Clojure REPL workflow by providing incremental change management for non-clojur aspects of the project.</p><p>Add an <code>x-develop</code> configuration with <code>watch</code> under the Clojure service configuration.  Define the action for each path to create a simple but comprehensive way to update the service</p><pre><code class="yaml">services:
+  clojure-service:
+    platform: linux/amd64
+    build: ./
+    ports: # host:container
+      - 8080:8080
+    depends_on:
+      postgres-database:
+        condition: service_healthy
+    x-develop:
+      watch:
+        - path: ./deps.edn
+          action: rebuild
+        - path: ./src
+          action: rebuild
+</code></pre><p>Start the services and the file watch mode</p><pre><code class="shell">docker compose up --detach &amp;&amp; docker compose alpha watch
+</code></pre><p>Save changes to files and a new image for the Clojure service will be built and deployed when ready.</p><blockquote><p>Having an optimised build process in the <code>Dockerfile</code> or <code>compose.yaml</code> configuration is especially important to make build on change fast and therefore effective to use.</p></blockquote><h2 id="summary">Summary</h2><p>With Compose integrated to Docker the configuration is simplified and provides a consistent point to evolve the compose specification.</p><p>Composing services provides a simple way of trying out different tools and services in concert with Clojure projects or by themselves.</p><p><a href="https://practical.li/engineering-playbook/continuous-integration/docker/compose/">Practicalli Engineering Playbook</a> covers Docker Compose in more detail</p><p>Thank you</p><p><a href="https://github.com/practicalli">practicalli GitHub profile</a> I <a href="https://twitter.com/practcial_li">@practical_li</a></p>
+</div>
+
+<div id="post-tags">
+    <b>Tags: </b>
+    
+    <a href="/blog/tags/docker/">docker</a>
+    
+</div>
+
+
+    <div id="prev-next">
+        
+        <a href="/blog/posts/docker-desktop-on-ubuntu-linux/">&laquo; Docker Desktop on Ubuntu Linux</a>
+        
+        
+        <a class="right" href="/blog/posts/practicalli-plans-2023/">Practicalli plans for 2023 &raquo;</a>
+        
+    </div>
+
+    
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_config = function () {
+            this.page.url = "http://practical.li/blog/posts/docker-compose-for-clojure-development/";
+            this.page.identifier = "Docker Compose for Clojure Development";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//practicalli-blog.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    
+
+
 </div>
 
             </div>

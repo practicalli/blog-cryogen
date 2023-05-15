@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Practicalli: Docker: a simple workflow for Clojure</title>
+    <link rel="canonical" href="http://practical.li/blog/posts/docker-a-simple-workflow-for-clojure/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu|Ubuntu+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/default.min.css">
+    <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/practicalli/graphic-design/live/logos/practicalli-logo-bullet.png">
+    <link href="/blog/css/screen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/blog/">
+              <img src="https://raw.githubusercontent.com/practicalli/graphic-design/live/logos/practicalli-logo-name-white.svg" alt="Practicalli logo" />
+            </a>
+        </div>
+
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li ><a href="/blog/">Home</a></li>
+                <li
+                ><a href="/blog/archives/">Archives</a></li>
+                
+                <li
+                >
+                <a href="/blog/pages/about/">About</a>
+                </li>
+                
+                <li><a href="/blog/feed.xml">RSS</a></li>
+                <li><a href="https://github.com/practicalli/blog-content/projects/1">Feedback</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div><!--/.container-fluid -->
+</nav>
+
+
+<div class="container">
+
+
+    <div class="row">
+        <div class="col-lg-9">
+            <div id="content">
+                
+<div id="post">
+    <div class="post-header">
+    <div id="post-meta" class="row">
+        <div class="col-lg-6">May 15, 2023</div>
+        
+    </div>
+    <h2>Docker: a simple workflow for Clojure</h2>
+
+    <!-- conditional topic logo displayed if :topic has value in a post -->
+    
+    <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/docker-logo-name.png" alt="docker logo - post topic" />
+    
+</div>
+<div>
+    
+    <p>Docker enables a consistent approach to building and running Clojure projects along with a range of other services locally (database, cache, streams, etc.), The Clojure project is built from source when starting services (a <code>watch</code> feature can rebuild on code changes). Heath checks and conditions are set to ensure dependant services start in the correct order.</p><p>Running Docker is relatively fast once image overlays (layers) are cached on their first run, so its a viable approach for local system integration testing and acceptance testing, before pushing changes to a remote Continuous Integration service.</p><p>A Docker workflow complements a <a href="https://practical.li/clojure/introduction/repl-workflow/">REPL Driven Development workflow</a>, it does not replace it.  The main development effort should be more effective via a REPL connected editor with Docker Compose focused on orchestration of services.</p><blockquote><p><a href="https://practical.li/engineering-playbook/continuous-integration/docker/clojure-multi-stage-dockerfile/">Practicalli Engineering Playbook</a> covers Docker and Compose in more detail</p></blockquote><!-- more --><h2 id="general-workflow">General Workflow</h2><ul><li>Create a Clojure project, e.g. using <a href="https://practical.li/clojure/clojure-cli/projects/templates/">deps-new and Practicalli Project Templates</a></li><li>Install Docker Desktop &amp; Extensions, e.g. <a href="https://practical.li/blog/posts/docker-desktop-on-ubuntu-linux/">Docker Desktop for Ubuntu</a></li><li>Create a Dockerfile e.g. <a href="https://practical.li/engineering-playbook/continuous-integration/docker/clojure-multi-stage-dockerfile/">multi-stage build and run-time configuration for Clojure</a></li><li><a href="https://practical.li/engineering-playbook/continuous-integration/docker/compose/">Compose services</a> together, adding health checks and conditional starts</li><li>REPL driven development, e.g. <a href="https://practical.li/clojure/clojure-cli/repl-reloaded/">Practicalli REPL Reloaded Workflow</a></li><li>(optional) Automatic rebuild of Clojure project when <a href="https://practical.li/engineering-playbook/continuous-integration/docker/compose/#file-watcher">watching for code changes</a> (experimental feature)</li></ul><blockquote><p>First time using Docker? Try the Docker getting started tutorial once Docker is installed</p><pre><code class="shell">docker run -d -p 80:80 docker/getting-started
+</code></pre></blockquote><h2 id="docker-desktop">Docker Desktop</h2><p><a href="https://docs.docker.com/desktop/">Docker desktop</a> provides an easy way to manage Docker images, containers and volumes.  Sign in to Docker Desktop to manage your images on DockerHub.</p><p><img src="https://github.com/practicalli/graphic-design/blob/live/continuous-integration/docker-desktop-images-light.png?raw=true" alt="Docker Desktop - images view" /></p><p>There is a growing marketplace of extensions that provide very useful tools to extend the capabilities of Docker Desktop.  Search within the Docker Desktop extensions or for <a href="https://hub.docker.com/search?q=&amp;type=extension">extensions on Docker Hub</a>.</p><ul><li><a href="https://hub.docker.com/extensions/docker/resource-usage-extension">Resource Usage</a> monitor resources (cpu, memory, network, disk) used by containers and docker compose systems over time</li><li><a href="https://hub.docker.com/extensions/docker/disk-usage-extension">Disk Usage</a> optimise use of local disk space by removing unused images, containers and volumes</li><li><a href="https://hub.docker.com/extensions/docker/volumes-backup-extension">Volumes Backup &amp; Share</a> to backup, clone, restore and share Docker volumes easily</li><li><a href="https://hub.docker.com/extensions/docker/logs-explorer-extension">Logs Explorer</a> view all container logs in one place to assist troubleshooting</li><li><a href="https://hub.docker.com/extensions/mochoa/pgadmin4-docker-extension">Postgres Admin</a> PGAdmin4 open source management tool for Postgres</li><li><a href="https://hub.docker.com/extensions/aquasec/trivy-docker-extension">Trivy</a> scan local and remote images for security vulnerabilities</li><li><a href="https://hub.docker.com/extensions/snyk/snyk-docker-desktop-extension">Snyk</a> scan local and remote images for security vulnerabilities</li><li><a href="https://hub.docker.com/extensions/ddosify/ddosify-docker-extension">Ddosify</a> high-performance, open-source and simple load testing tool</li></ul><p><img src="https://github.com/practicalli/graphic-design/blob/live/continuous-integration/docker-desktop-extensions-disk-usage-light.png?raw=true" alt="Docker Desktop extension - disk usage" /></p><h2 id="choosing-docker-images">Choosing Docker Images</h2><p><a href="https://docs.docker.com/docker-hub/official_images/">Docker Official Images</a> from Docker Hub are highly recommended.  Look for the Docker Official Image tag on the image page.</p><p><img src="https://docs.docker.com/docker-hub/images/official-image-badge-iso.png" alt="Docker Official Image Tag" /></p><ul><li><a href="https://hub.docker.com/_/clojure/">Clojure - official Docker Image</a> - built by the Clojure community, provides tools to build Clojure projects (Clojure CLI, Leiningen)</li><li><a href="https://hub.docker.com/_/eclipse-temurin">Eclipse temurin OpenJDK - official Docker image</a> - built by the <a href="https://adoptium.net/">community</a> - provides the Java run-time</li><li><a href="https://hub.docker.com/_/amazoncorretto">Amazon Corretto</a> is an OpenJDK distribution by Amazon AWS team, <a href="https://aws.amazon.com/corretto/">Amazon Corretto</a> can also be installed for the local development environment</li><li><a href="https://hub.docker.com/_/postgres">Postgres</a> open-source object-relational database management system</li><li><a href="https://hub.docker.com/_/redis">Redis</a> open-source, networked, in-memory, key-value data store with optional durability</li><li><a href="https://hub.docker.com/_/nginx">nginx</a> open source reverse proxy &amp; load balancing for HTTP, HTTPS, SMTP, POP3 &amp; IMAP protocols, HTTP cache and a web server</li><li><a href="https://hub.docker.com/_/mariadb">mariadb</a> open source relational database by the original developers of MySQL and is much more efficient</li></ul><blockquote><p>An Official Docker Image means the configuration of that image follows the <a href="https://docs.docker.com/develop/develop-images/dockerfile_best-practices/">Docker recommended practices</a>, is well documented and designed for common use cases.  There is no implication at to the correctness of tools, languages or service that image provides, only in the means in which they are provided.</p></blockquote><h2 id="use-multi-stage-dockerfile">Use Multi-stage Dockerfile</h2><p>A multi-stage <code>Dockerfile</code> contains <code>builder</code> stage and a <code>final</code> stage used as the run-time.  Optionally, the configuration can use a <code>base</code> stage that defines a common image and configuration which both build and final stages extend.</p><p>The builder stage caches dependencies to optimise building Clojure and the run-time stage optimises running the service efficiently and securely.</p><p>The uberjar created by the builder image is copied over to the final stage to keep the run-time image as clean and small as possible to minimise resource use.</p><p><img src="https://github.com/practicalli/graphic-design/blob/live/continuous-integration/docker-compose-build-output-cached-layers.png?raw=true" alt="Docker Multi-stage build file with cached overlays" /></p><p><a href="https://practical.li/engineering-playbook/continuous-integration/docker/clojure-multi-stage-dockerfile/">Multi-stage <code>Dockerfile</code> for Clojure projects</a></p><ul><li><a href="https://docs.docker.com/build/building/multi-stage/">Docker Multi-stage builds docs</a></li></ul><blockquote><p><a href="https://docs.docker.com/engine/reference/commandline/init/"><code>docker init</code></a> is a new (beta) feature to create <code>Dockerfile</code>, <code>.dockerignore</code> and<code>compose.yaml</code> files using Docker recommended practices.</p></blockquote><h2 id="compose-services">Compose services</h2><p>Define a <code>compose.yaml</code> file that builds the Clojure project and run services that the Clojure service requires or talks too (database, cache, mock API, etc.). Each service can define a heart beat that can be used as a conditional startup for other services.</p><p>Include the <code>build:</code> option for the Clojure service with the path to the multi-stage Dockerfile for the project (typically in the same root directory of the project, although a remote Git repository can also be used)</p><p>The Clojure service defines a dependency on a Postgres Database.  The dependency has a condition so the Clojure service is only started once the Postgres service is healthy</p><pre><code class="yaml">services:
+  clojure-service:
+    platform: linux/amd64
+    build: ./
+    ports: # host:container
+      - 8080:8080
+    depends_on:
+      postgres-database:
+        condition: service_healthy
+
+  postgres-database:
+    image: postgres:15.2-alpine
+    environment:
+      POSTGRES_PASSWORD: "$DOCKER_POSTGRES_ROOT_PASSWORD"
+    healthcheck:
+      test: [ "CMD", "pg_isready" ]
+      timeout: 45s
+      interval: 10s
+      retries: 10
+    ports:
+      - 5432:5432
+</code></pre><p>Run the services using docker from the root of the project</p><pre><code class="shell">docker compose up --build
+</code></pre><blockquote><p><code>compose.yaml</code> is the new configuration file for orchestrating services locally, a simplified and extended version of <code>docker-compose.yaml</code>.</p></blockquote><h3 id="file-watcher">File watcher</h3><p>Docker provides <a href="https://docs.docker.com/compose/file-watch/"><code>watch</code></a> as an experimental feature which can rebuild the Clojure service when a file change is detected.  This seems most useful when troubleshooting issues that occur during system integration testing.</p><p>Add an <code>x-develop</code> configuration with watch under the Clojure service configuration</p><pre><code class="yaml">    x-develop:
+      watch:
+        - path: ./deps.edn
+          action: rebuild
+        - path: ./src
+          action: rebuild
+</code></pre><p>Start the services and the file watch mode</p><pre><code class="shell">docker compose up --detach &amp;&amp; docker compose alpha watch
+</code></pre><p>Save changes to files and a new image for the Clojure service will be built and deployed when ready.</p><h2 id="summary">Summary</h2><p>Docker desktop provides lots of tools to support local system integration work before code is sent to a continuous integration service (or as a temporary alternative if that CI service id down)</p><p>Practicalli Project Templates include <code>Dockerfile</code>, <code>.dockerignore</code> and <code>compose.yaml</code> configurations for Clojure development, kick-starting the use of Docker.</p><p>Docker images are a relatively clean way of trying out different services or even different operating systems, e.g.<a href="https://hub.docker.com/_/ubuntu">Ubuntu</a> or <a href="https://hub.docker.com/_/archlinux">ArchLinux</a>.  Deleting the images removes the whole service without affecting the underlying operating system.</p><p><a href="https://practical.li/engineering-playbook/code-quality/megalinter/#megalinter-configuration">MegaLinter</a> is an excellent example of a docker image that provides a large number of tools that would otherwise need to be installed directly on the operating system.</p><ul><li><a href="https://docs.docker.com/desktop/">Docker Desktop Overview</a></li><li><a href="https://docs.docker.com/desktop/extensions/">Docker Desktop Extensions overview</a></li><li><a href="https://docs.docker.com/build/">Docker Build overview</a></li><li><a href="https://docs.docker.com/compose/">Docker Compose Overview</a></li></ul><p>Thank you</p><p><a href="https://github.com/practicalli">practicalli GitHub profile</a> I <a href="https://twitter.com/practcial_li">@practical_li</a></p>
+</div>
+
+<div id="post-tags">
+    <b>Tags: </b>
+    
+    <a href="/blog/tags/docker/">docker</a>
+    
+</div>
+
+
+    <div id="prev-next">
+        
+        
+        <a class="right" href="/blog/posts/docker-desktop-on-ubuntu-linux/">Docker Desktop on Ubuntu Linux &raquo;</a>
+        
+    </div>
+
+    
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_config = function () {
+            this.page.url = "http://practical.li/blog/posts/docker-a-simple-workflow-for-clojure/";
+            this.page.identifier = "Docker: a simple workflow for Clojure";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//practicalli-blog.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    
+
+
+</div>
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div id="sidebar">
+                <h3>Links</h3>
+                <ul id="links">
+                    <li><a href="http://practical.li/">Practicalli Home</a></li>
+                    <li><a href="http://youtube.com/practicalli">YouTube channel</a></li>
+                    <li><a href="https://github.com/practicalli/blog-content/projects/1">Feeback / Issues</a></li>
+                    
+                    <li><a href="/blog/pages/contributing/">Contributing</a></li>
+                    
+                </ul>
+                
+                <div id="recent">
+                    <h3>Recent Posts</h3>
+                    <ul>
+                        
+                        <li><a href="/blog/posts/docker-a-simple-workflow-for-clojure/">Docker: a simple workflow for Clojure</a></li>
+                        
+                        <li><a href="/blog/posts/docker-desktop-on-ubuntu-linux/">Docker Desktop on Ubuntu Linux</a></li>
+                        
+                        <li><a href="/blog/posts/docker-compose-for-clojure-development/">Docker Compose for Clojure Development</a></li>
+                        
+                        <li><a href="/blog/posts/practicalli-plans-2023/">Practicalli plans for 2023</a></li>
+                        
+                        <li><a href="/blog/posts/create-deps-new-template-for-clojure-cli-projects/">Create deps-new templates for Clojure CLI projects</a></li>
+                        
+                        <li><a href="/blog/posts/build-emacs-from-source-on-ubuntu-linux/">Build Emacs from source on Ubuntu Linux</a></li>
+                        
+                        <li><a href="/blog/posts/london-clojurians-community-a-brief-history/">London Clojurians Community - a relatively brief history</a></li>
+                        
+                        <li><a href="/blog/posts/build-and-run-clojure-with-multistage-dockerfile/">Build and run Clojure with Multi-stage Dockerfile</a></li>
+                        
+                        <li><a href="/blog/posts/make-clojure-tasks-simple-and-consistent/">Make Clojure development tasks simple and consistent</a></li>
+                        
+                    </ul>
+                </div>
+                
+                
+                <div id="tags">
+                    <h3>Tags</h3>
+                    <ul>
+                        
+                        <li><a href="/blog/tags/json/">json</a></li>
+                        
+                        <li><a href="/blog/tags/ring/">ring</a></li>
+                        
+                        <li><a href="/blog/tags/very%20fetch/">very fetch</a></li>
+                        
+                        <li><a href="/blog/tags/ubuntu/">ubuntu</a></li>
+                        
+                        <li><a href="/blog/tags/lsp/">lsp</a></li>
+                        
+                        <li><a href="/blog/tags/cryogen/">cryogen</a></li>
+                        
+                        <li><a href="/blog/tags/practicalli/">practicalli</a></li>
+                        
+                        <li><a href="/blog/tags/makefile/">makefile</a></li>
+                        
+                        <li><a href="/blog/tags/neovim/">neovim</a></li>
+                        
+                        <li><a href="/blog/tags/aliases/">aliases</a></li>
+                        
+                        <li><a href="/blog/tags/challenges/">challenges</a></li>
+                        
+                        <li><a href="/blog/tags/github/">github</a></li>
+                        
+                        <li><a href="/blog/tags/clojure/">clojure</a></li>
+                        
+                        <li><a href="/blog/tags/httpkit/">httpkit</a></li>
+                        
+                        <li><a href="/blog/tags/webapps/">webapps</a></li>
+                        
+                        <li><a href="/blog/tags/clojure-cli/">clojure-cli</a></li>
+                        
+                        <li><a href="/blog/tags/pull-requests/">pull-requests</a></li>
+                        
+                        <li><a href="/blog/tags/editors/">editors</a></li>
+                        
+                        <li><a href="/blog/tags/java/">java</a></li>
+                        
+                        <li><a href="/blog/tags/tools-deps/">tools-deps</a></li>
+                        
+                        <li><a href="/blog/tags/hardware/">hardware</a></li>
+                        
+                        <li><a href="/blog/tags/make/">make</a></li>
+                        
+                        <li><a href="/blog/tags/cider/">cider</a></li>
+                        
+                        <li><a href="/blog/tags/emacs/">emacs</a></li>
+                        
+                        <li><a href="/blog/tags/clj-http/">clj-http</a></li>
+                        
+                        <li><a href="/blog/tags/calva/">calva</a></li>
+                        
+                        <li><a href="/blog/tags/snippets/">snippets</a></li>
+                        
+                        <li><a href="/blog/tags/clojure-lsp/">clojure-lsp</a></li>
+                        
+                        <li><a href="/blog/tags/thinkpad/">thinkpad</a></li>
+                        
+                        <li><a href="/blog/tags/events/">events</a></li>
+                        
+                        <li><a href="/blog/tags/community/">community</a></li>
+                        
+                        <li><a href="/blog/tags/advent-of-parens/">advent-of-parens</a></li>
+                        
+                        <li><a href="/blog/tags/spacemacs/">spacemacs</a></li>
+                        
+                        <li><a href="/blog/tags/docker/">docker</a></li>
+                        
+                        <li><a href="/blog/tags/help/">help</a></li>
+                        
+                        <li><a href="/blog/tags/transducers/">transducers</a></li>
+                        
+                        <li><a href="/blog/tags/lenovo/">lenovo</a></li>
+                        
+                        <li><a href="/blog/tags/reduce/">reduce</a></li>
+                        
+                        <li><a href="/blog/tags/compojure/">compojure</a></li>
+                        
+                        <li><a href="/blog/tags/klipse/">klipse</a></li>
+                        
+                        <li><a href="/blog/tags/figwheel-main/">figwheel-main</a></li>
+                        
+                        <li><a href="/blog/tags/clojure-core/">clojure-core</a></li>
+                        
+                        <li><a href="/blog/tags/web-scraper/">web-scraper</a></li>
+                        
+                        <li><a href="/blog/tags/blogging/">blogging</a></li>
+                        
+                        <li><a href="/blog/tags/conjure/">conjure</a></li>
+                        
+                        <li><a href="/blog/tags/github-actions/">github-actions</a></li>
+                        
+                        <li><a href="/blog/tags/apis/">apis</a></li>
+                        
+                        <li><a href="/blog/tags/jvm/">jvm</a></li>
+                        
+                        <li><a href="/blog/tags/static-sites/">static-sites</a></li>
+                        
+                        <li><a href="/blog/tags/re-clojure/">re-clojure</a></li>
+                        
+                        <li><a href="/blog/tags/packages/">packages</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <footer>
+      Copyright &copy; 2023 Practicalli
+      <p style="text-align: center;">Powered by <a href="http://cryogenweb.org">Cryogen</a></p>
+
+      <license id="license">
+        <div>
+          <p>This work is licensed under a <a href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution 4.0 ShareAlike License</a>, including custom images & stylesheets.</p>
+          <p>Permissions beyond the scope of this license may be available by contacting <a xmlns:cc="http://creativecommons.org/ns#" href="https://twitter.com/practical_li" rel="cc:morePermissions">@practical_li</a></p>
+          <br>
+          <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a>
+        </div>
+      </license>
+
+    </footer>
+</div>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="/blog/js/highlight.pack.js" type="application/javascript"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+</body>
+</html>

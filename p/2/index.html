@@ -59,6 +59,57 @@
     
     <div class="post-header">
         <h2>
+            <a href="/blog/posts/build-emacs-from-source-on-ubuntu-linux/">Build Emacs from source on Ubuntu Linux</a>
+        </h2>
+        <div id="post-meta">
+            
+            <div class="date">March 11, 2023</div>
+        </div>
+        <!-- conditional topic logo displayed if :topic has value in a post -->
+        
+        <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/emacs-logo-name.png" alt="emacs logo" />
+        
+    </div>
+    <p>Emacs 29 will be the next stable release later in 2023 adding major features: Eglot LSP client, Tree-Sitter language parser and <code>package.el</code> package install from Git repositories. more features to enhance and improved every day use of Emacs.</p><p>Building Emacs from source is a relatively straight forward way to try out some or all of these features in advance, especially useful for those maintaining or developing new tools on top of Emacs.</p><blockquote><p><a href="https://blog.phundrak.com/emacs-29-what-can-we-expect/">Emacs 29 - what to expect</a> - a brief summary of the major features</p></blockquote>
+    <a href="/blog/posts/build-emacs-from-source-on-ubuntu-linux/">Continue reading &#8594;</a>
+    <hr>
+    
+    <div class="post-header">
+        <h2>
+            <a href="/blog/posts/london-clojurians-community-a-brief-history/">London Clojurians Community - a relatively brief history</a>
+        </h2>
+        <div id="post-meta">
+            
+            <div class="date">March 10, 2023</div>
+        </div>
+        <!-- conditional topic logo displayed if :topic has value in a post -->
+        
+        <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/london-clojurians-logo-name.png" alt="london-clojurians logo" />
+        
+    </div>
+    <p>The London Clojurian community started in 2009 when Robert Rees tricked Bruce Durling into organsing monthly events. From those humble beginnings the community has grown close to 4,000 members with several monthly events taking place fairly consistently over the last 14 years (5 events in 1 month was the record).</p><p>The community has thrived due to the hard work of a great many people and this article probably misses out on a lot of activities (especially in the early years).  I would like to thank everyone involved in organising events, hosting events and attending events.  Without you there would not be a community.</p><p>I steped down as one of the main organisers having delegated all of the work to many other people.  The last decade of community work has been very rewarding, but its time for other to continue the work.  I now focus on the <a href="https://practical.li/">Practicalli websites</a> for learning and using Clojure effectively.</p>
+    <a href="/blog/posts/london-clojurians-community-a-brief-history/">Continue reading &#8594;</a>
+    <hr>
+    
+    <div class="post-header">
+        <h2>
+            <a href="/blog/posts/build-and-run-clojure-with-multistage-dockerfile/">Build and run Clojure with Multi-stage Dockerfile</a>
+        </h2>
+        <div id="post-meta">
+            
+            <div class="date">October 30, 2022</div>
+        </div>
+        <!-- conditional topic logo displayed if :topic has value in a post -->
+        
+        <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/docker-logo-name.png" alt="docker logo" />
+        
+    </div>
+    <p>Deployment of Clojure is very simple, only an Uberjar archive file (Clojure Project and Clojure run-time) and the Java Run-time Environment (JRE) are required.</p><p>A Clojure service rarely works in isolation and although many services are access via a network connection (defined in Environment Variables), provisioning containers to build and run Clojure along with any other services can be valuable as complexity of the architecture grows.</p><p>A <a href="https://github.com/practicalli/clojure-app-template/blob/main/Dockerfile">Multi-stage <code>Dockerfile</code></a> is an effective way to build and run Clojure projects in continuous integration pipelines and during local development where multiple services are required for testing.</p>
+    <a href="/blog/posts/build-and-run-clojure-with-multistage-dockerfile/">Continue reading &#8594;</a>
+    <hr>
+    
+    <div class="post-header">
+        <h2>
             <a href="/blog/posts/make-clojure-tasks-simple-and-consistent/">Make Clojure development tasks simple and consistent</a>
         </h2>
         <div id="post-meta">
@@ -91,57 +142,6 @@
     <a href="/blog/posts/clojurescript-workflow-with-clojure-cli-tools-and-figwheel-main/">Continue reading &#8594;</a>
     <hr>
     
-    <div class="post-header">
-        <h2>
-            <a href="/blog/posts/adopt-FreeDesktop.org-XDG-standard-for-configuration-files/">Adopting FreeDesktop.org XDG standard for development tools</a>
-        </h2>
-        <div id="post-meta">
-            
-            <div class="date">May 16, 2022</div>
-        </div>
-        <!-- conditional topic logo displayed if :topic has value in a post -->
-        
-        <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/ubuntu-logo-name.png" alt="ubuntu logo" />
-        
-    </div>
-    <p>Managing your personal configuration for development tools and applications is much more effective when adopting the <a href="https://www.freedesktop.org/wiki/Specifications/basedir-spec/">XDG basedir standard</a>, which defines separate locations to store user configurations, data files and caches.</p><p>Without the XDG standard, these files and directories are often mixed together and stored in the <code>$HOME</code>  of the users account, making it more challenging to backup or version control.</p><p>Development tools such as NeoVim, Emacs, Clojure CLI  and Clojure LSP support the XDG specification, although some tools like Leiningen required a little help.  There are simple approaches to work-around the limitations of tools that don't conform.</p>
-    <a href="/blog/posts/adopt-FreeDesktop.org-XDG-standard-for-configuration-files/">Continue reading &#8594;</a>
-    <hr>
-    
-    <div class="post-header">
-        <h2>
-            <a href="/blog/posts/build-emacs-28-on-ubuntu/">Building Emacs 28 on Ubuntu Linux</a>
-        </h2>
-        <div id="post-meta">
-            
-            <div class="date">May 16, 2022</div>
-        </div>
-        <!-- conditional topic logo displayed if :topic has value in a post -->
-        
-        <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/ubuntu-logo-name.png" alt="ubuntu logo" />
-        
-    </div>
-    <p>Emacs 28.1 is <a href="https://www.masteringemacs.org/article/whats-new-in-emacs-28-1" title="What is new in Emacs 28.1">a feature packed release</a> and includes native compilation to significantly increase the speed of all Emacs software packages installed.  This is a very noticeable difference, especially when Emacs is at the center of your developer workflow.</p><p>Ubuntu hasn't packaged Emacs 28.1 yet, although its <em>usually</em> straight forward to build Emacs yourself.</p><!-- more -->
-    <a href="/blog/posts/build-emacs-28-on-ubuntu/">Continue reading &#8594;</a>
-    <hr>
-    
-    <div class="post-header">
-        <h2>
-            <a href="/blog/posts/practicalli-plans-for-spring-2022/">Practicalli content plans for Spring 2022</a>
-        </h2>
-        <div id="post-meta">
-            
-            <div class="date">February 18, 2022</div>
-        </div>
-        <!-- conditional topic logo displayed if :topic has value in a post -->
-        
-        <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/practicalli-logo-name.png" alt="practicalli logo" />
-        
-    </div>
-    <p>Much more content is coming in the Spring of 2022, thanks to <a href="https://www.clojuriststogether.org/news/q1-2022-funding-announcement/">Clojurists Together funding</a>.  To ensure the most useful content is provides, Practicalli would value feedback on the planned topics.</p><p>The <a href="https://www.clojuriststogether.org/news/q1-2022-funding-announcement/">submitted plan to Clojurists Together</a> is to extend existing guides and code examples, as well as adding new content to the existing Practicalli books.  Additional video content will be added across the Practicall Books, updating existing video content where it has become dated.</p><blockquote><p>Due to continued Covid symptoms, <a href="https://github.com/practicalli/clojurists-together-journal/blob/summer-2022/2022-2023-updates.md">work is being done over 2022 and 2023</a> as health conditions allow</p></blockquote>
-    <a href="/blog/posts/practicalli-plans-for-spring-2022/">Continue reading &#8594;</a>
-    <hr>
-    
 
     <div id="prev-next">
         
@@ -172,6 +172,12 @@
                     <h3>Recent Posts</h3>
                     <ul>
                         
+                        <li><a href="/blog/posts/docker-a-simple-workflow-for-clojure/">Docker: a simple workflow for Clojure</a></li>
+                        
+                        <li><a href="/blog/posts/docker-desktop-on-ubuntu-linux/">Docker Desktop on Ubuntu Linux</a></li>
+                        
+                        <li><a href="/blog/posts/docker-compose-for-clojure-development/">Docker Compose for Clojure Development</a></li>
+                        
                         <li><a href="/blog/posts/practicalli-plans-2023/">Practicalli plans for 2023</a></li>
                         
                         <li><a href="/blog/posts/create-deps-new-template-for-clojure-cli-projects/">Create deps-new templates for Clojure CLI projects</a></li>
@@ -183,12 +189,6 @@
                         <li><a href="/blog/posts/build-and-run-clojure-with-multistage-dockerfile/">Build and run Clojure with Multi-stage Dockerfile</a></li>
                         
                         <li><a href="/blog/posts/make-clojure-tasks-simple-and-consistent/">Make Clojure development tasks simple and consistent</a></li>
-                        
-                        <li><a href="/blog/posts/clojurescript-workflow-with-clojure-cli-tools-and-figwheel-main/">ClojureScript workflow with Clojure CLI tools and Figwheel-main</a></li>
-                        
-                        <li><a href="/blog/posts/adopt-FreeDesktop.org-XDG-standard-for-configuration-files/">Adopting FreeDesktop.org XDG standard for development tools</a></li>
-                        
-                        <li><a href="/blog/posts/build-emacs-28-on-ubuntu/">Building Emacs 28 on Ubuntu Linux</a></li>
                         
                     </ul>
                 </div>

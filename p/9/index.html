@@ -59,6 +59,57 @@
     
     <div class="post-header">
         <h2>
+            <a href="/blog/posts/a-deeper-understanding-of-clojure-cli-tools/">A deeper understanding of Clojure CLI tools</a>
+        </h2>
+        <div id="post-meta">
+            
+            <div class="date">July 21, 2019</div>
+        </div>
+        <!-- conditional topic logo displayed if :topic has value in a post -->
+        
+        <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/clojure-cli-logo-name.png" alt="clojure-cli logo" />
+        
+    </div>
+    <p>CLI tools make Clojure very accessible and simple to install as they are a essentially a wrapper for running Clojure code using the <code>java</code> command and use additional libraries to manage dependencies, class paths, create projects and build java archive (jar) files.</p><blockquote><p>Newer content can be found in <a href="http://practicalli.github.io/clojure/clojure-tools/using-clojure-tools.html">Using Clojure tools section of Practicalli Clojure</a></p></blockquote><p>Its quite common to use the <code>java</code> command to run your code in production, usually defined in a shell script.  Leiningen can be used to run your application in production too, however, because Leiningen creates 2 JVM instances (one for itself and one for the application), its more efficient to just use the <code>java</code> command.</p>
+    <a href="/blog/posts/a-deeper-understanding-of-clojure-cli-tools/">Continue reading &#8594;</a>
+    <hr>
+    
+    <div class="post-header">
+        <h2>
+            <a href="/blog/posts/cider-jack-in-to-clojure-cli-projects-from-spacemacs/">CIDER jack-in to Clojure CLI projects from Spacemacs</a>
+        </h2>
+        <div id="post-meta">
+            
+            <div class="date">July 16, 2019</div>
+        </div>
+        <!-- conditional topic logo displayed if :topic has value in a post -->
+        
+        <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/spacemacs-logo-name.png" alt="spacemacs logo" />
+        
+    </div>
+    <p>Running a Clojure project created with CLI tools or <code>clj-new</code> may require you to pass in an alias for the REPL to pick up the right libraries.</p><p>A few days ago I created a new ClojureScript and reagent project, using the Clojure CLI tools and <code>clj-new</code> project creation tool, which converts Leiningen and Boot templates into a deps.edn based project.  Unfortunately when I created a project from the fighwheel-main template the REPL failed to run from CIDER using <code>cider-jack-in-cljs</code>, saying that figwheel-main was not found.  All that was required was to specify the <code>:fig</code> alias when running a REPL.</p><p>This article covers two approaches to running Clojure CLI projects from CIDER jack-in that require setting of an alias or multiple aliases e.g. <code>-A:fig:build:party:hammock</code></p>
+    <a href="/blog/posts/cider-jack-in-to-clojure-cli-projects-from-spacemacs/">Continue reading &#8594;</a>
+    <hr>
+    
+    <div class="post-header">
+        <h2>
+            <a href="/blog/posts/clojure-cli-and-tools-deps/">Clojure CLI and tools.deps</a>
+        </h2>
+        <div id="post-meta">
+            
+            <div class="date">July 13, 2019</div>
+        </div>
+        <!-- conditional topic logo displayed if :topic has value in a post -->
+        
+        <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/clojure-cli-logo-name.png" alt="clojure-cli logo" />
+        
+    </div>
+    <p>Clojure Command Line Interface (CLI) tools provide a fast way for developers to get started with Clojure and simplify an already pretty simple experience.   With tools.deps it also provides a more flexible approach to including libraries, including the use of code from a specific commit in a Git repository.</p><blockquote><p>Newer content can be found in <a href="http://practicalli.github.io/clojure/clojure-tools/using-clojure-tools.html">Using Clojure tools section of Practicalli Clojure</a></p></blockquote><p><a href="https://www.youtube.com/watch?v=JsdgIKUD_6Q&amp;list=PLpr9V-R8ZxiDjyU7cQYWOEFBDR1t7t0wv&amp;index=37">Practicalli Clojure 35 - Clojure CLI tools - an introduction</a> is a video of a live broadcast of this content (inclucing typos)</p>
+    <a href="/blog/posts/clojure-cli-and-tools-deps/">Continue reading &#8594;</a>
+    <hr>
+    
+    <div class="post-header">
+        <h2>
             <a href="/blog/posts/testing-live-coding/">Testing Klipse Integration</a>
         </h2>
         <div id="post-meta">
@@ -87,57 +138,6 @@
     </div>
     <p>Yasnippets minimise typing for commonly used Clojure forms and documentation structures, or any other text regularly created. Yasnippets have placeholders that allow jumping (tabbing) to points in the snippet, so specific text can be added to the more generic text of the snippet.</p><p>Emacs YASnippet package uses <a href="https://github.com/AndreaCrotti/yasnippet-snippets" title="Yasnippet official snippet collections">mode-specific snippets</a> that expand to anything from a simple text replacement to an intricate code block structure using placeholders to add specific values to the general form.</p><p>See YASnippet in action in this <a href="https://www.youtube.com/watch?v=-4O-ZYjQxks">Emacs Yasnippet video</a>.</p>
     <a href="/blog/posts/yasnippets-for-faster-clojure-development/">Continue reading &#8594;</a>
-    <hr>
-    
-    <div class="post-header">
-        <h2>
-            <a href="/blog/posts/writing-custom-snippets-for-yasnippets/">Writing custom snippets for yasnippet</a>
-        </h2>
-        <div id="post-meta">
-            
-            <div class="date">July 23, 2016</div>
-        </div>
-        <!-- conditional topic logo displayed if :topic has value in a post -->
-        
-        <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/spacemacs-logo-name.png" alt="spacemacs logo" />
-        
-    </div>
-    <p>Snippets are names that expand to code or documentation, to minimise typing commonly used code pattern and can serve as a reminder of common Clojure forms.</p><p>YASnippets templates are defined in plain text, so are very easy to learn and write.</p><p>The content of a snippet can be anything, from a simple piece of text or a more involved code structure with placeholders for tab stops.  Snippets can even include Emacs lisp (elisp) code which is evaluated, allowing the snippet to tap into all the features of Emacs.</p>
-    <a href="/blog/posts/writing-custom-snippets-for-yasnippets/">Continue reading &#8594;</a>
-    <hr>
-    
-    <div class="post-header">
-        <h2>
-            <a href="/blog/posts/transducers-in-clojure-getting-started/">Clojure Transducers - Getting Started</a>
-        </h2>
-        <div id="post-meta">
-            
-            <div class="date">June 15, 2016</div>
-        </div>
-        <!-- conditional topic logo displayed if :topic has value in a post -->
-        
-        <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/clojure-logo-name.png" alt="clojure logo" />
-        
-    </div>
-    <p>Transducers are built upon the design principle in Clojure of composing functions together, allowing you to elegantly abstract functional composition and create a workflow that will transform data without being tied to a specific context.  So what does that actually mean and what does the code look like?  Is there a transducer function or is it just extensions to existing functions.  These are the questions we will explore and answer.</p><blockquote><p>A good understanding of functions such as map &amp; reduce and composing functions with the threading macros is recommended before writing code with Transducers.</p></blockquote><p>This is my interpretation of the really great introduction to Transducers from <a href="https://funcool.github.io/clojurescript-unraveled/">Clojurescript Unraveled</a>, expanded with additional code and my own comments.</p>
-    <a href="/blog/posts/transducers-in-clojure-getting-started/">Continue reading &#8594;</a>
-    <hr>
-    
-    <div class="post-header">
-        <h2>
-            <a href="/blog/posts/spacemacs-share-buffers-as-github-gists/">Spacemacs - Share Buffers via Github Gists</a>
-        </h2>
-        <div id="post-meta">
-            
-            <div class="date">March 13, 2016</div>
-        </div>
-        <!-- conditional topic logo displayed if :topic has value in a post -->
-        
-        <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/spacemacs-logo-name.png" alt="spacemacs logo" />
-        
-    </div>
-    <blockquote><p>The Spacemacs <strong>github</strong> layer has been deprecated and gist.el is longer a reliable tool to work with GitHub gists unfortunately</p></blockquote><p><a href="https://gist.github.com/">Github Gists</a> proved a simple way to share a piece of code, configuration or documentation without setting up a full version control project.  Rather than use copy &amp; paste, a Gist can be created from any <a href="https://github.com/syl20bnr/spacemacs">Spacemacs</a> buffer or region with a single command.</p><p>Add the <code>github</code> layer to the <code>~/.spacemacs</code> configuration file and reload your configuration, <code>SPC f e R</code>, or restart Spacemacs <code>SPC q r</code>.  Lets see just how easy it is to use Gists with Spacemacs.</p>
-    <a href="/blog/posts/spacemacs-share-buffers-as-github-gists/">Continue reading &#8594;</a>
     <hr>
     
 
@@ -170,6 +170,12 @@
                     <h3>Recent Posts</h3>
                     <ul>
                         
+                        <li><a href="/blog/posts/docker-a-simple-workflow-for-clojure/">Docker: a simple workflow for Clojure</a></li>
+                        
+                        <li><a href="/blog/posts/docker-desktop-on-ubuntu-linux/">Docker Desktop on Ubuntu Linux</a></li>
+                        
+                        <li><a href="/blog/posts/docker-compose-for-clojure-development/">Docker Compose for Clojure Development</a></li>
+                        
                         <li><a href="/blog/posts/practicalli-plans-2023/">Practicalli plans for 2023</a></li>
                         
                         <li><a href="/blog/posts/create-deps-new-template-for-clojure-cli-projects/">Create deps-new templates for Clojure CLI projects</a></li>
@@ -181,12 +187,6 @@
                         <li><a href="/blog/posts/build-and-run-clojure-with-multistage-dockerfile/">Build and run Clojure with Multi-stage Dockerfile</a></li>
                         
                         <li><a href="/blog/posts/make-clojure-tasks-simple-and-consistent/">Make Clojure development tasks simple and consistent</a></li>
-                        
-                        <li><a href="/blog/posts/clojurescript-workflow-with-clojure-cli-tools-and-figwheel-main/">ClojureScript workflow with Clojure CLI tools and Figwheel-main</a></li>
-                        
-                        <li><a href="/blog/posts/adopt-FreeDesktop.org-XDG-standard-for-configuration-files/">Adopting FreeDesktop.org XDG standard for development tools</a></li>
-                        
-                        <li><a href="/blog/posts/build-emacs-28-on-ubuntu/">Building Emacs 28 on Ubuntu Linux</a></li>
                         
                     </ul>
                 </div>
