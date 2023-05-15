@@ -52,6 +52,10 @@ lint:  ## Run MegaLinter with custom configuration
 	$(info --------- MegaLinter Runner ---------)
 	npx mega-linter-runner --flavor documentation --release beta --env "'MEGALINTER_CONFIG=.github/config/megalinter.yaml'" --remove-container
 
+lint-fix:  ## Run MegaLinter with custom configuration
+	$(info --------- MegaLinter Runner ---------)
+	npx mega-linter-runner --fix --flavor documentation --release beta --env "'MEGALINTER_CONFIG=.github/config/megalinter.yaml'" --remove-container
+
 lint-clean:  ## Clean MegaLinter report information
 	$(info --------- MegaLinter Clean Reports ---------)
 	- rm -rf ./megalinter-reports
