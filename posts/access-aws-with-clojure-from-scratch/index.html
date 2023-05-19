@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Practicalli: Accessing AWS with Clojure from scratch - simple approach</title>
+    <link rel="canonical" href="http://practical.li/blog/posts/access-aws-with-clojure-from-scratch/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu|Ubuntu+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/default.min.css">
+    <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/practicalli/graphic-design/live/logos/practicalli-logo-bullet.png">
+    <link href="/blog/css/screen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/blog/">
+              <img src="https://raw.githubusercontent.com/practicalli/graphic-design/live/logos/practicalli-logo-name-white.svg" alt="Practicalli logo" />
+            </a>
+        </div>
+
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li ><a href="/blog/">Home</a></li>
+                <li
+                ><a href="/blog/archives/">Archives</a></li>
+                
+                <li
+                >
+                <a href="/blog/pages/about/">About</a>
+                </li>
+                
+                <li><a href="/blog/feed.xml">RSS</a></li>
+                <li><a href="https://github.com/practicalli/blog-content/projects/1">Feedback</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div><!--/.container-fluid -->
+</nav>
+
+
+<div class="container">
+
+
+    <div class="row">
+        <div class="col-lg-9">
+            <div id="content">
+                
+<div id="post">
+    <div class="post-header">
+    <div id="post-meta" class="row">
+        <div class="col-lg-6">May 17, 2023</div>
+        
+    </div>
+    <h2>Accessing AWS with Clojure from scratch - simple approach</h2>
+
+    <!-- conditional topic logo displayed if :topic has value in a post -->
+    
+    <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/aws-logo-name.png" alt="aws logo - post topic" />
+    
+</div>
+<div>
+    
+    <p><a href="https://github.com/cognitect-labs/aws-api">Cognitect Labs AWS API</a> is an excellent data driven Clojure library for interacting with AWS from code.  Essentially a client for an AWS Service is created which operations are invoked.  The project includes working code examples (<em>once a working AWS account is configured</em>).</p><p>The hardest is configuring suitable AWS accounts, programmatic access and service permissions, especially when new to AWS.  This article starts with nothing and steps through the simplest and quickest AWS account and permission setup, using the <a href="https://aws.amazon.com/free/">"AWS Free Tier"</a>.  Note: every service has quota limits and some services are only free for a period of time (free trials &amp; 12 months free).</p><p>The approach outlined is not intended for commercial work, only the bare essentials to start exploring what is possible with the Cognitect Labs library.  (Or you could try out <a href="https://localstack.cloud/">LocalStack if you have docker installed locally</a>).</p><p>Don't use this approach for personal or company secrets and sensitive information.</p><blockquote><p>A working credit card is required to setup a root account and AWS will charge the card $1 to verify identity and that the card is legitimate.  This amount will be returned within 3-5 days.</p><p>Apart from the temporary charge, this approach should not incur any charges so long as the account stays within the free plan limits.  Recommend using a digital card that can be set to frozen when not explicitly used as a safety precaution.</p></blockquote><!-- more --><h2 id="create-root-account">Create Root account</h2><p>A root account is used for administration of an Amazon Web Service (AWS) account. This includes management of IAM accounts which are used for day to day work and programmatic (code) access.</p><p>Create a root account by <a href="https://portal.aws.amazon.com/billing/signup#/start/email">singing up for AWS</a></p><p>Enter an email for the root account and a name for the AWS account</p><p><img src="https://github.com/practicalli/graphic-design/blob/live/cloud-services/aws/aws-sign-up-webpage.png?raw=true" alt="AWS Sign up website" /></p><p>An email is sent to the address entered with a verification code.  Enter the code and select <strong>Verify</strong></p><p><img src="https://github.com/practicalli/graphic-design/blob/live/cloud-services/aws/aws-sign-up-webpage-confirm-verification-code.png?raw=true" alt="AWS sign up website - verify code" /></p><p>Generate a secure password for the root account, e.g. using a Password Manager such as NordPass or 1Password</p><p><img src="https://github.com/practicalli/graphic-design/blob/live/cloud-services/aws/aws-sign-up-webpage-root-password.png?raw=true" alt="AWS sign up website - set root account password" /></p><blockquote><p>Save the account password with your favourite password manager</p></blockquote><p>Select <strong>Personal</strong> plan as this account is only used for personal projects &amp; hacking (not cracking).</p><p>Complete contact information with your actual details (used when AWS confirms the credit card is legitimate) and confirm the <a href="https://aws.amazon.com/agreement/">AWS Customer Agreement</a>.</p><p><img src="https://github.com/practicalli/graphic-design/blob/live/cloud-services/aws/aws-sign-up-webpage-contact-information.png?raw=true" alt="AWS sign up website - contact details" /></p><p>Enter details of a valid credit/debit card.  AWS will charge $1 to the card, which will be returned in 3-5 days.</p><p><img src="https://github.com/practicalli/graphic-design/blob/live/cloud-services/aws/aws-sign-up-webpage-billing-information.png?raw=true" alt="AWS sign up - billing information" /></p><p>Confirm identity</p><blockquote><p>NOTE: do not include spaces in the security code even if they are in the image</p></blockquote><p>Select <strong>Send SMS</strong></p><p><img src="https://github.com/practicalli/graphic-design/blob/live/cloud-services/aws/aws-sign-up-webpage-confirm-identity.png?raw=true" alt="AWS sign up website - select confirm identity method" /></p><p>Confirm identity pin number</p><p>4 digit code (dont use the 5 digit phone number by mistake)</p><p><img src="https://github.com/practicalli/graphic-design/blob/live/cloud-services/aws/aws-sign-up-webpage-confirm-identity-code.png?raw=true" alt="AWS sign up website - confirm identity code" /></p><p>Select support plan - <strong>Basic support - Free</strong></p><p>Select <strong>Complete Sign up</strong></p><p><img src="https://github.com/practicalli/graphic-design/blob/live/cloud-services/aws/aws-sign-up-webpage-support-plan-basic-free.png?raw=true" alt="AWS sign up website - select basic support plan" /></p><p>Congratulations</p><p>An email will be sent to the root account address once the account is ready, which make take a few minutes.</p><p>Take a break from the form filling by stretching and taking some deep breaths.</p><p><img src="https://github.com/practicalli/graphic-design/blob/live/cloud-services/aws/aws-sign-up-webpage-congratulations.png?raw=true" alt="AWS sign up website - congratulations" /></p><blockquote><p>Visit the IAM dashboard and add Multi-Factor authentication (MFA) to the root user account for additional security.  Practicalli uses the <a href="https://authy.com/">Authy app</a> for Multi-Factor authentication</p></blockquote><h2 id="iam-user-for-code--cli">IAM User for Code &amp; CLI</h2><p>Login to AWS Management Console with root account</p><p>Search for and select IAM and create a new IAM user</p><p><img src="https://github.com/practicalli/graphic-design/blob/live/cloud-services/aws/web-console/amazon-aws-console-iam-user-create-1-user-details.png?raw=true" alt="AWS IAM Users - create user" /></p><p>Select <strong>Add user to group</strong></p><p>Create new group and assing it to the user</p><p><img src="https://github.com/practicalli/graphic-design/blob/live/cloud-services/aws/web-console/amazon-aws-console-iam-user-create-user-group-added.png?raw=true" alt="AWS IAM Users - select add user to group and create a new group" /></p><p>The group should be assigned Permission policies to access the relevant AWS services, e.g. AwsS3FullAccess</p><p><img src="https://github.com/practicalli/graphic-design/blob/live/cloud-services/aws/web-console/amazon-aws-console-iam-user-create-user-group-with-permission-policies.png?raw=true" alt="AWS IAM Users - assigning permissions policies to the new group" /></p><p>Ensure the new user is added to the group (I missed this step out initially and access was not allowed)</p><p><img src="https://github.com/practicalli/graphic-design/blob/live/cloud-services/aws/web-console/amazon-aws-console-iam-user-create-6-user-details-groups.png?raw=true" alt="AWS IAM Users - view of new user account" /></p><p>Once the IAM user has been created, create an Access Key (key and secret)</p><p>Select the <strong>Security credentials</strong> tab in the user summary</p><p>Select <strong>Command Line Interface (CLI)</strong> and tick the check box to understand this isnt the recommended approach.</p><p><img src="https://github.com/practicalli/graphic-design/blob/live/cloud-services/aws/web-console/amazon-aws-console-iam-user-access-keys-cli-access.png?raw=true" alt="AWS IAM Users - creating access key - selecting command line interface" /></p><p>Retrieve the access key details so they can be used when configuring the AWS CLI tool.</p><p><img src="https://github.com/practicalli/graphic-design/blob/live/cloud-services/aws/web-console/amazon-aws-console-iam-user-access-keys-cli-access-retrieve-keys.png?raw=true" alt="AWS IAM Users - retrieve access keys for created user" /></p><blockquote><p>In a commercial environment, the operations team should create an IAM account for you, so this step is only relevant for your own education.</p></blockquote><h2 id="install-aws-cli-2">Install AWS CLI 2</h2><p><a href="https://aws.amazon.com/cli/">AWS Command Line Interface (AWS CLI)</a> is a unified tool to control multiple AWS services from the command line and automate them through scripts.</p><p>The AWS CLI configuration can also be used by Clojure code using the Cognitect Labs AWS API library.</p><p>Download the install script archive file</p><pre><code class="shell">curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+</code></pre><p>Extract the install script which extract to a directory called <code>aws</code></p><pre><code class="shell">unzip awscliv2.zip
+</code></pre><p>Run the install script, providing the user password when prompted</p><pre><code class="shell">sudo ~/aws/install
+</code></pre><p>The install script can also be used to update an existing version of the AWS CLI version 2 (but not AWS CLI version 1)</p><pre><code class="shell">sudo ~/aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
+</code></pre><h2 id="configure-aws-cli">Configure AWS CLI</h2><p>Use AWS CLI to create a configuration, using its wizard</p><pre><code class="shell">aws configure
+</code></pre><p>Enter the access key and access key secret from the IAM account when prompted</p><p>Enter the default region, e.g. eu-west-1 for Ireland</p><p>The wizard creates two files</p><ul><li><code>~/.aws/config</code> containing the <code>default</code> profile</li><li><code>~/.aws/credentials</code> containing the AWS access key and secret (this is a plain text file, so not secure if someone hacks into your computer)</li></ul><blockquote><p>An aws_session_token is not required, even though the AWS documentation mentions it repeatedly (but neglects to tell you how to create it)</p></blockquote><h2 id="install-clojure">Install Clojure</h2><p><a href="https://practical.li/clojure/install/">Practicalli guide to install Clojure CLI</a>, Java and Practicalli Clojure CLI Config for a wide range of community tools.</p><blockquote><p>Leiningen should also work, although this tool was not tested</p></blockquote><h2 id="cognitect-labs-aws-apis">Cognitect Labs AWS API's</h2><p>Now for the easy part :)</p><p><a href="https://practical.li/clojure/clojure-cli/projects/">Create a new Clojure project</a>, e.g. using the <code>:project/create</code> from Practicalli Clojure CLI</p><pre><code class="shell">clojure -T:project/create :template app :name practicalli/bucket-of-data
+</code></pre><p>Edit the <code>deps.edn</code> file and add the Cognitect Labs AWS API, Endpoints and S3 libraries</p><pre><code class="clojure">  com.cognitect.aws/api {:mvn/version "0.8.666"}
+  com.cognitect.aws/endpoints {:mvn/version "1.1.12.456"}
+  com.cognitect.aws/s3 {:mvn/version "847.2.1365.0"}
+</code></pre><blockquote><p><a href="https://github.com/cognitect-labs/aws-api/blob/main/latest-releases.edn">latest-release.edn</a> listed all the libraries and their current version</p></blockquote><p>Start repl the repl, e.g. using the <a href="https://practical.li/clojure/clojure-cli/repl-reloaded/">Practicalli REPL Reloaded workflow</a> or from an editor</p><pre><code class="shell">clojure -M:repl/reloaded
+</code></pre><p>Open <code>src/practicalli/bucket_of_data.clj</code> file in a Clojure aware editor &amp; connect to the REPL process (if the editor was not used to start the REPL process)</p><p>Create a rich comment and start to experiment with the Cognitect Labs AWS API library.</p><p>Example creating an S3 bucket, adding a file and reading the contents of a file.</p><p>Require the main library</p><pre><code class="clojure">(require '[cognitect.aws.client.api :as aws])
+</code></pre><p>Define a client for the AWS S3 service</p><pre><code class="clojure">(def data-bucket (aws/client {:api :s3}))
+</code></pre><p>Validate requests to the S3 service to report incorrect arguments (especially useful when starting out with the library).  Underlying this is a Clojure specification derived from the AWS specifications.</p><pre><code class="clojure">(aws/validate-requests data-bucket true)
+</code></pre><p>Credentials are required for this request, so its a useful test to ensure the AWS CLI is configured correctly.</p><pre><code class="clojure">(aws/invoke data-bucket {:op :ListBuckets})
+</code></pre><blockquote><p>A REPL restart (stop/start) is required if the AWS environment variables are changed, otherwise the updated values in those environment variables will not be used.</p></blockquote><p>As Cognitect Labs AWS API has a complete specification for each service, all the available operations for a specific service can be listed (even if the credentials are not working)</p><p>List the S3 Service operations.  Note, this returns a big data structure, so I find it useful to look at it in a data inspector, e.g. Portal, Cider Inspector or Morse</p><pre><code class="clojure">(aws/ops data-bucket)
+</code></pre><p>Once the name of the operation is know, view the documentation to see how it is used.</p><pre><code class="clojure">(aws/doc data-bucket :CreateBucket)
+</code></pre><p><img src="https://github.com/practicalli/graphic-design/blob/live/cloud-services/aws/clojure-aws-api-s3-operations-create-bucket.png?raw=true" alt="Clojure Cognitect Labs AWS API - navigate AWS S3 Bucket operations in Portal - create bucket" /></p><blockquote><p>The Practicalli REPL Reloaded workflow launches Portal at startup and all evaluations are sent to the Portal UI, so its easy to navigate the large list of operations for an AWS service.</p></blockquote><h2 id="sso-account-approach">SSO Account approach</h2><p>IAM Identity Center is the recommended approach for personal and commercial access management for engineers and command line access.</p><p>IAM Identity Center can be used to define users and groups for single sign-on, or connected to an external identity provider, e.g. Okta, Google Workspace, Active Directory, etc.</p><p>The IAM Identity Center approach will be covered in a future article.</p><h2 id="summary">Summary</h2><p>This is just the start of using AWS from Clojure and almost all the work was to simply use AWS itself.</p><p>The recommended approach is to use the AWS IAM Identity Center as a Single Sign-On (SSO) service.  The IAM Identity Center can manage users and accounts in its own directory, useful for personal AWS accounts (and probably brand new startups too).</p><p>An AWS Organisation is required to enable IAM Identity Center, it can take up to 24 hours for AWS to create an organisation if one does not already exist for the AWS account.</p><p>There are lots of services to explore on AWS and with a working account and credentials and the excellent Cognitect Labs AWS API library it should be relatively straight forward (fingers crossed).</p><p>Please to keep a considered eye on how much of AWS you are using.  Even though a free plan was used, it can be quite easy to leave things running and exceed quotas.  Its not clear as yet if AWS will stop the service or simply send a bill.  Taking a look at the quotas allowed for a service is a valuable step to ensure you can remain within the free plan.</p><p>Thank you</p><p><a href="https://github.com/practicalli">practicalli GitHub profile</a> I <a href="https://twitter.com/practcial_li">@practical_li</a></p>
+</div>
+
+<div id="post-tags">
+    <b>Tags: </b>
+    
+    <a href="/blog/tags/clojure/">clojure</a>
+    
+    <a href="/blog/tags/aws/">aws</a>
+    
+    <a href="/blog/tags/cognitect-labs/">cognitect-labs</a>
+    
+</div>
+
+
+    <div id="prev-next">
+        
+        
+        <a class="right" href="/blog/posts/docker-a-simple-workflow-for-clojure/">Docker: a simple workflow for Clojure &raquo;</a>
+        
+    </div>
+
+    
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_config = function () {
+            this.page.url = "http://practical.li/blog/posts/access-aws-with-clojure-from-scratch/";
+            this.page.identifier = "Accessing AWS with Clojure from scratch - simple approach";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//practicalli-blog.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    
+
+
+</div>
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div id="sidebar">
+                <h3>Links</h3>
+                <ul id="links">
+                    <li><a href="http://practical.li/">Practicalli Home</a></li>
+                    <li><a href="http://youtube.com/practicalli">YouTube channel</a></li>
+                    <li><a href="https://github.com/practicalli/blog-content/projects/1">Feeback / Issues</a></li>
+                    
+                    <li><a href="/blog/pages/contributing/">Contributing</a></li>
+                    
+                </ul>
+                
+                <div id="recent">
+                    <h3>Recent Posts</h3>
+                    <ul>
+                        
+                        <li><a href="/blog/posts/access-aws-with-clojure-from-scratch/">Accessing AWS with Clojure from scratch - simple approach</a></li>
+                        
+                        <li><a href="/blog/posts/docker-a-simple-workflow-for-clojure/">Docker: a simple workflow for Clojure</a></li>
+                        
+                        <li><a href="/blog/posts/docker-desktop-on-ubuntu-linux/">Docker Desktop on Ubuntu Linux</a></li>
+                        
+                        <li><a href="/blog/posts/docker-compose-for-clojure-development/">Docker Compose for Clojure Development</a></li>
+                        
+                        <li><a href="/blog/posts/practicalli-plans-2023/">Practicalli plans for 2023</a></li>
+                        
+                        <li><a href="/blog/posts/create-deps-new-template-for-clojure-cli-projects/">Create deps-new templates for Clojure CLI projects</a></li>
+                        
+                        <li><a href="/blog/posts/build-emacs-from-source-on-ubuntu-linux/">Build Emacs from source on Ubuntu Linux</a></li>
+                        
+                        <li><a href="/blog/posts/london-clojurians-community-a-brief-history/">London Clojurians Community - a relatively brief history</a></li>
+                        
+                        <li><a href="/blog/posts/build-and-run-clojure-with-multistage-dockerfile/">Build and run Clojure with Multi-stage Dockerfile</a></li>
+                        
+                    </ul>
+                </div>
+                
+                
+                <div id="tags">
+                    <h3>Tags</h3>
+                    <ul>
+                        
+                        <li><a href="/blog/tags/json/">json</a></li>
+                        
+                        <li><a href="/blog/tags/ring/">ring</a></li>
+                        
+                        <li><a href="/blog/tags/very%20fetch/">very fetch</a></li>
+                        
+                        <li><a href="/blog/tags/ubuntu/">ubuntu</a></li>
+                        
+                        <li><a href="/blog/tags/lsp/">lsp</a></li>
+                        
+                        <li><a href="/blog/tags/cryogen/">cryogen</a></li>
+                        
+                        <li><a href="/blog/tags/practicalli/">practicalli</a></li>
+                        
+                        <li><a href="/blog/tags/makefile/">makefile</a></li>
+                        
+                        <li><a href="/blog/tags/neovim/">neovim</a></li>
+                        
+                        <li><a href="/blog/tags/aliases/">aliases</a></li>
+                        
+                        <li><a href="/blog/tags/challenges/">challenges</a></li>
+                        
+                        <li><a href="/blog/tags/github/">github</a></li>
+                        
+                        <li><a href="/blog/tags/clojure/">clojure</a></li>
+                        
+                        <li><a href="/blog/tags/httpkit/">httpkit</a></li>
+                        
+                        <li><a href="/blog/tags/aws/">aws</a></li>
+                        
+                        <li><a href="/blog/tags/webapps/">webapps</a></li>
+                        
+                        <li><a href="/blog/tags/clojure-cli/">clojure-cli</a></li>
+                        
+                        <li><a href="/blog/tags/pull-requests/">pull-requests</a></li>
+                        
+                        <li><a href="/blog/tags/editors/">editors</a></li>
+                        
+                        <li><a href="/blog/tags/java/">java</a></li>
+                        
+                        <li><a href="/blog/tags/tools-deps/">tools-deps</a></li>
+                        
+                        <li><a href="/blog/tags/hardware/">hardware</a></li>
+                        
+                        <li><a href="/blog/tags/make/">make</a></li>
+                        
+                        <li><a href="/blog/tags/cider/">cider</a></li>
+                        
+                        <li><a href="/blog/tags/emacs/">emacs</a></li>
+                        
+                        <li><a href="/blog/tags/clj-http/">clj-http</a></li>
+                        
+                        <li><a href="/blog/tags/calva/">calva</a></li>
+                        
+                        <li><a href="/blog/tags/snippets/">snippets</a></li>
+                        
+                        <li><a href="/blog/tags/clojure-lsp/">clojure-lsp</a></li>
+                        
+                        <li><a href="/blog/tags/thinkpad/">thinkpad</a></li>
+                        
+                        <li><a href="/blog/tags/events/">events</a></li>
+                        
+                        <li><a href="/blog/tags/community/">community</a></li>
+                        
+                        <li><a href="/blog/tags/advent-of-parens/">advent-of-parens</a></li>
+                        
+                        <li><a href="/blog/tags/spacemacs/">spacemacs</a></li>
+                        
+                        <li><a href="/blog/tags/docker/">docker</a></li>
+                        
+                        <li><a href="/blog/tags/cognitect-labs/">cognitect-labs</a></li>
+                        
+                        <li><a href="/blog/tags/help/">help</a></li>
+                        
+                        <li><a href="/blog/tags/transducers/">transducers</a></li>
+                        
+                        <li><a href="/blog/tags/lenovo/">lenovo</a></li>
+                        
+                        <li><a href="/blog/tags/reduce/">reduce</a></li>
+                        
+                        <li><a href="/blog/tags/compojure/">compojure</a></li>
+                        
+                        <li><a href="/blog/tags/klipse/">klipse</a></li>
+                        
+                        <li><a href="/blog/tags/figwheel-main/">figwheel-main</a></li>
+                        
+                        <li><a href="/blog/tags/clojure-core/">clojure-core</a></li>
+                        
+                        <li><a href="/blog/tags/web-scraper/">web-scraper</a></li>
+                        
+                        <li><a href="/blog/tags/blogging/">blogging</a></li>
+                        
+                        <li><a href="/blog/tags/conjure/">conjure</a></li>
+                        
+                        <li><a href="/blog/tags/github-actions/">github-actions</a></li>
+                        
+                        <li><a href="/blog/tags/apis/">apis</a></li>
+                        
+                        <li><a href="/blog/tags/jvm/">jvm</a></li>
+                        
+                        <li><a href="/blog/tags/static-sites/">static-sites</a></li>
+                        
+                        <li><a href="/blog/tags/re-clojure/">re-clojure</a></li>
+                        
+                        <li><a href="/blog/tags/packages/">packages</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <footer>
+      Copyright &copy; 2023 Practicalli
+      <p style="text-align: center;">Powered by <a href="http://cryogenweb.org">Cryogen</a></p>
+
+      <license id="license">
+        <div>
+          <p>This work is licensed under a <a href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution 4.0 ShareAlike License</a>, including custom images & stylesheets.</p>
+          <p>Permissions beyond the scope of this license may be available by contacting <a xmlns:cc="http://creativecommons.org/ns#" href="https://twitter.com/practical_li" rel="cc:morePermissions">@practical_li</a></p>
+          <br>
+          <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a>
+        </div>
+      </license>
+
+    </footer>
+</div>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="/blog/js/highlight.pack.js" type="application/javascript"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+</body>
+</html>

@@ -59,6 +59,23 @@
     
     <div class="post-header">
         <h2>
+            <a href="/blog/posts/access-aws-with-clojure-from-scratch/">Accessing AWS with Clojure from scratch - simple approach</a>
+        </h2>
+        <div id="post-meta">
+            
+            <div class="date">May 17, 2023</div>
+        </div>
+        <!-- conditional topic logo displayed if :topic has value in a post -->
+        
+        <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/aws-logo-name.png" alt="aws logo" />
+        
+    </div>
+    <p><a href="https://github.com/cognitect-labs/aws-api">Cognitect Labs AWS API</a> is an excellent data driven Clojure library for interacting with AWS from code.  Essentially a client for an AWS Service is created which operations are invoked.  The project includes working code examples (<em>once a working AWS account is configured</em>).</p><p>The hardest is configuring suitable AWS accounts, programmatic access and service permissions, especially when new to AWS.  This article starts with nothing and steps through the simplest and quickest AWS account and permission setup, using the <a href="https://aws.amazon.com/free/">"AWS Free Tier"</a>.  Note: every service has quota limits and some services are only free for a period of time (free trials &amp; 12 months free).</p><p>The approach outlined is not intended for commercial work, only the bare essentials to start exploring what is possible with the Cognitect Labs library.  (Or you could try out <a href="https://localstack.cloud/">LocalStack if you have docker installed locally</a>).</p>
+    <a href="/blog/posts/access-aws-with-clojure-from-scratch/">Continue reading &#8594;</a>
+    <hr>
+    
+    <div class="post-header">
+        <h2>
             <a href="/blog/posts/docker-a-simple-workflow-for-clojure/">Docker: a simple workflow for Clojure</a>
         </h2>
         <div id="post-meta">
@@ -125,23 +142,6 @@
     <a href="/blog/posts/practicalli-plans-2023/">Continue reading &#8594;</a>
     <hr>
     
-    <div class="post-header">
-        <h2>
-            <a href="/blog/posts/create-deps-new-template-for-clojure-cli-projects/">Create deps-new templates for Clojure CLI projects</a>
-        </h2>
-        <div id="post-meta">
-            
-            <div class="date">March 30, 2023</div>
-        </div>
-        <!-- conditional topic logo displayed if :topic has value in a post -->
-        
-        <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/clojure-cli-logo-name.png" alt="clojure-cli logo" />
-        
-    </div>
-    <p>Templates are great way to learn how to assemble Clojure libraries into a working project and can save considerable time when creating new projects by providing common configuration, development tools, dependencies and code used by the engineering team.</p><p><a href="https://github.com/seancorfield/deps-new">seancorfield/deps-new</a> provides a simple to understand approach to defining templates. Declarative rules express how file templates are copied to create a new project.  Substitution values are passed to <code>{{unique-key}}</code> placeholders in template files creating a specific project each time.  Programmatic transformation is also supported for significant customisation, e.g. adding options to templates.</p><p><a href="https://github.com/practicalli/project-templates">practicalli/project-templates</a> is a new project to provide comprehensive templates to support production level workflows, including Dockerfile configuration, GitHub continuous integration workflows, etc . Read on to see how the first template was built and learn tips to building your own templates.</p>
-    <a href="/blog/posts/create-deps-new-template-for-clojure-cli-projects/">Continue reading &#8594;</a>
-    <hr>
-    
 
     <div id="prev-next">
         
@@ -170,6 +170,8 @@
                     <h3>Recent Posts</h3>
                     <ul>
                         
+                        <li><a href="/blog/posts/access-aws-with-clojure-from-scratch/">Accessing AWS with Clojure from scratch - simple approach</a></li>
+                        
                         <li><a href="/blog/posts/docker-a-simple-workflow-for-clojure/">Docker: a simple workflow for Clojure</a></li>
                         
                         <li><a href="/blog/posts/docker-desktop-on-ubuntu-linux/">Docker Desktop on Ubuntu Linux</a></li>
@@ -185,8 +187,6 @@
                         <li><a href="/blog/posts/london-clojurians-community-a-brief-history/">London Clojurians Community - a relatively brief history</a></li>
                         
                         <li><a href="/blog/posts/build-and-run-clojure-with-multistage-dockerfile/">Build and run Clojure with Multi-stage Dockerfile</a></li>
-                        
-                        <li><a href="/blog/posts/make-clojure-tasks-simple-and-consistent/">Make Clojure development tasks simple and consistent</a></li>
                         
                     </ul>
                 </div>
@@ -223,6 +223,8 @@
                         <li><a href="/blog/tags/clojure/">clojure</a></li>
                         
                         <li><a href="/blog/tags/httpkit/">httpkit</a></li>
+                        
+                        <li><a href="/blog/tags/aws/">aws</a></li>
                         
                         <li><a href="/blog/tags/webapps/">webapps</a></li>
                         
@@ -263,6 +265,8 @@
                         <li><a href="/blog/tags/spacemacs/">spacemacs</a></li>
                         
                         <li><a href="/blog/tags/docker/">docker</a></li>
+                        
+                        <li><a href="/blog/tags/cognitect-labs/">cognitect-labs</a></li>
                         
                         <li><a href="/blog/tags/help/">help</a></li>
                         
