@@ -17,15 +17,15 @@ Building Emacs from source is a relatively straight forward way to try out some 
 Add Ubuntu packages for building Emacs
 
 ```shell
-sudo apt build-dep emacs && /
+sudo apt build-dep emacs && \
 sudo apt install libgccjit0 libgccjit-10-dev libjansson4 libjansson-dev gnutls-bin
 ```
 
 [Clone Emacs 29 source code](https://git.savannah.gnu.org/cgit/emacs.git), configure and build emacs and then install (in /usr/local/bin/)
 
 ```shell
-git clone --branch emacs-29 git://git.savannah.gnu.org/emacs.git emacs-29 && cd emacs-29 && /
-export CC=/usr/bin/gcc-10  && export CXX=/usr/bin/gcc-10 && ./autogen.sh && ./configure --with-native-compilation=aot && /
+git clone --branch emacs-29 git://git.savannah.gnu.org/emacs.git emacs-29 && cd emacs-29 && \
+export CC=/usr/bin/gcc-10  && export CXX=/usr/bin/gcc-10 && ./autogen.sh && ./configure --with-native-compilation=aot && \
 make -j$(proc)  && /
 sudo make install
 ```
@@ -335,9 +335,13 @@ Optional Packages:
                           (use with caution on other systems).
 ```
 
-
 ## References
 
 * [Emacs 28.1 whats new](https://www.masteringemacs.org/article/whats-new-in-emacs-28-1) - a very detailed description of new features in Emacs 28.1
 * [Emacs Wiki - Building Emacs](https://www.emacswiki.org/emacs/BuildingEmacs) - base instructions for building Emacs
 * [Ubuntu Emacs LISP team PPA](https://launchpad.net/~ubuntu-elisp/+archive/ubuntu/ppa) - nightly builds from the latest Emacs commits
+
+Thank you
+
+[practicalli GitHub profile](https://github.com/practicalli) I [@practical_li](https://twitter.com/practcial_li)
+
