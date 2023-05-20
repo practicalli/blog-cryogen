@@ -1,4 +1,4 @@
-{:title "Practicalli plans for 2023"
+{:title "Practicalli future plans"
 :layout :post
 :date "2023-04-24"
 :topic "practicalli"
@@ -7,9 +7,11 @@
 
 The plan of work for Practicalli during 2023 focuses on improving the developer experience for Clojure curious and experienced developers alike. A slow start to the year has changed into very good pace, especially after updating the tooling and theme for all the Practicalli books.  My health is much improved and motivation is very high (although still working on my fitness).
 
-I've applied to [Clojurists Together](https://www.clojuriststogether.org/) for funding so I can spend the next 3 months creating more content and updating some of the older content that needs a refresh.  I do get some funding from Cognitect/Nubank and a few generous people which helps support maintain some of the work.
-
 New work will follow the [Practicalli REPL Reloaded workflow](https://practical.li/clojure/clojure-cli/repl-reloaded/) and will include videos showing how I work, based on my commercial experiences with Clojure. I am also keen to start a regular live broadcast of Hacking Clojure, these will be live and unscripted, allowing for an experimental experience and an opportunity to understand what information would be useful to create in the more polished Practicalli books and videos.
+
+UPDATE: Practicalli was not selected for [Clojurists Together](https://www.clojuriststogether.org/) for funding this time around, so the planned work will take more time as I look for commercial work. 
+
+Although I get some funding from Cognitect/Nubank and a few generous people this only covers the regular maintaintenance and mintor updates to the work. Most of the effort is (and mostly has been) on my own time. This does mean that I will be working on what is most useful for myself and any commercial work I obtain.  Thank you to everyone who has provided financial and emotional support.
 
 <!-- more -->
 
@@ -72,13 +74,15 @@ Provide updated guides for ClojureScript development, especially aimed at those 
 * create deps-new project templates to enhance developer experience
 
 
-## Neovim 9
+## Neovim Configuration
 
-Once Neovim 9 has been released I will refactor the [fennel based practicalli/neovim-config-redux project](https://github.com/practicalli/neovim-config-redux) to improve the general used of Neovim.  The config already provides an excellent Clojure experience thanks to Conjure, especially when adding Portal into the mix
+Neovim with Conjure has been an excellent development tool for Clojure.  I initially created the [fennel based practicalli/neovim-config-redux configuration](https://github.com/practicalli/neovim-config-redux) to provide a feature-rich workflow and tools, all via a mnemonic key-driven menu.  The config already provides a good Clojure experience thanks to Conjure, especially when adding Portal into the mix with the Practicalli REPL Reloaded workflow. There is much scope for improvement though, especially around the developer experience. 
 
-The plan is to add Lazy package manager, Mason for LSP plugins and other packages that will provide the tools for a feature rich experience (comparable with [Spacemacs](https://practical.li/spacemacs/)) whilst still having a minimal footprint, similar to [AstroNvim](https://astronvim.com/) and other community distributions written in Lua.
+Telescope and its extensions already provide an excellent experience.  Adding the Lazy package manager and Mason for LSP plugins will provide an excellent UI and greatly simplify interacting with packages and parsers. 
 
-Neovim 9 provides [a simple mechanism to try out different configurations](https://github.com/practicalli/neovim-config/issues/2), so it is much easier to discover features from other configurations.
+I would like to create an experience with Neovim that is comparable to [Spacemacs](https://practical.li/spacemacs/)) whilst still having a minimal footprint, similar to [AstroNvim](https://astronvim.com/) although preferably still created using Fennel.
+
+Neovim 0.9 onward provides [a simple mechanism to try out different configurations](https://github.com/practicalli/neovim-config/issues/2), so it is much easier to discover features from other configurations.
 
 
 ## Summary
@@ -87,11 +91,10 @@ I am excited about adding more content to Practicalli this year and continue to 
 
 There is a lot of work planned and [more ideas in the Practicalli Todo board](https://github.com/orgs/practicalli/projects/2), although I feel like I'm making significant progress and [my GitHub stats](https://github.com/practicalli-john) are also looking very good too.
 
-Should I not get the Clojurists Together funding I'll still be working on Practicalli, although the work will take longer in order to make time for some commercial work.
+Without Clojurists Together funding I'll still be working on Practicalli, although the work will take far longer in order to make time for some commercial work.
 
 Feedback and ideas are welcome via the #practicalli channel of the Clojurians Slack Community or via issues on the [Practicalli Todo board](https://github.com/orgs/practicalli/projects/2) (and issues on the associated repositories)
 
 Many thanks to everyone who has supported the work in the past and those that continue to sponsor this ever growing project.
-
 
 [practicalli GitHub profile](https://github.com/practicalli) I [@practical_li](https://twitter.com/practical_li)
