@@ -70,15 +70,15 @@
 </div>
 <div>
     
-    <p>Emacs 29 will be the next stable release later in 2023 adding major features: Eglot LSP client, Tree-Sitter language parser and <code>package.el</code> package install from Git repositories. more features to enhance and improved every day use of Emacs.</p><p>Building Emacs from source is a relatively straight forward way to try out some or all of these features in advance, especially useful for those maintaining or developing new tools on top of Emacs.</p><blockquote><p><a href="https://blog.phundrak.com/emacs-29-what-can-we-expect/">Emacs 29 - what to expect</a> - a brief summary of the major features</p></blockquote><!-- more --><h2 id="building-steps-for-the-impatient">Building steps for the impatient</h2><p>Add Ubuntu packages for building Emacs</p><pre><code class="shell">sudo apt build-dep emacs &amp;&amp; \
-sudo apt install libgccjit0 libgccjit-10-dev libjansson4 libjansson-dev gnutls-bin
+    <p>Emacs 29 will be the next stable release later in 2023 adding major features: Eglot LSP client, Tree-Sitter language parser and <code>package.el</code> package install from Git repositories. more features to enhance and improved every day use of Emacs.</p><p>Building from source is a convenient way to try Emacs features in advance, especially useful for those maintaining or developing new tools on top of Emacs.</p><blockquote><p><a href="https://blog.phundrak.com/emacs-29-what-can-we-expect/">Emacs 29 - what to expect</a> - a brief summary of the major features</p></blockquote><!-- more --><h2 id="building-steps-for-the-impatient">Building steps for the impatient</h2><p>Add Ubuntu packages for building Emacs</p><pre><code class="shell">sudo apt build-dep emacs &amp;&amp; \
+sudo apt install libgccjit0 libgccjit-10-dev libjansson4 libjansson-dev gnutls-bin libtree-sitter-dev
 </code></pre><p><a href="https://git.savannah.gnu.org/cgit/emacs.git">Clone Emacs 29 source code</a>, configure and build emacs and then install (in /usr/local/bin/)</p><pre><code class="shell">git clone --branch emacs-29 git://git.savannah.gnu.org/emacs.git emacs-29 &amp;&amp; cd emacs-29 &amp;&amp; \
 export CC=/usr/bin/gcc-10  &amp;&amp; export CXX=/usr/bin/gcc-10 &amp;&amp; ./autogen.sh &amp;&amp; ./configure --with-native-compilation=aot &amp;&amp; \
 make -j$(proc)  &amp;&amp; /
 sudo make install
 </code></pre><blockquote><p>skip the branch for the very latest commits to Emacs which will effectively become Emacs 30 some time in the next year or so</p></blockquote><p>Read the rest of the article for a detailed description of this workflow</p><h2 id="prepare-ubuntu">Prepare Ubuntu</h2><p>Open <code>Software &amp; Updates</code> and ensure the Source Code source is enabled and reload the package list (or run <code>sudo apt update</code> in a terminal after adding Source Code)</p><p><img src="https://raw.githubusercontent.com/practicalli/graphic-design/live/ubuntu/screenshots/ubuntu-sofware-updates-download-from-source-code.png" alt="Ubuntu Software &amp; Updates - Download from Source Code" /></p><p>Ask Ubuntu to install the packages required to build Emacs (there will be quite a few packages if this is the first software built with GCC on the operating system)</p><pre><code class="shell">sudo apt build-dep -y emacs
-</code></pre><blockquote><p>The previous approach was to use <code>sudo apt-get install build-essential gcc git-core</code>. Using build-deps manages the set of packages required as Emacs evolves.</p></blockquote><p>Install some additional libraries to support the newest features of Emacs, native compilation of Emacs packages (<code>libgccjit</code>) and fast JSON processing (<code>libjansson</code>).  These really boost performance, so are important to add.</p><pre><code class="shell">sudo apt install libgccjit0 libgccjit-10-dev libjansson4 libjansson-dev
-</code></pre><blockquote><p>On Ubuntu 20.04 <code>sudo apt-get install gnutls-bin</code>  removes a potential issue from an older certificates library</p></blockquote><h2 id="preparing-emacs-source-code">Preparing Emacs source code</h2><p>Use a Git client to clone the latest code from <a href="https://git.savannah.gnu.org/cgit/emacs.git">the Emacs repository</a>, or open a terminal and use the Git command line client</p><pre><code class="shell">git clone git://git.savannah.gnu.org/emacs.git
+</code></pre><blockquote><p>The previous approach was to use <code>sudo apt-get install build-essential gcc git-core</code>. Using build-deps manages the set of packages required as Emacs evolves.</p></blockquote><p>Install some additional libraries to support the newest features of Emacs, native compilation of Emacs packages (<code>libgccjit</code>), fast JSON processing (<code>libjansson</code>) and tree-sitter support.  These really boost performance, so are important to add.</p><pre><code class="shell">sudo apt install libgccjit0 libgccjit-10-dev libjansson4 libjansson-dev libtree-sitter-dev
+</code></pre><blockquote><p>On Ubuntu 20.04 <code>sudo apt-get install gnutls-bin</code> removes a potential issue from an older certificates library</p></blockquote><h2 id="preparing-emacs-source-code">Preparing Emacs source code</h2><p>Use a Git client to clone the latest code from <a href="https://git.savannah.gnu.org/cgit/emacs.git">the Emacs repository</a>, or open a terminal and use the Git command line client</p><pre><code class="shell">git clone git://git.savannah.gnu.org/emacs.git
 </code></pre><blockquote><p>To build version of Emacs that is already release, <strong><a href="https://www.gnu.org/software/emacs/download.html">Download source from a nearby GNU mirror</a></strong>, either tar.gz or tar.xz</p></blockquote><p>Change into the cloned directory</p><pre><code class="shell">cd emacs
 </code></pre><p>Set <code>CC</code> and <code>CXX</code> environment variables to inform the Emacs configuration script as to the location of gcc-10, otherwise it fails to find libgccjit</p><pre><code class="shell">export CC=/usr/bin/gcc-10 &amp;&amp; export CXX=/usr/bin/gcc-10
 </code></pre><blockquote><p>If CC and CXX environment variables are not set, the configure script will not find important libraries and report errors such as: <code>configure: error: ELisp native compiler was requested, but libgccjit was not found.</code></p></blockquote><p>Run the autogen script to create a configure script specific to your operating system.</p><pre><code class="shell">./autogen.sh
@@ -95,23 +95,25 @@ A noticeable exception is native compilation, as its a relatively new feature an
   What compiler should emacs be built with?               /usr/bin/gcc-10 -g3 -O2
   Should Emacs use the GNU version of malloc?             no
     (The GNU allocators don't work with this system configuration.)
-  Should Emacs use a relocating allocator for buffers?    no   (use operating system allocator)
-  Should Emacs use mmap(2) for buffer allocation?         no  (use operating system mmap)
+  Should Emacs use a relocating allocator for buffers?    no
+  Should Emacs use mmap(2) for buffer allocation?         no
   What window system should Emacs use?                    x11
   What toolkit should Emacs use?                          GTK3
   Where do we find X Windows header files?                Standard dirs
   Where do we find X Windows libraries?                   Standard dirs
-  Does Emacs use -lXaw3d?                                 no  (superseded by gtk)
+  Does Emacs use -lXaw3d?                                 no
   Does Emacs use -lXpm?                                   yes
   Does Emacs use -ljpeg?                                  yes
   Does Emacs use -ltiff?                                  yes
   Does Emacs use a gif library?                           yes -lgif
   Does Emacs use a png library?                           yes -lpng16 -lz
   Does Emacs use -lrsvg-2?                                yes
+  Does Emacs use -lwebp?                                  no
+  Does Emacs use -lsqlite3?                               yes
   Does Emacs use cairo?                                   yes
   Does Emacs use -llcms2?                                 yes
-  Does Emacs use imagemagick?                             no  (deprecated Emacs 27.1 - security issues)
-  Does Emacs use native APIs for images?                  no  (only for MS-Windows)
+  Does Emacs use imagemagick?                             no
+  Does Emacs use native APIs for images?                  no
   Does Emacs support sound?                               yes
   Does Emacs use -lgpm?                                   yes
   Does Emacs use -ldbus?                                  yes
@@ -129,16 +131,19 @@ A noticeable exception is native compilation, as its a relatively new feature an
   Does Emacs use -lxft?                                   no
   Does Emacs use -lsystemd?                               yes
   Does Emacs use -ljansson?                               yes
+  Does Emacs use -ltree-sitter?                           yes
   Does Emacs use the GMP library?                         yes
   Does Emacs directly use zlib?                           yes
   Does Emacs have dynamic modules support?                yes
   Does Emacs use toolkit scroll bars?                     yes
-  Does Emacs support Xwidgets?                            no  (deprecated)
+  Does Emacs support Xwidgets?                            no
   Does Emacs have threading support in lisp?              yes
   Does Emacs support the portable dumper?                 yes
   Does Emacs support legacy unexec dumping?               no
   Which dumping strategy does Emacs use?                  pdumper
   Does Emacs have native lisp compiler?                   yes
+  Does Emacs use version 2 of the X Input Extension?      yes
+  Does Emacs generate a smaller-size Japanese dictionary? no
 </code></pre><h2 id="emacs-29-configuration-options">Emacs 29 configuration options</h2><p>Run configure with <code>--help</code> option to list the available compilation options.  Apart from <code>--with-native-compilation=aot</code> defaults are used when Practicalli compiles Emacs.</p><pre><code class="shell">Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
@@ -314,9 +319,9 @@ A noticeable exception is native compilation, as its a relatively new feature an
                         
                         <li><a href="/blog/posts/access-aws-with-clojure-from-scratch/">Accessing AWS with Clojure from scratch - simple approach</a></li>
                         
-                        <li><a href="/blog/posts/docker-a-simple-workflow-for-clojure/">Docker: a simple workflow for Clojure</a></li>
-                        
                         <li><a href="/blog/posts/docker-desktop-on-ubuntu-linux/">Docker Desktop on Ubuntu Linux</a></li>
+                        
+                        <li><a href="/blog/posts/docker-a-simple-workflow-for-clojure/">Docker: a simple workflow for Clojure</a></li>
                         
                         <li><a href="/blog/posts/docker-compose-for-clojure-development/">Docker Compose for Clojure Development</a></li>
                         
