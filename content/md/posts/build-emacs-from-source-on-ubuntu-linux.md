@@ -6,7 +6,7 @@
 
 Emacs 29 will be the next stable release later in 2023 adding major features: Eglot LSP client, Tree-Sitter language parser and `package.el` package install from Git repositories. more features to enhance and improved every day use of Emacs.
 
-Building Emacs from source is a relatively straight forward way to try out some or all of these features in advance, especially useful for those maintaining or developing new tools on top of Emacs.
+Building from source is a convenient way to try Emacs features in advance, especially useful for those maintaining or developing new tools on top of Emacs.
 
 > [Emacs 29 - what to expect](https://blog.phundrak.com/emacs-29-what-can-we-expect/) - a brief summary of the major features
 
@@ -18,7 +18,7 @@ Add Ubuntu packages for building Emacs
 
 ```shell
 sudo apt build-dep emacs && \
-sudo apt install libgccjit0 libgccjit-10-dev libjansson4 libjansson-dev gnutls-bin
+sudo apt install libgccjit0 libgccjit-10-dev libjansson4 libjansson-dev gnutls-bin libtree-sitter-dev
 ```
 
 [Clone Emacs 29 source code](https://git.savannah.gnu.org/cgit/emacs.git), configure and build emacs and then install (in /usr/local/bin/)
@@ -49,13 +49,13 @@ sudo apt build-dep -y emacs
 
 > The previous approach was to use `sudo apt-get install build-essential gcc git-core`. Using build-deps manages the set of packages required as Emacs evolves.
 
-Install some additional libraries to support the newest features of Emacs, native compilation of Emacs packages (`libgccjit`) and fast JSON processing (`libjansson`).  These really boost performance, so are important to add.
+Install some additional libraries to support the newest features of Emacs, native compilation of Emacs packages (`libgccjit`), fast JSON processing (`libjansson`) and tree-sitter support.  These really boost performance, so are important to add.
 
 ```shell
-sudo apt install libgccjit0 libgccjit-10-dev libjansson4 libjansson-dev
+sudo apt install libgccjit0 libgccjit-10-dev libjansson4 libjansson-dev libtree-sitter-dev
 ```
 
-> On Ubuntu 20.04 `sudo apt-get install gnutls-bin`  removes a potential issue from an older certificates library
+> On Ubuntu 20.04 `sudo apt-get install gnutls-bin` removes a potential issue from an older certificates library
 
 
 ## Preparing Emacs source code
@@ -170,23 +170,25 @@ Configured for 'x86_64-pc-linux-gnu'.
   What compiler should emacs be built with?               /usr/bin/gcc-10 -g3 -O2
   Should Emacs use the GNU version of malloc?             no
     (The GNU allocators don't work with this system configuration.)
-  Should Emacs use a relocating allocator for buffers?    no   (use operating system allocator)
-  Should Emacs use mmap(2) for buffer allocation?         no  (use operating system mmap)
+  Should Emacs use a relocating allocator for buffers?    no
+  Should Emacs use mmap(2) for buffer allocation?         no
   What window system should Emacs use?                    x11
   What toolkit should Emacs use?                          GTK3
   Where do we find X Windows header files?                Standard dirs
   Where do we find X Windows libraries?                   Standard dirs
-  Does Emacs use -lXaw3d?                                 no  (superseded by gtk)
+  Does Emacs use -lXaw3d?                                 no
   Does Emacs use -lXpm?                                   yes
   Does Emacs use -ljpeg?                                  yes
   Does Emacs use -ltiff?                                  yes
   Does Emacs use a gif library?                           yes -lgif
   Does Emacs use a png library?                           yes -lpng16 -lz
   Does Emacs use -lrsvg-2?                                yes
+  Does Emacs use -lwebp?                                  no
+  Does Emacs use -lsqlite3?                               yes
   Does Emacs use cairo?                                   yes
   Does Emacs use -llcms2?                                 yes
-  Does Emacs use imagemagick?                             no  (deprecated Emacs 27.1 - security issues)
-  Does Emacs use native APIs for images?                  no  (only for MS-Windows)
+  Does Emacs use imagemagick?                             no
+  Does Emacs use native APIs for images?                  no
   Does Emacs support sound?                               yes
   Does Emacs use -lgpm?                                   yes
   Does Emacs use -ldbus?                                  yes
@@ -204,16 +206,19 @@ Configured for 'x86_64-pc-linux-gnu'.
   Does Emacs use -lxft?                                   no
   Does Emacs use -lsystemd?                               yes
   Does Emacs use -ljansson?                               yes
+  Does Emacs use -ltree-sitter?                           yes
   Does Emacs use the GMP library?                         yes
   Does Emacs directly use zlib?                           yes
   Does Emacs have dynamic modules support?                yes
   Does Emacs use toolkit scroll bars?                     yes
-  Does Emacs support Xwidgets?                            no  (deprecated)
+  Does Emacs support Xwidgets?                            no
   Does Emacs have threading support in lisp?              yes
   Does Emacs support the portable dumper?                 yes
   Does Emacs support legacy unexec dumping?               no
   Which dumping strategy does Emacs use?                  pdumper
   Does Emacs have native lisp compiler?                   yes
+  Does Emacs use version 2 of the X Input Extension?      yes
+  Does Emacs generate a smaller-size Japanese dictionary? no
 ```
 
 ## Emacs 29 configuration options
