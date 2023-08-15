@@ -59,6 +59,23 @@
     
     <div class="post-header">
         <h2>
+            <a href="/blog/posts/pin-emacs-package-to-manage-issues/">Pin Emacs packages to manage issues</a>
+        </h2>
+        <div id="post-meta">
+            
+            <div class="date">August 15, 2023</div>
+        </div>
+        <!-- conditional topic logo displayed if :topic has value in a post -->
+        
+        <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/spacemacs-logo-name.png" alt="spacemacs logo" />
+        
+    </div>
+    <p>Emacs provides a huge amount of features via packages. Community configurations like Spacmacs orchestrate packages so they work seemlessly together.  It is rare, but sometimes a package will have a breaking issue.</p><p><a href="https://melpa.org/#/">Melpa</a> provides (5,544) up-to-date packages  automatically built from each projects Git repository. Builds are defined by a recipe for each package.</p><p>A custom recipe can be used to control which version of a package is used with the Emacs configuration, to work around issues or changes to a package.</p>
+    <a href="/blog/posts/pin-emacs-package-to-manage-issues/">Continue reading &#8594;</a>
+    <hr>
+    
+    <div class="post-header">
+        <h2>
             <a href="/blog/posts/access-aws-with-clojure-from-scratch/">Accessing AWS with Clojure from scratch - simple approach</a>
         </h2>
         <div id="post-meta">
@@ -72,23 +89,6 @@
     </div>
     <p><a href="https://github.com/cognitect-labs/aws-api">Cognitect Labs AWS API</a> is an excellent data driven Clojure library for interacting with AWS from code.  Essentially a client for an AWS Service is created which operations are invoked.  The project includes working code examples (<em>once a working AWS account is configured</em>).</p><p>The hardest is configuring suitable AWS accounts, programmatic access and service permissions, especially when new to AWS.  This article starts with nothing and steps through the simplest and quickest AWS account and permission setup, using the <a href="https://aws.amazon.com/free/">"AWS Free Tier"</a>.  Note: every service has quota limits and some services are only free for a period of time (free trials &amp; 12 months free).</p><p>The approach outlined is not intended for commercial work, only the bare essentials to start exploring what is possible with the Cognitect Labs library.  (Or you could try out <a href="https://localstack.cloud/">LocalStack if you have docker installed locally</a>).</p>
     <a href="/blog/posts/access-aws-with-clojure-from-scratch/">Continue reading &#8594;</a>
-    <hr>
-    
-    <div class="post-header">
-        <h2>
-            <a href="/blog/posts/docker-desktop-on-ubuntu-linux/">Docker Desktop on Ubuntu Linux</a>
-        </h2>
-        <div id="post-meta">
-            
-            <div class="date">May 15, 2023</div>
-        </div>
-        <!-- conditional topic logo displayed if :topic has value in a post -->
-        
-        <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/docker-logo-name.png" alt="docker logo" />
-        
-    </div>
-    <p>Docker can support local development and provide an effective workflow for system integration before changes are pushed to a remote continuous integration service. Docker can be used to spin up local databases and persist data in a volume, helping keep a separation between applications and supporting test of schema changes, migrations and data loading.</p><p>Docker desktop simplifies the install and provides a desktop client to manage docker images, containers, volumes and the new dev environments.  <a href="https://hub.docker.com/search?q=&amp;type=extension">Extensions Marketplace for Docker Desktop</a> provides tooling to unify logging, manage local resources and many more</p><p>The Docker install instructions are more of a reference of information than a simple tutorial. Essential Docker Community Edition is installed via the Docker package archive and Docker Desktop is installed from a <a href="https://docs.docker.com/desktop/install/ubuntu/">manually downloaded DEB file</a>.</p>
-    <a href="/blog/posts/docker-desktop-on-ubuntu-linux/">Continue reading &#8594;</a>
     <hr>
     
     <div class="post-header">
@@ -110,6 +110,23 @@
     
     <div class="post-header">
         <h2>
+            <a href="/blog/posts/docker-desktop-on-ubuntu-linux/">Docker Desktop on Ubuntu Linux</a>
+        </h2>
+        <div id="post-meta">
+            
+            <div class="date">May 15, 2023</div>
+        </div>
+        <!-- conditional topic logo displayed if :topic has value in a post -->
+        
+        <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/docker-logo-name.png" alt="docker logo" />
+        
+    </div>
+    <p>Docker can support local development and provide an effective workflow for system integration before changes are pushed to a remote continuous integration service. Docker can be used to spin up local databases and persist data in a volume, helping keep a separation between applications and supporting test of schema changes, migrations and data loading.</p><p>Docker desktop simplifies the install and provides a desktop client to manage docker images, containers, volumes and the new dev environments.  <a href="https://hub.docker.com/search?q=&amp;type=extension">Extensions Marketplace for Docker Desktop</a> provides tooling to unify logging, manage local resources and many more</p><p>The Docker install instructions are more of a reference of information than a simple tutorial. Essential Docker Community Edition is installed via the Docker package archive and Docker Desktop is installed from a <a href="https://docs.docker.com/desktop/install/ubuntu/">manually downloaded DEB file</a>.</p>
+    <a href="/blog/posts/docker-desktop-on-ubuntu-linux/">Continue reading &#8594;</a>
+    <hr>
+    
+    <div class="post-header">
+        <h2>
             <a href="/blog/posts/docker-compose-for-clojure-development/">Docker Compose for Clojure Development</a>
         </h2>
         <div id="post-meta">
@@ -123,23 +140,6 @@
     </div>
     <p>Docker Compose provides a declarative configuration for orchestrating services locally, providing a simple way to spin up services to try them out or orchestrate a whole system from numerous dependent services.</p><p>Compose can build images for Clojure projects and conditionally run based on the health check of other supporting services, e.g. Postgres Database.</p><p>Now that Compose is part of docker, more features such as build on change are being added.</p>
     <a href="/blog/posts/docker-compose-for-clojure-development/">Continue reading &#8594;</a>
-    <hr>
-    
-    <div class="post-header">
-        <h2>
-            <a href="/blog/posts/practicalli-plans-2023/">Practicalli future plans</a>
-        </h2>
-        <div id="post-meta">
-            
-            <div class="date">April 24, 2023</div>
-        </div>
-        <!-- conditional topic logo displayed if :topic has value in a post -->
-        
-        <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/practicalli-logo-name.png" alt="practicalli logo" />
-        
-    </div>
-    <p>The plan of work for Practicalli during 2023 focuses on improving the developer experience for Clojure curious and experienced developers alike. A slow start to the year has changed into very good pace, especially after updating the tooling and theme for all the Practicalli books.  My health is much improved and motivation is very high (although still working on my fitness).</p><p>New work will follow the <a href="https://practical.li/clojure/clojure-cli/repl-reloaded/">Practicalli REPL Reloaded workflow</a> and will include videos showing how I work, based on my commercial experiences with Clojure. I am also keen to start a regular live broadcast of Hacking Clojure, these will be live and unscripted, allowing for an experimental experience and an opportunity to understand what information would be useful to create in the more polished Practicalli books and videos.</p><p>UPDATE: Practicalli was not selected for <a href="https://www.clojuriststogether.org/">Clojurists Together</a> for funding this time around, so the planned work will take more time as I look for commercial work.</p>
-    <a href="/blog/posts/practicalli-plans-2023/">Continue reading &#8594;</a>
     <hr>
     
 
@@ -170,11 +170,13 @@
                     <h3>Recent Posts</h3>
                     <ul>
                         
+                        <li><a href="/blog/posts/pin-emacs-package-to-manage-issues/">Pin Emacs packages to manage issues</a></li>
+                        
                         <li><a href="/blog/posts/access-aws-with-clojure-from-scratch/">Accessing AWS with Clojure from scratch - simple approach</a></li>
                         
-                        <li><a href="/blog/posts/docker-desktop-on-ubuntu-linux/">Docker Desktop on Ubuntu Linux</a></li>
-                        
                         <li><a href="/blog/posts/docker-a-simple-workflow-for-clojure/">Docker: a simple workflow for Clojure</a></li>
+                        
+                        <li><a href="/blog/posts/docker-desktop-on-ubuntu-linux/">Docker Desktop on Ubuntu Linux</a></li>
                         
                         <li><a href="/blog/posts/docker-compose-for-clojure-development/">Docker Compose for Clojure Development</a></li>
                         
@@ -185,8 +187,6 @@
                         <li><a href="/blog/posts/build-emacs-from-source-on-ubuntu-linux/">Build Emacs from source on Ubuntu Linux</a></li>
                         
                         <li><a href="/blog/posts/london-clojurians-community-a-brief-history/">London Clojurians Community - a relatively brief history</a></li>
-                        
-                        <li><a href="/blog/posts/build-and-run-clojure-with-multistage-dockerfile/">Build and run Clojure with Multi-stage Dockerfile</a></li>
                         
                     </ul>
                 </div>

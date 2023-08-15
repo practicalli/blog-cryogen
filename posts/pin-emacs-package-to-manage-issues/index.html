@@ -2,8 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
     <meta charset="utf-8"/>
-    <title>Practicalli: Posts Tagged &quot;events&quot;</title>
-    <link rel="canonical" href="http://practical.li/blog/tags/events/">
+    <title>Practicalli: Pin Emacs packages to manage issues</title>
+    <link rel="canonical" href="http://practical.li/blog/posts/pin-emacs-package-to-manage-issues/">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu|Ubuntu+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
@@ -55,21 +55,79 @@
         <div class="col-lg-9">
             <div id="content">
                 
-<div id="posts-by-tag">
-    <div id="page-header">
-        <h2>Posts Tagged &quot;events&quot;</h2>
+<div id="post">
+    <div class="post-header">
+    <div id="post-meta" class="row">
+        <div class="col-lg-6">August 15, 2023</div>
+        
     </div>
-    <ul>
+    <h2>Pin Emacs packages to manage issues</h2>
+
+    <!-- conditional topic logo displayed if :topic has value in a post -->
     
-        <li>
-            <a href="/blog/posts/london-clojurians-community-a-brief-history/">London Clojurians Community - a relatively brief history</a>
-        </li>
+    <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/spacemacs-logo-name.png" alt="spacemacs logo - post topic" />
     
-        <li>
-            <a href="/blog/posts/reclojure-the-community-conference-for-all/">re:Clojure - the Clojure community conference for all</a>
-        </li>
+</div>
+<div>
     
-    </ul>
+    <p>Emacs provides a huge amount of features via packages. Community configurations like Spacmacs orchestrate packages so they work seemlessly together.  It is rare, but sometimes a package will have a breaking issue.</p><p><a href="https://melpa.org/#/">Melpa</a> provides (5,544) up-to-date packages  automatically built from each projects Git repository. Builds are defined by a recipe for each package.</p><p>A custom recipe can be used to control which version of a package is used with the Emacs configuration, to work around issues or changes to a package.</p><!-- more --><h2 id="melpa-recipes">Melpa recipes</h2><p>Search for packages on the Melpa website and view its recipe to understand how it is built.</p><pre><code class="elisp">(treemacs
+ :fetcher github
+ :repo "Alexander-Miller/treemacs"
+ :files (:defaults
+         "Changelog.org"
+         "icons"
+         "src/elisp/treemacs*.el"
+         "src/scripts/treemacs*.py"
+         (:exclude "src/extra/*")))
+</code></pre><p>Melpa will build the package from the lastest commit.</p><p><code>:commit</code> with a specific Git SHA value can be used to specify a different commit, especially useful for using an earlier package known to be issue free.</p><blockquote><p>Visit the shared Git repository of the package and review the commit history to find a likely working package.</p></blockquote><h2 id="custom-recipe-in-spacemacs">Custom recipe in Spacemacs</h2><p>Spacemacs uses packages from Melpa so the latest package versions are downloaded when Spacemacs is installed.</p><p>Users of Spacemacs can decide when to update packages by manually running a package update, <code>SPC f e U</code>, usually when a new feature in a package is desirable.</p><p>If there is an issue with updated package, then run a package rollback via the link on the Spacemacs home buffer, <code>SPC b h</code>.</p><p>If the majority of package updates are required, then a specific package version can be pinned by providing a custom recipe.</p><p>Add a custom recipe to the Spacemacs user configuration, to the <code>dotspacemacs-additional-packages</code>.</p><p>Move the newest package version from the <code>elpa/&lt;emacs-version&gt;/develop/</code> directory to trigger a package download when Emacs is restarted.</p><h3 id="example-package-pin">Example package pin</h3><pre><code class="elisp">   dotspacemacs-additional-packages
+   '((treemacs
+      :location (recipe
+                 :fetcher github
+                 :repo "Alexander-Miller/treemacs"
+                 :commit "2c576bebccd56ec8e65f4ec5ed5de864d9684fbf"
+                 :files (:defaults
+                         "Changelog.org"
+                         "icons"
+                         "src/elisp/treemacs*.el"
+                         "src/scripts/treemacs*.py"
+                         (:exclude "src/extra/*")))))
+</code></pre><blockquote><p>Practicalli recommends Spacemacs packages should be updated only when there is a known new feature or bug fix available.</p><p>Avoid updating packages when your time is constrained, so there is scope to resolve a potential error.</p></blockquote><h2 id="copy-package-from-rollback-cache">Copy package from rollback cache</h2><p>Spacemacs saves a short history of package files in the <code>.cache/.rollback/&lt;emacs-version&gt;/develop/&lt;rollback-date&gt;</code></p><p>Rather than use a custom recipe or revert all updated packages, a specific package can be copied from the rollback cache, removing the newer package.</p><p>For example:</p><pre><code class="shell">cp -r ~/.config/emacs/.cache/.rollback/28.3/develop/23-08-10_07.35.07/treemacs-20230703.1929/ ~/.config/emacs/elpa/28.3/develop/
+</code></pre><h2 id="summary">Summary</h2><p>Issues with Emacs packages are quite rare from experience and often solved very quickly.</p><p>A Package rollback in Spacemacs is a very quick way to resolve an issue.  Pinning a package using a custom recipe a little more involved, although still a relatively quick approach if the error messages identify a troubled package.</p><p>The Spacemacs community is very large so issues are reported quickly.  Even if the issue is not obvious then collectively the issue is solved quite rapidly.</p><p>Thank you</p><p><a href="https://github.com/practicalli">practicalli GitHub profile</a> I <a href="https://twitter.com/practcial_li">@practical_li</a></p>
+</div>
+
+<div id="post-tags">
+    <b>Tags: </b>
+    
+    <a href="/blog/tags/emacs/">emacs</a>
+    
+    <a href="/blog/tags/spacemacs/">spacemacs</a>
+    
+</div>
+
+
+    <div id="prev-next">
+        
+        
+        <a class="right" href="/blog/posts/access-aws-with-clojure-from-scratch/">Accessing AWS with Clojure from scratch - simple approach &raquo;</a>
+        
+    </div>
+
+    
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_config = function () {
+            this.page.url = "http://practical.li/blog/posts/pin-emacs-package-to-manage-issues/";
+            this.page.identifier = "Pin Emacs packages to manage issues";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//practicalli-blog.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    
+
+
 </div>
 
             </div>
