@@ -2,8 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
     <meta charset="utf-8"/>
-    <title>Practicalli: Posts Tagged &quot;conjure&quot;</title>
-    <link rel="canonical" href="http://practical.li/blog/tags/conjure/">
+    <title>Practicalli: Expose Clojure Service using Ngrok</title>
+    <link rel="canonical" href="http://practical.li/blog/posts/expose-local-clojure-service-with-ngrok/">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu|Ubuntu+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
@@ -55,17 +55,100 @@
         <div class="col-lg-9">
             <div id="content">
                 
-<div id="posts-by-tag">
-    <div id="page-header">
-        <h2>Posts Tagged &quot;conjure&quot;</h2>
+<div id="post">
+    <div class="post-header">
+    <div id="post-meta" class="row">
+        <div class="col-lg-6">August 24, 2023</div>
+        
     </div>
-    <ul>
+    <h2>Expose Clojure Service using Ngrok</h2>
+
+    <!-- conditional topic logo displayed if :topic has value in a post -->
     
-        <li>
-            <a href="/blog/posts/clojure-repl-jack-in-or-connect/">Clojure CLI tools - To jack-in or connect, that is the question</a>
-        </li>
+    <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/clojure-logo-name.png" alt="clojure logo - post topic" />
     
-    </ul>
+</div>
+<div>
+    
+    <p>Exposing a local running services can be valuable when writing apps and web-hooks for Cloud API products, e.g. Slack, Atlassian Confluence, Hasura, Salesforce, etc.</p><p>ngrok exposes local networked services behinds NATs and firewalls to the public internet over a secure tunnel.</p><p><a href="https://ngrok.com/signup">Create a free ngrok account</a> to get an authorisation token for use with the ngrok agent to create a secure tunnel.  Or add an SSH public key to use SSH reverse tunnel with the ngrok service.</p><!-- more --><p>ngrok has additional <a href="https://ngrok.com/pricing">paid services</a>, although they are not required for exposing local services.</p><h2 id="example-clojure-service">Example Clojure Service</h2><p><a href="https://practical.li/clojure/clojure-cli/practicalli-config/">Practicalli Clojure CLI Config</a> defines the <code>:project/create</code> alias to generate a new project from a template.  The <code>practicalli/service</code> template creates a project for developing web services with a REST API.</p><p>Create a project called gameboard using donut system to manage service components</p><pre><code class="shell">clojure -T:project/create :template practicalli/service :name practicalli/gameboard :component donut
+</code></pre><p>Change into the <code>gameboard</code> directory</p><p><code>make run</code> (<code>clojure -M:run/service</code>) to run the service locally, serving an API endpoint on <a href="http://localhost:8888">http://localhost:8888</a></p><blockquote><p>Alternatively, <code>make docker-build</code> to run the service via a docker container (assuming Docker is running locally).</p></blockquote><h2 id="install-ngrok">Install ngrok</h2><p>Linux (apt) operating system, add a ngrok repository key and install the ngrock package</p><pre><code class="shell">curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | \
+  sudo tee /etc/apt/trusted.gpg.d/ngrok.asc &gt;/dev/null &amp;&amp; \
+  echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | \
+  sudo tee /etc/apt/sources.list.d/ngrok.list &amp;&amp; \
+  sudo apt update &amp;&amp; sudo apt install ngrok
+</code></pre><p>MacOS install with HomeBrew:</p><pre><code class="shell">brew install ngrok/ngrok/ngrok
+</code></pre><blockquote><p><a href="https://ngrok.com/download">Ngrok download page</a> for other installation options or use an SSH reverse tunnel without need to install the ngrok agent.</p></blockquote><h2 id="setup-ngrok">Setup ngrok</h2><p><a href="https://ngrok.com/signup">Create an account</a> with multi-factor authentication.</p><p>Login to the Ngrok dashboard to obtain the Authtoken (tunnel credential) for the ngrok account.  The token is used by the ngrok agent to log into the ngrok account when starting a tunnel.</p><pre><code class="shell">ngrok config add-authtoken TOKEN
+</code></pre><blockquote><p>Claim a free <a href="https://dashboard.ngrok.com/cloud-edge/domains">static domain</a> to avoid random URLs. Creating a domain of your own choosing is a paid service on ngrok.</p></blockquote><h3 id="ngrok-config-file">ngrok config file</h3><p>Use a configuration file to define one or more tunnels for use with the ngrok agent.</p><p>Open the default ngrok configuration file for editing:</p><pre><code class="shell">ngrok config edit
+</code></pre><p>Or open the yaml file from the default configuration location</p><ul><li>Linux: <code>~/.config/ngrok/ngrok.yml</code></li><li>MacOS (Darwin): <code>~/Library/Application Support/ngrok/ngrok.yml</code></li></ul><pre><code class="yaml">authtoken: ***************************_*********************
+version: 2
+tunnels:
+  custom_tunnel_name:
+    proto: http
+    hostname: free-static-domain-name.ngrok-free.app
+    addr: 127.0.0.1:8080
+
+    # -------------------------
+    # Additional options
+    # -------------------------
+    # auth: "username:password"
+    # host_header: rewrite
+    # inspect: true
+    # bind_tls: true
+</code></pre><blockquote><p><a href="https://ngrok.com/docs/secure-tunnels/ngrok-agent/reference/config/">ngrok agent configuration file documentation</a></p></blockquote><p>Start the tunnel using the command line.</p><pre><code class="shell">ngrok start custom_tunnel_name
+</code></pre><p>Or start all tunnels in the configuration file</p><pre><code class="shell">ngrok start --all
+</code></pre><h2 id="inspecting-traffic">Inspecting traffic</h2><p>Open <a href="http://localhost:4040">http://localhost:4040</a> to view the ngrok web interface, allowing inspection of traffic over the secure HTTP tunnel (TCP &amp; TLS tunnel inspection not supported).</p><p>The web interface lists each request through the tunnel and selecting a request shows all the details of that request.</p><ul><li>Request body validation (JSON, XML data)</li><li>Filter requests on request path, response status code, response body size, request duration, or any header value</li><li>Replay requests, optionally modifying a request first</li><li><a href="http://localhost:4040/status">ngrok agent status</a> to help with troubleshooting the tunnel connetion</li></ul><p><img src="https://ngrok.com/docs/assets/images/inspect2-91853c29eecae917896a429455b02111.png" alt="Ngrok web inspection interface" /></p><p><a href="https://ngrok.com/docs/secure-tunnels/ngrok-agent/web-inspection-interface/">Ngrok web inspection interface</a></p><h2 id="ssh-reverse-tunnel">SSH reverse tunnel</h2><p>ngrok can be used with SSH reverse tunneling (ssh -R), avoiding the need to install the ngrok agent.</p><p>Add an SSH public key to the ngrok dashboard, <strong>Tunnels</strong> &gt; <strong>SSH Public Keys</strong></p><p>Run the command to open an SSH reverse tunnel to ngrok</p><pre><code class="shell">ssh -R 443:localhost:80 tunnel.us.ngrok.com http
+</code></pre><blockquote><p><a href="https://ngrok.com/docs/secure-tunnels/tunnels/ssh-reverse-tunnel-agent/">SSH reverse tunnel agent documentation</a></p></blockquote><h2 id="ngrok-docker-service">ngrok Docker service</h2><p>Use a Docker image containing ngrok to avoid installing the ngrok agent.</p><p>ngrok provides the <a href="https://hub.docker.com/r/ngrok/ngrok">ngrok/ngrok</a> docker image.  Practicalli recommends using the alpine image variant for minimal resource use.</p><pre><code class="shell">docker run -it -e NGROK_AUTHTOKEN=$NGROK_AUTH_TOKEN ngrok/ngrok:alpine http 8080 --domain=free-static-domain-name.ngrok-free.app
+</code></pre><p>Add an ngrok service to Docker <code>compose.yaml</code>, optionally adding a volume and port configuration.</p><p>To manage ngrok configuration effectively, add an <code>ngrok.yml</code> configuration to the root of the directory where the ngrok image is to be run.  The <code>ngrok.yml</code> config is mounted to <code>/etc/ngrok.yml</code> in the Docker container, allowing an simple way to update the config.</p><pre><code class="yaml">services:
+    ngrok:
+        image: ngrok/ngrok:alpine
+        restart: unless-stopped
+        command:
+          - "start"
+          - "--all"
+          - "--config"
+          - "/etc/ngrok.yml"
+        volumes:
+          - ./ngrok.yml:/etc/ngrok.yml
+        ports:
+          - 4040:4040
+</code></pre><p>Run all the services defined in the Docker <code>compose.yml</code> file, optionally with the <code>--detatch</code> flag to run in the background of the shell.</p><pre><code class="shell">docker compose up --detatch
+</code></pre><p>Or run only the ngrok service</p><pre><code class="shell">docker compose up --detatch ngrok
+</code></pre><blockquote><p>Add an ngrok service to a <a href="https://practical.li/engineering-playbook/continuous-integration/docker/compose/">Docker compose configuration to build &amp; run the clojure service</a> in conjunction with a <a href="https://practical.li/engineering-playbook/continuous-integration/docker/clojure-multi-stage-dockerfile/">multi-stage dockerfile</a>.</p></blockquote><p><a href="https://ngrok.com/docs/using-ngrok-with/docker/">Using ngrok with Docker</a></p><h2 id="secure-public-endpoints">Secure public endpoints</h2><p>ngrok agent allows security to be dynamically added to any public endpoint, with IP restrictions</p><ul><li>HTTP Basic Authentication</li><li>OAuth 2.0</li><li>OpenID Connect</li><li>SAML</li><li>Webhook Verification</li><li>Mutual TLS</li></ul><h2 id="summary">Summary</h2><p>ngrok is a secure way to expose locally running services that integrate with cloud services and can help speed development by providing faster feedback than running a full deployment cycle.</p><p>ngrok agent works on multiple operating systems and can be run in a Docker container.  An SSH reverse tunnel can be used for zero agent install approach.</p><p>Using ngrok only because the continuous integration process is very time consuming is a strong indication that time should be invested in improving the CI workflow, ensuring the minimal amount of work is required to create a repeatable build.</p><p><a href="https://github.com/practicalli">practicalli GitHub profile</a> I <a href="https://twitter.com/practical_li">@practical_li</a></p>
+</div>
+
+<div id="post-tags">
+    <b>Tags: </b>
+    
+    <a href="/blog/tags/clojure/">clojure</a>
+    
+    <a href="/blog/tags/ngrok/">ngrok</a>
+    
+</div>
+
+
+    <div id="prev-next">
+        
+        
+        <a class="right" href="/blog/posts/pin-emacs-package-to-manage-issues/">Pin Emacs packages to manage issues &raquo;</a>
+        
+    </div>
+
+    
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_config = function () {
+            this.page.url = "http://practical.li/blog/posts/expose-local-clojure-service-with-ngrok/";
+            this.page.identifier = "Expose Clojure Service using Ngrok";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//practicalli-blog.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    
+
+
 </div>
 
             </div>

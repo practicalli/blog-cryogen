@@ -59,6 +59,23 @@
     
     <div class="post-header">
         <h2>
+            <a href="/blog/posts/build-and-run-clojure-with-multistage-dockerfile/">Build and run Clojure with Multi-stage Dockerfile</a>
+        </h2>
+        <div id="post-meta">
+            
+            <div class="date">October 30, 2022</div>
+        </div>
+        <!-- conditional topic logo displayed if :topic has value in a post -->
+        
+        <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/docker-logo-name.png" alt="docker logo" />
+        
+    </div>
+    <p>Deployment of Clojure is very simple, only an Uberjar archive file (Clojure Project and Clojure run-time) and the Java Run-time Environment (JRE) are required.</p><p>A Clojure service rarely works in isolation and although many services are access via a network connection (defined in Environment Variables), provisioning containers to build and run Clojure along with any other services can be valuable as complexity of the architecture grows.</p><p>A <a href="https://github.com/practicalli/clojure-app-template/blob/main/Dockerfile">Multi-stage <code>Dockerfile</code></a> is an effective way to build and run Clojure projects in continuous integration pipelines and during local development where multiple services are required for testing.</p>
+    <a href="/blog/posts/build-and-run-clojure-with-multistage-dockerfile/">Continue reading &#8594;</a>
+    <hr>
+    
+    <div class="post-header">
+        <h2>
             <a href="/blog/posts/make-clojure-tasks-simple-and-consistent/">Make Clojure development tasks simple and consistent</a>
         </h2>
         <div id="post-meta">
@@ -125,23 +142,6 @@
     <a href="/blog/posts/build-emacs-28-on-ubuntu/">Continue reading &#8594;</a>
     <hr>
     
-    <div class="post-header">
-        <h2>
-            <a href="/blog/posts/practicalli-plans-for-spring-2022/">Practicalli content plans for Spring 2022</a>
-        </h2>
-        <div id="post-meta">
-            
-            <div class="date">February 18, 2022</div>
-        </div>
-        <!-- conditional topic logo displayed if :topic has value in a post -->
-        
-        <img class="topic" src="https://raw.githubusercontent.com/practicalli/graphic-design/live/topic-images/practicalli-logo-name.png" alt="practicalli logo" />
-        
-    </div>
-    <p>Much more content is coming in the Spring of 2022, thanks to <a href="https://www.clojuriststogether.org/news/q1-2022-funding-announcement/">Clojurists Together funding</a>.  To ensure the most useful content is provides, Practicalli would value feedback on the planned topics.</p><p>The <a href="https://www.clojuriststogether.org/news/q1-2022-funding-announcement/">submitted plan to Clojurists Together</a> is to extend existing guides and code examples, as well as adding new content to the existing Practicalli books.  Additional video content will be added across the Practicall Books, updating existing video content where it has become dated.</p><blockquote><p>Due to continued Covid symptoms, <a href="https://github.com/practicalli/clojurists-together-journal/blob/summer-2022/2022-2023-updates.md">work is being done over 2022 and 2023</a> as health conditions allow</p></blockquote>
-    <a href="/blog/posts/practicalli-plans-for-spring-2022/">Continue reading &#8594;</a>
-    <hr>
-    
 
     <div id="prev-next">
         
@@ -172,6 +172,8 @@
                     <h3>Recent Posts</h3>
                     <ul>
                         
+                        <li><a href="/blog/posts/expose-local-clojure-service-with-ngrok/">Expose Clojure Service using Ngrok</a></li>
+                        
                         <li><a href="/blog/posts/pin-emacs-package-to-manage-issues/">Pin Emacs packages to manage issues</a></li>
                         
                         <li><a href="/blog/posts/access-aws-with-clojure-from-scratch/">Accessing AWS with Clojure from scratch - simple approach</a></li>
@@ -187,8 +189,6 @@
                         <li><a href="/blog/posts/create-deps-new-template-for-clojure-cli-projects/">Create deps-new templates for Clojure CLI projects</a></li>
                         
                         <li><a href="/blog/posts/build-emacs-from-source-on-ubuntu-linux/">Build Emacs from source on Ubuntu Linux</a></li>
-                        
-                        <li><a href="/blog/posts/london-clojurians-community-a-brief-history/">London Clojurians Community - a relatively brief history</a></li>
                         
                     </ul>
                 </div>
@@ -273,6 +273,8 @@
                         <li><a href="/blog/tags/help/">help</a></li>
                         
                         <li><a href="/blog/tags/transducers/">transducers</a></li>
+                        
+                        <li><a href="/blog/tags/ngrok/">ngrok</a></li>
                         
                         <li><a href="/blog/tags/lenovo/">lenovo</a></li>
                         
