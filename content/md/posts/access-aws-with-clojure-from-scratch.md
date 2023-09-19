@@ -10,7 +10,7 @@ The hardest is configuring suitable AWS accounts, programmatic access and servic
 
 The approach outlined is not intended for commercial work, only the bare essentials to start exploring what is possible with the Cognitect Labs library.  (Or you could try out [LocalStack if you have docker installed locally](https://localstack.cloud/)).
 
-Don't use this approach for personal or company secrets and sensitive information.
+**Don't use this approach for personal or company projects containing sensitive information**
 
 > A working credit card is required to setup a root account and AWS will charge the card $1 to verify identity and that the card is legitimate.  This amount will be returned within 3-5 days.
 >
