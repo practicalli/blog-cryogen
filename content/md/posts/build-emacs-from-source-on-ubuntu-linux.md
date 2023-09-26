@@ -14,14 +14,17 @@ Building from source is a convenient way to try Emacs features in advance, espec
 
 ## Building steps for the impatient
 
-Add Ubuntu packages for building Emacs
+Add Ubuntu packages for building Emacs 
 
 ```shell
 sudo apt build-dep emacs && \
-sudo apt install libgccjit0 libgccjit-10-dev libjansson4 libjansson-dev gnutls-bin libtree-sitter-dev
+sudo apt install libgccjit0 libgccjit-10-dev libjansson4 libjansson-dev \
+    gnutls-bin libtree-sitter-dev gcc-10 imagemagick libmagick++-dev \
+    libwebp-dev webp libxft-dev libxft2
 ```
 
-[Clone Emacs 29 source code](https://git.savannah.gnu.org/cgit/emacs.git), configure and build emacs and then install (in /usr/local/bin/)
+
+[Clone Emacs source code](https://git.savannah.gnu.org/cgit/emacs.git), configure and build emacs and then install (in /usr/local/bin/)
 
 ```shell
 git clone --branch emacs-29 git://git.savannah.gnu.org/emacs.git emacs-29 && cd emacs-29 && \
@@ -52,7 +55,9 @@ sudo apt build-dep -y emacs
 Install some additional libraries to support the newest features of Emacs, native compilation of Emacs packages (`libgccjit`), fast JSON processing (`libjansson`) and tree-sitter support.  These really boost performance, so are important to add.
 
 ```shell
-sudo apt install libgccjit0 libgccjit-10-dev libjansson4 libjansson-dev libtree-sitter-dev
+sudo apt install libgccjit0 libgccjit-10-dev libjansson4 libjansson-dev \
+    gnutls-bin libtree-sitter-dev gcc-10 imagemagick libmagick++-dev \
+    libwebp-dev webp libxft-dev libxft2
 ```
 
 > On Ubuntu 20.04 `sudo apt-get install gnutls-bin` removes a potential issue from an older certificates library
