@@ -1,4 +1,7 @@
-* Practicalli Blog Content
+* Archived: Practicalli Blog Content
+
+##[Practicalli Blog powered by Material for MkDocs with updated content](https://practical.li/blog)
+No further updates will be made to this GitHub project.
 
 A Cryogen project containing the raw markdown content that is used to generate the [[https://practicalli.github.io/blog][Practicalli blog website]]
 
